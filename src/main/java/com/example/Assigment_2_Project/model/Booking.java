@@ -37,11 +37,7 @@ public class Booking {
     @OneToOne
     private Driver driver;
 
-    @Column
-    private int totalPayment;
-
     public Booking() {
     }
-
 
 }
