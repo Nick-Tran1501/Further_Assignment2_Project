@@ -4,12 +4,12 @@ package com.example.Assigment_2_Project.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "car")
+@Table(name = "CAR")
 public class Car {
     @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long VIN;
+    @Column(name = "VIN")
+    @GeneratedValue(strategy = GenerationType.AUTO) //Checking later
+    private long id;
 
     @Column
     private String make;
@@ -29,10 +29,8 @@ public class Car {
     @Column
     private String rateKilometer;
 
-    @Column
     @OneToOne
-    private Driver driver;
-
+    private Driver driver;//refresh everyday
 
 
     public Car(){}
