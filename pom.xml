@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>Assigment_2_Project</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>sssss
 	<name>Assigment_2_Project</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -46,5 +46,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
