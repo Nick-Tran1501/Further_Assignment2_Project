@@ -20,7 +20,7 @@ import java.util.Properties;
 @EnableWebMvc
 public class AppConfig {
 
-    
+
     @Bean
     public LocalSessionFactoryBean sessionFactoryBean() {
         Properties properties = new Properties();
