@@ -16,9 +16,7 @@ public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
         return this.findById(id);
     }
 
-    List<Invoice> findByDate(ZonedDateTime date);
-    List<Invoice> findByStartEndDate(ZonedDateTime startDate, ZonedDateTime endDate);
-    List<Invoice> findByCustomer(Customer customer, ZonedDateTime startDate, ZonedDateTime endDate);
-    List<Invoice> findByDriver(Driver driver, ZonedDateTime startDate, ZonedDateTime endTime);
+    List<Invoice> findByDateTime(ZonedDateTime dateTime);
+    List<Invoice> findByDateTimeBetween(ZonedDateTime startDate, ZonedDateTime endDate);
 
 }

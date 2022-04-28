@@ -1,16 +1,13 @@
 package com.example.Assigment_2_Project.controller;
 
 import com.example.Assigment_2_Project.model.Car;
-import com.example.Assigment_2_Project.model.Driver;
 import com.example.Assigment_2_Project.repository.CarRepo;
-import com.example.Assigment_2_Project.repository.DriverRepo;
-import com.example.Assigment_2_Project.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,31 +21,30 @@ public class CarController extends EntityController<Car> {
     public CarController(CarRepo carRepo) {
         super(carRepo);
     }
-//
+
+    //
     @Autowired
-    CarRepo carRepo;
+    private CarRepo carRepo;
 
-//    @Autowired
-//    private CarService carService;
-
-
-    @PostMapping(path = "/post")
-    public ResponseEntity<Car> addCar(@RequestBody List<Car> cars ) {
+//    @PostMapping(path = "/post")
+    @RequestMapping(path = "/post")
+    public ResponseEntity<Car> addCar(@RequestBody Car car) {
         try {
-            for (Car car : cars ) {
-                carRepo.save(car);
-            }
+
+            carRepo.save(car);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping
+//    @GetMapping
+    @RequestMapping
     public ResponseEntity<List<Car>> getCars() {
         try {
-            List<Car> cars = carRepo.findAll();;
-            if (cars.size() == 0){
+            List<Car> cars = carRepo.findAll();
+            ;
+            if (cars.size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(HttpStatus.OK);
@@ -58,7 +54,7 @@ public class CarController extends EntityController<Car> {
     }
 
     @Override
-    @PatchMapping(path = "/{VIN}")
+    @RequestMapping(path = "/{VIN}")
     public ResponseEntity<Car> updateTableColumnById(Long VIN, @RequestBody Map<String, String> columnData) {
         Car car = carRepo.findById(VIN).get();
         if (columnData.size() > 0) {
@@ -80,7 +76,7 @@ public class CarController extends EntityController<Car> {
         }
     }
 
-
+}
 
 //    @RequestMapping(path = "/post", method = RequestMethod.POST)
 //    public Long createCar(@RequestBody Car car){
@@ -106,4 +102,3 @@ public class CarController extends EntityController<Car> {
 //    public ResponseEntity<Car> updateTableColumnById(Long id, Map<String, String> contentField) {
 //        return null;
 //    }
-}

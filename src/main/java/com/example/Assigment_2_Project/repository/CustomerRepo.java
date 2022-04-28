@@ -14,11 +14,18 @@ public interface CustomerRepo extends JpaRepository<Customer, Long> {
         return this.findById(id);
     }
 
-    List<Customer> findBuName(String name);
+    List<Customer> findByName(String name);
+
     List<Customer> findByPhone(String phone);
+
     List<Customer> findByAddress(String address);
-    List<Customer> findByNameAddress(String name, String address);
-    List<Customer> findByNamePhone(String name, String phone);
-    List<Customer> findByAddressPhone (String address, String phone);
-    List<Customer> findByAll(String name, String address, String phone);
+
+    List<Customer> findByNameAndAddress(String name, String address);
+
+    List<Customer> findByPhoneAndAddress(String phone, String address);
+
+    List<Customer> findByNameAndPhone(String name, String phone);
+
+    List<Customer> findByNameAndPhoneAndAddress(String name, String phone, String address);
+
 }
