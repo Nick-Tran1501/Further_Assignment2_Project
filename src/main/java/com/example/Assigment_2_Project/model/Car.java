@@ -18,6 +18,9 @@ public class Car {
     private String color;
 
     @Column
+    private String model;
+
+    @Column
     private boolean convertible;
 
     @Column
@@ -35,7 +38,8 @@ public class Car {
 
     public Car(){}
 
-    public Car(Long id, String make, String color, boolean convertible, double rating, String licensePlate, String rateKilometer) {
+    public Car(Long id, String make, String model, String color, boolean convertible, double rating, String licensePlate, String rateKilometer) {
+        this.model = model;
         this.id = id;
         this.make = make;
         this.color = color;
@@ -59,6 +63,14 @@ public class Car {
 
     public void setMake(String make) {
         this.make = make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public String getColor() {

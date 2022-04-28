@@ -8,7 +8,10 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
@@ -16,6 +19,15 @@ import java.util.List;
 public class CustomerService {
     @Autowired
     private SessionFactory sessionFactory;
+
+
+    private Customer customer;
+
+    @ModelAttribute
+    public Customer customer(HttpServletRequest request) {
+        request.setAttribute("name", customer.getName());
+        return customer;
+    }
 
     //  ADD Customer on Table
     public Long addCustomer(Customer customer){
@@ -48,5 +60,11 @@ public class CustomerService {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Customer.class);
         criteria.add(Restrictions.like("phone",phone,MatchMode.ANYWHERE));
         return criteria.list();
+    }
+
+    public List<Customer> searchByName(String name) {
+        List<Customer> customers = sessionFactory.getCurrentSession().createQuery("Select Customer from Customer where name =: name ")
+                .setParameter("name", name).list();
+        return customers;
     }
 }

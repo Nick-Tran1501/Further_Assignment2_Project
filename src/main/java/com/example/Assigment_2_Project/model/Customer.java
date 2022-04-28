@@ -6,6 +6,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "customer")
 public class Customer {
+
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -19,9 +22,11 @@ public class Customer {
     @Column
     private String address;
 
-    public Customer() {
+    public Customer(String s, int i) {
 
     }
+
+    public Customer() {};
 
     public long getId() {
         return id;

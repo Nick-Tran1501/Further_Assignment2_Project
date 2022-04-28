@@ -17,6 +17,7 @@ public class DriverService {
     @Autowired
     private SessionFactory sessionFactory;
 
+
     private List<Driver> drivers;
 
 
@@ -31,17 +32,17 @@ public class DriverService {
     }
 
     public Long addDriver(Driver driver) {
-//        getDrivers().add(driver);
+        getAllDriver().add(driver);
         this.sessionFactory.getCurrentSession().save(driver);
         return driver.getId();
     }
 
 
-//    public List<Driver> getAllDriver() {
-//        this.drivers = sessionFactory.getCurrentSession().createQuery("from Driver ").list();
-//        return this.drivers;
-//    }
-//
+    public List<Driver> getAllDriver() {
+        this.drivers = sessionFactory.getCurrentSession().createQuery("from Driver ").list();
+        return this.drivers;
+    }
+
 //    public String
 
 }

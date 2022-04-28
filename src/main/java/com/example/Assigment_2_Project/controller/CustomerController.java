@@ -14,6 +14,7 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+
     @RequestMapping(path = "/customers", method = RequestMethod.POST)
     public Long addCustomer(@RequestBody Customer customer){
         return customerService.addCustomer(customer);
@@ -27,6 +28,11 @@ public class CustomerController {
     @RequestMapping(path = {"/searchName/{name}"}, method = RequestMethod.GET)
     public List<Customer> searchName(@PathVariable String name){
         return customerService.searchName(name);
+    }
+
+    @RequestMapping(path = {"/get"}, method = RequestMethod.GET)
+    public List<Customer> searchByName(@RequestAttribute("name") String name) {
+        return customerService.searchByName(name);
     }
 
     @RequestMapping(path = {"searchAddress/{address}"},method = RequestMethod.GET)
