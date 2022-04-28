@@ -1,6 +1,8 @@
 package com.example.Assigment_2_Project.model;
 
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 
@@ -20,6 +22,7 @@ public class Booking {
     private String endLocation;
 
     @Column
+
     private ZonedDateTime pickupTime;
 
     @Column
