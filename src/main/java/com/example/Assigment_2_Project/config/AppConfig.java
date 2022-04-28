@@ -1,6 +1,6 @@
 package com.example.Assigment_2_Project.config;
 
-import com.example.Assigment_2_Project.model.Booking;
+
 import org.hibernate.SessionFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -20,12 +20,7 @@ import java.util.Properties;
 @EnableWebMvc
 public class AppConfig {
 
-    @Bean
-    public Booking booking() {
-        return new Booking();
-    }
-
-
+    
     @Bean
     public LocalSessionFactoryBean sessionFactoryBean() {
         Properties properties = new Properties();
@@ -44,7 +39,7 @@ public class AppConfig {
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/Assignment_2");
         dataSource.setUsername("postgres");
-        dataSource.setPassword("khoinguyen28100"); //Remember to modify
+        dataSource.setPassword("Ilovepheyeah98"); //Remember to modify
 
         sessionFactoryBean.setDataSource(dataSource);
         sessionFactoryBean.setHibernateProperties(properties);
