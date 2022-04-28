@@ -27,7 +27,7 @@ public class CarController extends EntityController<Car> {
     private CarRepo carRepo;
 
 //    @PostMapping(path = "/post")
-    @RequestMapping(path = "/post")
+    @PostMapping(path = "/post")
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
         try {
 
@@ -39,11 +39,10 @@ public class CarController extends EntityController<Car> {
     }
 
 //    @GetMapping
-    @RequestMapping
+//    @RequestMapping(path = "/get")
     public ResponseEntity<List<Car>> getCars() {
         try {
             List<Car> cars = carRepo.findAll();
-            ;
             if (cars.size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -54,7 +53,7 @@ public class CarController extends EntityController<Car> {
     }
 
     @Override
-    @RequestMapping(path = "/{VIN}")
+    @PatchMapping(path = "/{VIN}")
     public ResponseEntity<Car> updateTableColumnById(Long VIN, @RequestBody Map<String, String> columnData) {
         Car car = carRepo.findById(VIN).get();
         if (columnData.size() > 0) {
