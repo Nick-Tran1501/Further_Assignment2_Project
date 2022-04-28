@@ -12,6 +12,4 @@ public interface CarRepo extends JpaRepository<Car, Long > {
     default Optional<Car> findById(Long id) {
         return this.findById(id);
     }
-
-    List<Car> findByMake(String make);
 }
