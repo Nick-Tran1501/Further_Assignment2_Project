@@ -25,8 +25,8 @@ public class Driver {
     @Column
     private double rating;
 
-//    @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
-//    private Car car; //Refresh everyday
+    @OneToOne(cascade = CascadeType.ALL)
+    private Car car; //Refresh everyday
 
     public Driver() {}
 
@@ -79,11 +79,11 @@ public class Driver {
         this.id = id;
     }
 
-    //    public Car getCar() {
-//        return car;
-//    }
-//
-//    public void setCar(Car car) {
-//        this.car = car;
-//    }
+        public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
 }
