@@ -35,5 +35,71 @@ public class Car {
 
     public Car(){}
 
+    public Car(Long id, String make, String color, boolean convertible, double rating, String licensePlate, String rateKilometer) {
+        this.id = id;
+        this.make = make;
+        this.color = color;
+        this.convertible = convertible;
+        this.rating = rating;
+        this.licensePlate = licensePlate;
+        this.rateKilometer = rateKilometer;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public boolean isConvertible() {
+        return convertible;
+    }
+
+    public void setConvertible(boolean convertible) {
+        this.convertible = convertible;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
+    public String getRateKilometer() {
+        return rateKilometer;
+    }
+
+    public void setRateKilometer(String rateKilometer) {
+        this.rateKilometer = rateKilometer;
+    }
+
 
 }
