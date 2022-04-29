@@ -1,12 +1,14 @@
 package com.example.Assigment_2_Project.model;
 
 
+import org.springframework.http.ResponseEntity;
+
 import javax.persistence.*;
+import java.util.Map;
 
 @Entity
 @Table(name = "customer")
 public class Customer {
-
 
 
     @Id
@@ -21,10 +23,6 @@ public class Customer {
 
     @Column
     private String address;
-
-    public Customer(String s, int i) {
-
-    }
 
     public Customer() {};
 
