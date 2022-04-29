@@ -30,7 +30,7 @@ public class CustomerController extends EntityController<Customer>{
     }
 
     @PostMapping(path = "/post")
-    public ResponseEntity<Car> addCustomer(@RequestBody Customer customers ) {
+    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customers ) {
         try {
             customerRepo.save(customers);
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -38,6 +38,23 @@ public class CustomerController extends EntityController<Customer>{
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<List<Customer>> getCustomers() {
+        try {
+            List<Customer> customers = customerRepo.findAll();
+            if (customers.size() == 0) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+
+
+
+
 
 //    Hello world
 
