@@ -25,11 +25,12 @@ public class CustomerController extends EntityController<Customer>{
     @Autowired
     private CustomerService customerService;
 
+
     @Override
+    @PutMapping("/{id}")
     public ResponseEntity<Customer> updateTableColumnById(Long id, Map<String, String> contentField) {
         return null;
     }
-
 
 //  Add student on table
     @PostMapping(path = "/post")
@@ -46,7 +47,6 @@ public class CustomerController extends EntityController<Customer>{
 //  Implement search customer function
 //  http://localhost:8080/Customer/search?name=Tuan (search 1 param)
 //  http://localhost:8080/Customer/search?name=Tuan&&address=Sky Garden (search > 1 params) (%20 = space)
-//    @RequestMapping(path = "/search",method = RequestMethod.GET)
     @GetMapping(path = "/search")
     public ResponseEntity<List<Customer>> customerSearch(
             @RequestParam(required = false) Optional<String> name,
@@ -54,6 +54,8 @@ public class CustomerController extends EntityController<Customer>{
             @RequestParam(required = false) Optional<String> phone){
         return customerService.customerSearch(name,address,phone);
     }
+
+
 
 // 
 
