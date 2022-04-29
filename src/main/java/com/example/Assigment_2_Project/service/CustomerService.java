@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class CustomerService {
+public class CustomerService{
 
     @Autowired
     CustomerRepo customerRepo;

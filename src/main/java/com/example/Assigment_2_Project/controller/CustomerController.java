@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Customer")
+@RequestMapping("/customer")
 public class CustomerController extends EntityController<Customer>{
 
     @Autowired
