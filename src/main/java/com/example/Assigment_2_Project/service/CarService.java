@@ -24,7 +24,7 @@ public class CarService<updateCarName> {
 
 
     @Autowired
-    private CarRepo carRepo;
+    CarRepo carRepo;
 
 
     //Create car
@@ -52,9 +52,37 @@ public class CarService<updateCarName> {
     }
 
     //Get car by available
-    public List<Car> getAvailableCars(String available ) {
-        List<Car> cars = carRepo.findByAvailable(available);
-        return cars;
+//    public List<Car> getAvailableCars(String available ) {
+//        List<Car> cars = carRepo.findByAvailable(available);
+//        return cars;
+//    }
+
+    public ResponseEntity<List<Car>> getAvailableCarSorted(Optional<String> make, Optional<String> model,
+                                                           Optional<String> color, Optional<Boolean> convertible,
+                                                           Optional<Double> rating, Optional<String> rateKilometer) {
+
+        try {
+            String available = "yes";
+            String unavailable = "Cannot find car";
+            List<Car> carTemp = carRepo.findByAvailable(available);
+            if (make.isPresent())
+                carTemp = carRepo.findByAvailableAndMake(available, make.get());
+            else if (model.isPresent())
+                carTemp =  carRepo.findByAvailableAndModel(available, model.get());
+            else if (color.isPresent())
+                carTemp = carRepo.findByAvailableAndColor(available, color.get());
+            else if (convertible.isPresent())
+                carTemp = carRepo.findByAvailableAndConvertible(available, convertible.get());
+            else if (rating.isPresent())
+                carTemp = carRepo.findByAvailableAndRating(available, rating.get());
+            else if (rateKilometer.isPresent())
+                carTemp = carRepo.findByAvailableAndRateKilometer(available, rateKilometer.get());
+            return carTemp == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+                    : new ResponseEntity<>(carTemp, HttpStatus.FOUND);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 

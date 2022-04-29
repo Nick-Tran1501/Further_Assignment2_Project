@@ -40,34 +40,67 @@ public class CarController extends EntityController<Car> {
         return this.carService.getCars();
     }
 
-    @RequestMapping(path = "/search", method = RequestMethod.GET)
-    public List<Car> getAvailableCars(@RequestParam String available) {
-        return this.carService.getAvailableCars(available);
+//    @RequestMapping(path = "/search", method = RequestMethod.GET)
+//    public List<Car> getAvailableCars(@RequestParam String available) {
+//        return this.carService.getAvailableCars(available);
+//    }
+
+    @GetMapping(path = "/search")
+    public ResponseEntity<List<Car>> getAvailableCarSorted(@RequestParam(required = false) Optional<String> make,
+                                           @RequestParam(required = false) Optional<String> model,
+                                           @RequestParam(required = false) Optional<String> color,
+                                           @RequestParam(required = false) Optional<Boolean> convertible,
+                                           @RequestParam(required = false) Optional<Double> rating,
+                                           @RequestParam(required = false) Optional<String> rateKilometer) {
+        return this.carService.getAvailableCarSorted(make, model, color, convertible, rating, rateKilometer);
     }
 
-
+//    @GetMapping(path = "/{id}")
+//    public ResponseEntity<Car> getCarByID(@PathVariable("id") Long id) {
+//        try {
+//            Car car = carRepo.findById(id).get();
+//            return new ResponseEntity<>(car, HttpStatus.FOUND);
+//
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
     @Override
-    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Car> updateTableColumnById(@PathVariable Long id, @RequestBody Map<String, String> contentField) {
-        Car car = carRepo.findById(id).get();
-        System.out.println(car);
-        if (contentField.size() > 0) {
-            if (contentField.containsKey("make")) {
-                car.setMake(contentField.get("make"));
-            }
-            if (contentField.containsKey("model")) {
-                car.setModel(contentField.get("model"));
-            }
-            if (contentField.containsKey("color")) {
-                car.setColor(contentField.get("color"));
-            }
-            if (contentField.containsKey("licensePlate")) {
-                car.setLicensePlate(contentField.get("licensePlate"));
-            }
-            return new ResponseEntity<>(carRepo.save(car), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<Car> updateTableColumnById(@PathVariable("id") Long id, @RequestBody Map<String, String> contentField) {
+//        Car car =  carRepo.findById(id).get();
+//        System.out.println(car.getMake());
+//        System.out.println(car);
+//        if (contentField.size() > 0) {
+//            if (contentField.containsKey("make")) {
+//                car.setMake(contentField.get("make"));
+//            }
+//            if (contentField.containsKey("model")) {
+//                car.setModel(contentField.get("model"));
+//            }
+//            if (contentField.containsKey("color")) {
+//                car.setColor(contentField.get("color"));
+//            }
+//            if (contentField.containsKey("licensePlate")) {
+//                car.setLicensePlate(contentField.get("licensePlate"));
+//            }
+//            if (contentField.containsKey("available")){
+//                car.setAvailable(contentField.get("available"));
+//            }
+//            if (contentField.containsKey("rating")){
+//                car.setRating(Double.parseDouble(contentField.get("rating")));
+//            }
+//            if (contentField.containsKey("convertible")){
+//                car.setConvertible(Boolean.parseBoolean(contentField.get("convertible")));
+//            }
+//            if (contentField.containsKey("rateKilometer")){
+//                car.setRateKilometer(contentField.get("rateKilometer"));
+//            }
+//            return new ResponseEntity<>(carRepo.save(car), HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+        return null;
     }
 }
 
