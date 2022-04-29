@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Map;
@@ -72,7 +73,8 @@ public class Customer {
         return createDate;
     }
 
-    public void setCreateDate(ZonedDateTime createDate) {
-        this.createDate = createDate;
+    public void setCreateDate() {
+        this.createDate = ZonedDateTime.now(ZoneOffset.UTC);
     }
+
 }

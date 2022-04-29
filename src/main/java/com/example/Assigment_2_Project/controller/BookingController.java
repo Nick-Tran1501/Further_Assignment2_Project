@@ -9,13 +9,11 @@ import com.example.Assigment_2_Project.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/booking")
@@ -36,10 +34,16 @@ public class BookingController extends EntityController<Booking>{
     @Autowired
     private BookingService bookingService;
 
-    @RequestMapping(path = "/booking", method = RequestMethod.GET)
-    public List<Car> getAvailableCar(@RequestParam String available){
-        return bookingService.getAvailableCars(available);
+    @GetMapping(path = "/search")
+    public ResponseEntity<List<Car>> getAvailableCarSorted(@RequestParam(required = false) Optional<String> make,
+                                                           @RequestParam(required = false) Optional<String> model,
+                                                           @RequestParam(required = false) Optional<String> color,
+                                                           @RequestParam(required = false) Optional<Boolean> convertible,
+                                                           @RequestParam(required = false) Optional<Double> rating,
+                                                           @RequestParam(required = false) Optional<String> rateKilometer) {
+        return this.bookingService.getAvailableCarSorted(make, model, color, convertible, rating, rateKilometer);
     }
+
 
 
 

@@ -30,6 +30,14 @@ public class CarController extends EntityController<Car> {
     CarRepo carRepo;
 
     @PostMapping(path = "/post")
+//        "make" : "USA",
+//    "color" : "blue",
+//    "model" : "suv",
+//    "convertible" : "false",
+//    "rating" : "3",
+//    "licensePlate" : "30A45126",
+//    "rateKilometer" :"1",
+//    "available" : "yes"
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
         return this.carService.addCar(car);
     }

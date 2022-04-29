@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -27,23 +28,38 @@ public class BookingService {
     @Autowired
     private CustomerRepo customerRepo;
 
-    // Get all car
-    public ResponseEntity<List<Car>> getCars() {
+
+//  Get available car for customer
+    public ResponseEntity<List<Car>> getAvailableCarSorted(
+            Optional<String> make, Optional<String> model,
+            Optional<String> color, Optional<Boolean> convertible,
+            Optional<Double> rating, Optional<String> rateKilometer) {
         try {
-            List<Car> cars = carRepo.findAll();
-            if (cars.size() == 0) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(HttpStatus.OK);
+            String available = "yes";
+            String unavailable = "Cannot find car";
+            List<Car> carTemp = carRepo.findByAvailable(available);
+            if (make.isPresent())
+                carTemp = carRepo.findByAvailableAndMake(available, make.get());
+            else if (model.isPresent())
+                carTemp =  carRepo.findByAvailableAndModel(available, model.get());
+            else if (color.isPresent())
+                carTemp = carRepo.findByAvailableAndColor(available, color.get());
+            else if (convertible.isPresent())
+                carTemp = carRepo.findByAvailableAndConvertible(available, convertible.get());
+            else if (rating.isPresent())
+                carTemp = carRepo.findByAvailableAndRating(available, rating.get());
+            else if (rateKilometer.isPresent())
+                carTemp = carRepo.findByAvailableAndRateKilometer(available, rateKilometer.get());
+            return carTemp == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+                    : new ResponseEntity<>(carTemp, HttpStatus.valueOf(unavailable));
+
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Get car by available
-    public List<Car> getAvailableCars(String available) {
-        List<Car> cars = carRepo.findByAvailable(available);
-        return cars;
-    }
+
+
+
 
 }

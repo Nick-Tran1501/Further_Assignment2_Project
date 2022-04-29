@@ -33,6 +33,9 @@ public class CustomerController extends EntityController<Customer>{
     }
 
 //  Add student on table
+//      "name" :"name",
+//    "phone" : "phone",
+//    "address" : "address"
     @PostMapping(path = "/post")
     public ResponseEntity<Customer> addCustomer(@RequestBody Customer customers ) {
         return customerService.addCustomer(customers);
