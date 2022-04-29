@@ -32,28 +32,34 @@ public class Car {
     @Column
     private String rateKilometer;
 
+    @Column
+    private String available;
+
     @OneToOne
     private Driver driver;//refresh everyday
 
 
     public Car(){}
 
-    public Car(Long id, String make, String model, String color, boolean convertible, double rating, String licensePlate, String rateKilometer) {
-        this.model = model;
+    public Car(long id, String make, String color, String model, boolean convertible,
+               double rating, String licensePlate, String rateKilometer, String available, Driver driver) {
         this.id = id;
         this.make = make;
         this.color = color;
+        this.model = model;
         this.convertible = convertible;
         this.rating = rating;
         this.licensePlate = licensePlate;
         this.rateKilometer = rateKilometer;
+        this.available = available;
+        this.driver = driver;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -65,20 +71,20 @@ public class Car {
         this.make = make;
     }
 
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
     public String getColor() {
         return color;
     }
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public boolean isConvertible() {
@@ -113,5 +119,19 @@ public class Car {
         this.rateKilometer = rateKilometer;
     }
 
+    public String getAvailable() {
+        return available;
+    }
 
+    public void setAvailable(String available) {
+        this.available = available;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
 }

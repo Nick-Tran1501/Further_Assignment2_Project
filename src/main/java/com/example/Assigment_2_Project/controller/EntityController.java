@@ -58,7 +58,7 @@ public abstract class EntityController<T> {
         }
     }
 
-    @PatchMapping(path = "/{id}")
+    @PutMapping(path = "/{id}")
     public abstract ResponseEntity<T> updateTableColumnById(@PathVariable("id") Long id, @RequestBody Map<String, String> contentField);
 
 
