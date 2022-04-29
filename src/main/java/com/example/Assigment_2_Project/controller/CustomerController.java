@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/Customer")
@@ -22,46 +23,48 @@ public class CustomerController extends EntityController<Customer>{
     }
 
     @Autowired
-    CustomerRepo customerRepo;
+    CustomerService customerService;
 
     @Override
     public ResponseEntity<Customer> updateTableColumnById(Long id, Map<String, String> contentField) {
         return null;
     }
 
+
+//  Add student on table
     @PostMapping(path = "/post")
     public ResponseEntity<Customer> addCustomer(@RequestBody Customer customers ) {
-        try {
-            customerRepo.save(customers);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    public ResponseEntity<List<Customer>> getCustomers() {
-        try {
-            List<Customer> customers = customerRepo.findAll();
-            if (customers.size() == 0) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+        return customerService.addCustomer(customers);
     }
 
 
+//  Get all customer data
+    public ResponseEntity<List<Customer>> getCustomer(){
+        return customerService.getCustomers();
+    }
+
+//  Implement search customer function
+//  http://localhost:8080/Customer/search?name=Tuan (search 1 param)
+//  http://localhost:8080/Customer/search?name=Tuan&&address=Sky Garden (search > 1 params) (%20 = space)
+    @GetMapping(path = "/search")
+    public ResponseEntity<List<Customer>> customerSearch(@RequestParam(required = false) Optional<String> name,
+                                                         @RequestParam(required = false) Optional<String> address,
+                                                         @RequestParam(required = false) Optional<String> phone){
+        return customerService.customerSearch(name, phone, address);
+    }
+
+//
 
 
-
-
-//    Hello world
-
+////   Old
 
 //    @Autowired
 //    private CustomerService customerService;
-
+//
+//    @RequestMapping(path = "/customers", method = RequestMethod.DELETE)
+//    public Long deleteCustomers(@PathVariable Long id){
+//
+//    }
 
 //    @RequestMapping(path = "/customers", method = RequestMethod.POST)
 //    public Long addCustomer(@RequestBody Customer customer){
