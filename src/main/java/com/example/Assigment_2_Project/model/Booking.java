@@ -22,7 +22,6 @@ public class Booking {
     private String endLocation;
 
     @Column
-
     private ZonedDateTime pickupTime;
 
     @Column
@@ -40,7 +39,19 @@ public class Booking {
     @OneToOne
     private Driver driver;
 
+    @OneToOne
+    private Car car;
+
     public Booking() {
+
     }
+
+
+//  Get & Set Customers
+    public Customer getCustomer() {return customer;}
+    public void setCustomer(Customer customer) {this.customer = customer;}
+//  Get & Set Car
+    public Car getCar() {return car;}
+    public void setCar(Car car) {this.car = car;}
 
 }
