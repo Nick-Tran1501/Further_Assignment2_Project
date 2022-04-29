@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class CustomerService {
+public class CustomerService{
 
     @Autowired
     CustomerRepo customerRepo;
@@ -91,7 +91,7 @@ public class CustomerService {
 //        return customer;
 //    }
 //
-//    //  ADD Customer on Table
+//    //  Add Customer on Table
 //    public Long addCustomer(Customer customer){
 //        this.sessionFactory.getCurrentSession().saveOrUpdate(customer);
 //        return customer.getId();
@@ -103,7 +103,7 @@ public class CustomerService {
 //        return criteria.list();
 //    }
 //
-//    //  Seacrh customer by name
+//    //  Search customer by name
 //    public List<Customer> searchName(String name){
 //        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Customer.class);
 //        criteria.add(Restrictions.like("name",name, MatchMode.ANYWHERE));
