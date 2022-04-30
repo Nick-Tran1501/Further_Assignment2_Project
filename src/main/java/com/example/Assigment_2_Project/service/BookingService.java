@@ -2,6 +2,7 @@ package com.example.Assigment_2_Project.service;
 
 
 import com.example.Assigment_2_Project.model.Car;
+import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.repository.BookingRepo;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import com.example.Assigment_2_Project.repository.CustomerRepo;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -51,12 +53,28 @@ public class BookingService {
             else if (rateKilometer.isPresent())
                 carTemp = carRepo.findByAvailableAndRateKilometer(available, rateKilometer.get());
             return carTemp == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-                    : new ResponseEntity<>(carTemp, HttpStatus.valueOf(unavailable));
+                    : new ResponseEntity<>(carTemp, HttpStatus.OK);
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+//  Booking car
+
+//    public ResponseEntity<Map<Customer,Car>> bookData(Long id, Long id){
+//        try {
+//            List<Customer> customerTemp = customerRepo.findById(id);
+//            List<Car> carsTemp = carRepo.findById(id);
+//            if ()
+////            return carTemp == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+////                    : new ResponseEntity<>(carTemp, HttpStatus.OK);
+//        }
+//        catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
 
 
 

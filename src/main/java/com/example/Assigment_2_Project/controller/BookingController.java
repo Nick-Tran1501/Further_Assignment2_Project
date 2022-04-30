@@ -3,11 +3,13 @@ package com.example.Assigment_2_Project.controller;
 
 import com.example.Assigment_2_Project.model.Booking;
 import com.example.Assigment_2_Project.model.Car;
+import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.repository.BookingRepo;
 import com.example.Assigment_2_Project.repository.CustomerRepo;
 import com.example.Assigment_2_Project.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +36,7 @@ public class BookingController extends EntityController<Booking>{
     @Autowired
     private BookingService bookingService;
 
+
     @GetMapping(path = "/search")
     public ResponseEntity<List<Car>> getAvailableCarSorted(@RequestParam(required = false) Optional<String> make,
                                                            @RequestParam(required = false) Optional<String> model,
@@ -43,6 +46,8 @@ public class BookingController extends EntityController<Booking>{
                                                            @RequestParam(required = false) Optional<String> rateKilometer) {
         return this.bookingService.getAvailableCarSorted(make, model, color, convertible, rating, rateKilometer);
     }
+
+
 
 
 

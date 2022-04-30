@@ -5,6 +5,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.Map;
 
 @Entity
 @Table(name = "booking")
@@ -30,6 +31,8 @@ public class Booking {
     @Column
     private int tripDistance;
 
+    private Map<Customer,Car> bookData;
+
     @OneToOne
     private Invoice invoice;
 
@@ -42,10 +45,7 @@ public class Booking {
     @OneToOne
     private Car car;
 
-    public Booking() {
-
-    }
-
+    public Booking() {}
 
 //  Get & Set Customers
     public Customer getCustomer() {return customer;}
@@ -53,5 +53,8 @@ public class Booking {
 //  Get & Set Car
     public Car getCar() {return car;}
     public void setCar(Car car) {this.car = car;}
+//  book get & set
+    public Map<Customer, Car> getBookData() { return bookData; }
+    public void setBookData(Map<Customer, Car> bookData) { this.bookData = bookData; }
 
 }
