@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
@@ -23,12 +20,12 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class CustomerService{
+public class CustomerService {
 
     @Autowired
     CustomerRepo customerRepo;
 
-// Add customers
+    // Add customers
     public ResponseEntity<Customer> addCustomer(Customer customers) {
         try {
             customerRepo.save(customers);
@@ -38,7 +35,7 @@ public class CustomerService{
         }
     }
 
-//  Get all customers data
+    //  Get all customers data
     public ResponseEntity<List<Customer>> getCustomers() {
         try {
             List<Customer> customers = customerRepo.findAll();
@@ -52,8 +49,8 @@ public class CustomerService{
     }
 
 
-//  Get customer data by specific attribute
-    public ResponseEntity<List<Customer>> customerSearch(Optional<String> name, Optional<String> address, Optional<String> phone){
+    //  Get customer data by specific attribute
+    public ResponseEntity<List<Customer>> customerSearch(Optional<String> name, Optional<String> address, Optional<String> phone) {
         try {
             List<Customer> customers = null;
             if (name.isPresent() && address.isPresent() && phone.isPresent())
@@ -79,6 +76,18 @@ public class CustomerService{
         }
     }
 
+    public ResponseEntity<List<Customer>> getByID(Long id){
+        try {
+            List<Customer> customers = customerRepo.findCustomerById(id);
+            return customers == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                    : new ResponseEntity<>(customers, HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+}
 
 //    @Autowired
 //    private SessionFactory sessionFactory;
@@ -129,4 +138,5 @@ public class CustomerService{
 //                .setParameter("name", name).list();
 //        return customers;
 //    }
-}
+//    }
+

@@ -1,6 +1,7 @@
 package com.example.Assigment_2_Project.service;
 
 
+import com.example.Assigment_2_Project.model.Booking;
 import com.example.Assigment_2_Project.model.Car;
 import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.repository.BookingRepo;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.UserTransaction;
+import java.awt.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,6 +32,10 @@ public class BookingService {
 
     @Autowired
     private CustomerRepo customerRepo;
+
+//    @Autowired
+//    private CustomerService customerService;
+
 
 
 //  Get available car for customer
@@ -59,27 +66,6 @@ public class BookingService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-//  Booking car
-
-//    public ResponseEntity<Map<Customer,Car>> bookData(Long customerID, Long carID){
-//        try {
-//            Optional<Customer> customerTemp = customerRepo.findById(customerID);
-//            Optional<Car> carsTemp = carRepo.findById(carID);
-//            Map<String,String> bookData = (Map<String, String>) bookData(customerID,carID);
-//
-//
-//            return bookData == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-//                    : new ResponseEntity<>(bookData, HttpStatus.OK);
-//        }
-//        catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
-
-
-
 
 
 }
