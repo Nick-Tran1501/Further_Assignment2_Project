@@ -33,6 +33,11 @@ public class CustomerController extends EntityController<Customer>{
         return null;
     }
 
+//  Add student on table
+//      "name" :"name",
+//    "phone" : "phone",
+//    "address" : "address"
+
     @Override
     public ResponseEntity<List<Customer>> inputDemoData(List<Customer> data) {
         return null;
@@ -40,6 +45,7 @@ public class CustomerController extends EntityController<Customer>{
 
 
     //  Add student on table
+
     @PostMapping(path = "/post")
     public ResponseEntity<Customer> addCustomer(@RequestBody Customer customers ) {
         return customerService.addCustomer(customers);

@@ -4,6 +4,11 @@ package com.example.Assigment_2_Project.model;
 import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.Map;
 
 @Entity
@@ -24,7 +29,13 @@ public class Customer {
     @Column
     private String address;
 
+    @Column
+    private ZonedDateTime createDate;
+
     public Customer() {};
+
+
+//  Get & Set
 
     public long getId() {
         return id;
@@ -56,6 +67,14 @@ public class Customer {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public ZonedDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate() {
+        this.createDate = ZonedDateTime.now(ZoneOffset.UTC);
     }
 
 }
