@@ -33,7 +33,7 @@ public interface CarRepo extends JpaRepository<Car, Long> {
     //7
     List<Car> findByRating(Double rating);
     //8
-    List<Car> findByRateKilometer(String rateKilometer);
+    List<Car> findByRateKilometer(Double rateKilometer);
 
     //Find by available and (6)
     //Make
@@ -47,7 +47,7 @@ public interface CarRepo extends JpaRepository<Car, Long> {
     //Rating
     List<Car> findByAvailableAndRating(String available, Double rating);
     //RateKilometer
-    List<Car> findByAvailableAndRateKilometer(String available, String rateKilometer);
+    List<Car> findByAvailableAndRateKilometer(String available, Double rateKilometer);
 
 
 }

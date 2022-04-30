@@ -30,7 +30,7 @@ public class Car {
     private String licensePlate;
 
     @Column
-    private String rateKilometer;
+    private Double rateKilometer;
 
     @Column
     private String available;
@@ -42,7 +42,7 @@ public class Car {
     public Car(){}
 
     public Car(long id, String make, String color, String model, boolean convertible,
-               double rating, String licensePlate, String rateKilometer, String available, Driver driver) {
+               double rating, String licensePlate, Double rateKilometer, String available, Driver driver) {
         this.id = id;
         this.make = make;
         this.color = color;
@@ -111,11 +111,11 @@ public class Car {
         this.licensePlate = licensePlate;
     }
 
-    public String getRateKilometer() {
+    public Double getRateKilometer() {
         return rateKilometer;
     }
 
-    public void setRateKilometer(String rateKilometer) {
+    public void setRateKilometer(Double rateKilometer) {
         this.rateKilometer = rateKilometer;
     }
 

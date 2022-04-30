@@ -17,10 +17,10 @@ public class Driver {
     private String name;
 
     @Column
-    private int licenseNumber;
+    private String licenseNumber;
 
     @Column
-    private int phoneNumber;
+    private String phoneNumber;
 
     @Column
     private double rating;
@@ -30,6 +30,14 @@ public class Driver {
 
     public Driver() {}
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -38,19 +46,19 @@ public class Driver {
         this.name = name;
     }
 
-    public int getLicenseNumber() {
+    public String getLicenseNumber() {
         return licenseNumber;
     }
 
-    public void setLicenseNumber(int licenseNumber) {
+    public void setLicenseNumber(String licenseNumber) {
         this.licenseNumber = licenseNumber;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -62,24 +70,7 @@ public class Driver {
         this.rating = rating;
     }
 
-    public Driver(long id, String name, int licenseNumber, int phoneNumber, double rating) {
-        this.id = id;
-        this.name = name;
-        this.licenseNumber = licenseNumber;
-        this.phoneNumber = phoneNumber;
-        this.rating = rating;
-//        this.car = car;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-        public Car getCar() {
+    public Car getCar() {
         return car;
     }
 

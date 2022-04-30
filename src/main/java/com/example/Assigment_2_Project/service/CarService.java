@@ -20,12 +20,10 @@ import java.util.Optional;
 
 @Transactional
 @Service
-public class CarService<updateCarName> {
-
+public class CarService {
 
     @Autowired
     CarRepo carRepo;
-
 
     //Create car
     public ResponseEntity<Car> addCar(Car car) {
@@ -37,7 +35,6 @@ public class CarService<updateCarName> {
         }
     }
 
-
     //Get all car
     public ResponseEntity<List<Car>> getCars() {
         try {
@@ -45,21 +42,15 @@ public class CarService<updateCarName> {
             if (cars.size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(cars, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
-    //Get car by available
-//    public List<Car> getAvailableCars(String available ) {
-//        List<Car> cars = carRepo.findByAvailable(available);
-//        return cars;
-//    }
-
     public ResponseEntity<List<Car>> getAvailableCarSorted(Optional<String> make, Optional<String> model,
                                                            Optional<String> color, Optional<Boolean> convertible,
-                                                           Optional<Double> rating, Optional<String> rateKilometer) {
+                                                           Optional<Double> rating, Optional<Double> rateKilometer) {
 
         try {
             String available = "yes";
