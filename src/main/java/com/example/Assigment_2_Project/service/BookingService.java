@@ -71,7 +71,7 @@ public class BookingService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
 //    public ResponseEntity<Booking> addBooking (Long customerID){
 //        try{
 //            ResponseEntity<List<Customer>> customer = customerService.getByID(customerID);
