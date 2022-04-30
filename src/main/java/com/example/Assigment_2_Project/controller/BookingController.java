@@ -49,9 +49,6 @@ public class BookingController extends EntityController<Booking>{
     }
 
 
-
-
-
     @Override
     public ResponseEntity<List<Booking>> inputDemoData(List<Booking> data) {
         return null;
