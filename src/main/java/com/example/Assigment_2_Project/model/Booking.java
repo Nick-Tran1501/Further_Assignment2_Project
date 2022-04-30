@@ -1,13 +1,10 @@
 package com.example.Assigment_2_Project.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Type;
-import org.springframework.data.annotation.CreatedDate;
+import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
-import java.util.Map;
+import java.util.List;
 
 @Entity
 @Table(name = "booking")
@@ -18,49 +15,57 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @CreatedDate
-    @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now();
+//    @CreatedDate
+//    @JsonIgnore
+//    private ZonedDateTime createdDate = ZonedDateTime.now();
+//
+//    @Column
+//    private String startLocation;
+//
+//    @Column
+//    private String endLocation;
+//
+//    @Column
+//    private ZonedDateTime pickupTime;
+//
+//    @Column
+//    private ZonedDateTime dropTime;
+//
+//    @Column
+//    private int tripDistance;
+//
+//    @OneToOne
+//    private Invoice invoice;
 
-    @Column
-    private String startLocation;
+//    @ManyToOne
+//    @Column
+//    private ResponseEntity<List<Customer>> customer;
 
-    @Column
-    private String endLocation;
+//    @Column(name = "customerName")
+//    private ResponseEntity<List<Customer>> name;
 
-    @Column
-    private ZonedDateTime pickupTime;
-
-    @Column
-    private ZonedDateTime dropTime;
-
-    @Column
-    private int tripDistance;
-
-//    private Map<String,String> bookData;
-
-    @OneToOne
-    private Invoice invoice;
-
-    @OneToOne
-    private Customer customer;
-
-    @OneToOne
-    private Driver driver;
-
-    @OneToOne
-    private Car car;
+//    @OneToOne
+//    private Car car;
 
     public Booking() {
-
     }
 
 
 //  Get & Set Customers
-    public Customer getCustomer() {return customer;}
-    public void setCustomer(Customer customer) {this.customer = customer;}
-//  Get & Set Car
-    public Car getCar() {return car;}
-    public void setCar(Car car) {this.car = car;}
+//    public ResponseEntity<List<Customer>> getCustomer() {return customer;}
+//    public void setCustomer(ResponseEntity<List<Customer>> customer) {this.customer = customer;}
+//
+//    public ResponseEntity<List<Customer>> getName() {
+//        return name;
+//    }
+//
+//    public void setName(ResponseEntity<List<Customer>> name) {
+//        this.name = name;
+//    }
+
+    ////  Get & Set Car
+//    public Car getCar() {return car;}
+//    public void setCar(Car car) {this.car = car;}
+
 
 }

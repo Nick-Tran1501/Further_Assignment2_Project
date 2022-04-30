@@ -4,10 +4,12 @@ package com.example.Assigment_2_Project.service;
 import com.example.Assigment_2_Project.model.Booking;
 import com.example.Assigment_2_Project.model.Car;
 import com.example.Assigment_2_Project.model.Customer;
+import com.example.Assigment_2_Project.model.Driver;
 import com.example.Assigment_2_Project.repository.BookingRepo;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import com.example.Assigment_2_Project.repository.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.SpringApplicationEvent;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,9 @@ public class BookingService {
 
     @Autowired
     private CustomerRepo customerRepo;
+
+    @Autowired
+    private CustomerService customerService;
 
 //    @Autowired
 //    private CustomerService customerService;
@@ -67,5 +72,24 @@ public class BookingService {
         }
     }
 
+//    public ResponseEntity<Booking> addBooking (Long customerID){
+//        try{
+//            ResponseEntity<List<Customer>> customer = customerService.getByID(customerID);
+//            Booking booking = new Booking();
+//            booking.setCustomer(customer);
+//            return new ResponseEntity<>(HttpStatus.CREATED);
+//        }
+//        catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
+//    public ResponseEntity<Customer> addCustomer(Customer customers) {
+//        try {
+//            customerRepo.save(customers);
+//            return new ResponseEntity<>(HttpStatus.CREATED);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 }

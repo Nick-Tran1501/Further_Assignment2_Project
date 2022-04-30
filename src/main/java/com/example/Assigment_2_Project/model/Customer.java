@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -30,6 +32,10 @@ public class Customer {
 
     @Column
     private String address;
+
+//    @OneToMany(mappedBy = "customer")
+////    @JoinColumn(name = "customer", referencedColumnName = "name")
+//    private List<Booking> booking;
 
     public Customer() {};
 
@@ -64,5 +70,13 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
+
+//    public List<Booking> getBooking() {
+//        return booking;
+//    }
+//
+//    public void setBooking(List<Booking> booking) {
+//        this.booking = booking;
+//    }
 
 }

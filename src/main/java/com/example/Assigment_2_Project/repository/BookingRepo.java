@@ -2,6 +2,7 @@ package com.example.Assigment_2_Project.repository;
 
 import com.example.Assigment_2_Project.model.Booking;
 import com.example.Assigment_2_Project.model.Car;
+import com.example.Assigment_2_Project.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +16,9 @@ public interface BookingRepo extends JpaRepository<Booking, Long> {
         return this.findById(id);
     }
 
-    List<Booking> findByPickupTime(ZonedDateTime pickupTime);
+//    List<Booking> findByPickupTime(ZonedDateTime pickupTime);
+
+//    List<Booking> findCustomerList(Customer customer);
 
 
 //    List<Booking> findByCreateDate(ZonedDateTime date);
