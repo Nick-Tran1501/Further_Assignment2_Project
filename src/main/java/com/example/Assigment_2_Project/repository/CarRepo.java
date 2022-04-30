@@ -19,6 +19,8 @@ public interface CarRepo extends JpaRepository<Car, Long> {
 //    List<Car> findByAvailable(boolean available);
 //    List<Car> findByAvailableIsTrue(Boolean available);
 
+    Car findCarById(Long id);
+
     List<Car> findByAvailable(String available);
     //2
     List<Car> findByMake(String make);

@@ -45,6 +45,11 @@ public class CarController extends EntityController<Car> {
     }
 
 
+    @GetMapping(path = "/search/{id}")
+    public ResponseEntity<Car> getCarById(@PathVariable("id") Long id){
+        return this.carService.getCarById(id);
+    }
+
     @GetMapping(path = "/search")
     public ResponseEntity<List<Car>> getAvailableCarSorted(@RequestParam(required = false) Optional<String> make,
                                            @RequestParam(required = false) Optional<String> model,
@@ -57,7 +62,7 @@ public class CarController extends EntityController<Car> {
 
 
     @Override
-    @PutMapping(path = "/{id}")
+//    @PutMapping(path = "/{id}")
     public ResponseEntity<Car> updateTableColumnById(@PathVariable("id") Long id, @RequestBody Map<String, String> contentField) {
 //        Car car =  carRepo.findById(id).get();
 //        System.out.println(car.getMake());

@@ -1,7 +1,11 @@
 package com.example.Assigment_2_Project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "CAR")
@@ -10,6 +14,10 @@ public class Car {
     @Column(name = "VIN")
     @GeneratedValue(strategy = GenerationType.AUTO) //Checking later
     private long id;
+
+    @CreatedDate
+    @JsonIgnore
+    private ZonedDateTime createdDate = ZonedDateTime.now();
 
     @Column
     private String make;
@@ -41,19 +49,6 @@ public class Car {
 
     public Car(){}
 
-    public Car(long id, String make, String color, String model, boolean convertible,
-               double rating, String licensePlate, Double rateKilometer, String available, Driver driver) {
-        this.id = id;
-        this.make = make;
-        this.color = color;
-        this.model = model;
-        this.convertible = convertible;
-        this.rating = rating;
-        this.licensePlate = licensePlate;
-        this.rateKilometer = rateKilometer;
-        this.available = available;
-        this.driver = driver;
-    }
 
     public long getId() {
         return id;
@@ -61,6 +56,14 @@ public class Car {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public ZonedDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getMake() {

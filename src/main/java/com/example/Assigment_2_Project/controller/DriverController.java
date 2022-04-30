@@ -33,6 +33,12 @@ public class DriverController extends EntityController<Driver> {
     }
 
 
+//    @GetMapping
+    public ResponseEntity<List<Driver>> getAllDriver() {
+        return this.driverService.getAllDriver();
+    }
+
+
     @PostMapping(path = "/post")
     public ResponseEntity<Driver> addDriver(@RequestBody Driver driver) {
         return this.driverService.addDriver(driver);

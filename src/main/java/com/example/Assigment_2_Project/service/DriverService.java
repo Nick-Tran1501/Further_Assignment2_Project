@@ -27,6 +27,16 @@ public class DriverService {
     CarRepo carRepo;
 
 
+    public ResponseEntity<List<Driver>> getAllDriver() {
+        try {
+            List<Driver> drivers = driverRepo.findAll();
+            return new ResponseEntity<>(drivers, HttpStatus.FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     public ResponseEntity<Driver> addDriver(Driver driver) {
         try {
             driverRepo.save(driver);
@@ -36,21 +46,19 @@ public class DriverService {
         }
     }
 
-    public ResponseEntity<Driver> selectCar(Long driverID, Map<String, Long> carID) {
+    public ResponseEntity<Driver> selectCar(Long driverID, Map<String, Long> car_id) {
         try {
-            Driver driver = driverRepo.getById(driverID);
+            Driver driver = driverRepo.findDriverById(driverID);
             List<Car> cars = carRepo.findAll();
-            for (Car car : cars)
-                if (car.getDriver() == null){
-                    car.setDriver(driver);
-                    driver.setCar(car);
-                    driverRepo.save(driver);
-                    return new ResponseEntity<>(driver, HttpStatus.OK);
-                }
-                else {
-                    return new ResponseEntity<>(HttpStatus.valueOf("Car assigned"));
-                }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            Car car = carRepo.findCarById(car_id.get("car_id"));
+            if (car.getDriver() == null){
+                car.setDriver(driver);
+                driverRepo.save(driver);
+                return new ResponseEntity<>(driver, HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<>(HttpStatus.valueOf("Car assigned, choose again"));
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -1,9 +1,12 @@
 package com.example.Assigment_2_Project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Map;
 
 @Entity
@@ -14,6 +17,10 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @CreatedDate
+    @JsonIgnore
+    private ZonedDateTime createdDate = ZonedDateTime.now();
 
     @Column
     private String name;

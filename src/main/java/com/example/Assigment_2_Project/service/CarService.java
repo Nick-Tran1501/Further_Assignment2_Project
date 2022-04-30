@@ -1,21 +1,15 @@
 package com.example.Assigment_2_Project.service;
 
-import com.example.Assigment_2_Project.controller.CarController;
 import com.example.Assigment_2_Project.model.Car;
-import com.example.Assigment_2_Project.model.Driver;
 import com.example.Assigment_2_Project.repository.CarRepo;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @Transactional
@@ -24,6 +18,7 @@ public class CarService {
 
     @Autowired
     CarRepo carRepo;
+
 
     //Create car
     public ResponseEntity<Car> addCar(Car car) {
@@ -48,6 +43,11 @@ public class CarService {
         }
     }
 
+    //Get car by id
+    public ResponseEntity<Car> getCarById(Long id){
+        Car car =  carRepo.findCarById(id);
+        return new ResponseEntity<>(car, HttpStatus.FOUND);
+    }
     public ResponseEntity<List<Car>> getAvailableCarSorted(Optional<String> make, Optional<String> model,
                                                            Optional<String> color, Optional<Boolean> convertible,
                                                            Optional<Double> rating, Optional<Double> rateKilometer) {

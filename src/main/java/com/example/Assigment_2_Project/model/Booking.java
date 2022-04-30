@@ -1,7 +1,9 @@
 package com.example.Assigment_2_Project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -12,8 +14,12 @@ public class Booking {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @CreatedDate
+    @JsonIgnore
+    private ZonedDateTime createdDate = ZonedDateTime.now();
 
     @Column
     private String startLocation;

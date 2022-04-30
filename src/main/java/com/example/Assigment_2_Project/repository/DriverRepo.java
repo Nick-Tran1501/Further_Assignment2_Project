@@ -11,4 +11,6 @@ public interface DriverRepo extends JpaRepository<Driver, Long> {
     default Optional<Driver> findById(Long id) {
         return this.findById(id);
     }
+
+    Driver findDriverById(Long id);
 }
