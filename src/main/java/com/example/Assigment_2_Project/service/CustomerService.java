@@ -76,9 +76,9 @@ public class CustomerService {
         }
     }
 
-    public ResponseEntity<List<Customer>> getByID(Long id){
+    public ResponseEntity<Customer> getByID(Long id){
         try {
-            List<Customer> customers = customerRepo.findCustomerById(id);
+            Customer customers = customerRepo.findCustomerById(id);
             return customers == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                     : new ResponseEntity<>(customers, HttpStatus.OK);
         }

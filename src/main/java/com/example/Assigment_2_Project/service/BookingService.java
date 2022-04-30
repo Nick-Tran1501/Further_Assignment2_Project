@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.transaction.UserTransaction;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,11 +32,30 @@ public class BookingService {
     private CarRepo carRepo;
 
     @Autowired
-    private CustomerRepo customerRepo;
+    CustomerRepo customerRepo;
 
 //    @Autowired
 //    private CustomerService customerService;
 
+    public ResponseEntity<List<Booking>> getAllBooking() {
+        List<Booking> bookingList = bookingRepo.findAll();
+        return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
+    }
+
+
+    public ResponseEntity<Booking> createBooking(Long customer_id, Booking booking) {
+        try {
+            Customer customer = customerRepo.findCustomerById(customer_id);
+            List<Booking> bookingList =  new ArrayList<>();
+            bookingList.add(booking);
+            customer.setBooking(bookingList);
+            booking.setCustomer(customer);
+            bookingRepo.save(booking);
+            return new ResponseEntity<>(booking, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 //  Get available car for customer

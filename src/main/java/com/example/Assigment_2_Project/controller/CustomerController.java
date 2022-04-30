@@ -64,7 +64,7 @@ public class CustomerController extends EntityController<Customer>{
 
 //  Find by ID
     @GetMapping(path = "/id/{id}")
-    public ResponseEntity<List<Customer>> getById(@PathVariable("id") Long id){
+    public ResponseEntity<Customer> getById(@PathVariable("id") Long id){
         return customerService.getByID(id);
     }
 

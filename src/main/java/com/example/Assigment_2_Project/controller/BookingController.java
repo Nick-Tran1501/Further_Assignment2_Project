@@ -49,6 +49,15 @@ public class BookingController extends EntityController<Booking>{
     }
 
 
+    @PostMapping(path = "/post/{id}")
+    public ResponseEntity<Booking> createBooking(@PathVariable("id") Long id, @RequestBody Booking booking){
+        return this.bookingService.createBooking(id, booking);
+    }
+
+    public ResponseEntity<List<Booking>> getAllBooking() {
+        return this.bookingService.getAllBooking();
+    }
+
     @Override
     public ResponseEntity<List<Booking>> inputDemoData(List<Booking> data) {
         return null;

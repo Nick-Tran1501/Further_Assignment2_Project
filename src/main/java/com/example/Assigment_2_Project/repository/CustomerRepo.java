@@ -14,7 +14,7 @@ public interface CustomerRepo extends JpaRepository<Customer, Long> {
         return this.findById(id);
     }
 
-    List<Customer> findCustomerById(Long id);
+    Customer findCustomerById(Long id);
 
     List<Customer> findByName(String name);
 

@@ -15,7 +15,7 @@ public interface BookingRepo extends JpaRepository<Booking, Long> {
         return this.findById(id);
     }
 
-    List<Booking> findByPickupTime(ZonedDateTime pickupTime);
+//    List<Booking> findByPickupTime(ZonedDateTime pickupTime);
 
 
 //    List<Booking> findByCreateDate(ZonedDateTime date);

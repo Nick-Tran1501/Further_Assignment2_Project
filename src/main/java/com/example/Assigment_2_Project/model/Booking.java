@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
@@ -14,8 +15,7 @@ import java.util.Map;
 public class Booking {
 
     @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @CreatedDate
@@ -24,29 +24,34 @@ public class Booking {
 
     @Column
     private String startLocation;
-
-    @Column
-    private String endLocation;
-
-    @Column
-    private ZonedDateTime pickupTime;
-
-    @Column
-    private ZonedDateTime dropTime;
-
-    @Column
-    private int tripDistance;
+//
+//    @Column
+//    private String endLocation;
+//
+//    @Column
+//    private ZonedDateTime pickupTime;
+//
+//    @Column
+//    private ZonedDateTime dropTime;
+//
+//    @Column
+//    private int tripDistance;
 
 //    private Map<String,String> bookData;
 
-    @OneToOne
-    private Invoice invoice;
+//    @OneToOne
+//    private Invoice invoice;
 
-    @OneToOne
+//    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+//    @JsonIgnore
+//    private Customer customer;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private Customer customer;
 
-    @OneToOne
-    private Driver driver;
+//    @OneToOne
+//    private Driver driver;
 
     @OneToOne
     private Car car;
@@ -55,12 +60,49 @@ public class Booking {
 
     }
 
+//    Get & Set date time
+//    public String getPickupTime() {
+//        return new SimpleDateFormat("dd/MM/yyyy").format(pickupTime);
+//    }
 
-//  Get & Set Customers
-    public Customer getCustomer() {return customer;}
-    public void setCustomer(Customer customer) {this.customer = customer;}
-//  Get & Set Car
-    public Car getCar() {return car;}
-    public void setCar(Car car) {this.car = car;}
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public ZonedDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getStartLocation() {
+        return startLocation;
+    }
+
+    public void setStartLocation(String startLocation) {
+        this.startLocation = startLocation;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
 }
