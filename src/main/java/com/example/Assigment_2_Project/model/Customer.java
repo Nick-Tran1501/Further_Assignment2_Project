@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,9 +32,12 @@ public class Customer {
     @Column
     private String address;
 
-//    @OneToMany(mappedBy = "customer")
-////    @JoinColumn(name = "customer", referencedColumnName = "name")
-//    private List<Booking> booking;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Booking> booking;
+
+//    @OneToOne
+//    private Booking booking;
 
     public Customer() {};
 
@@ -45,6 +47,14 @@ public class Customer {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public ZonedDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getName() {
@@ -71,12 +81,11 @@ public class Customer {
         this.address = address;
     }
 
-//    public List<Booking> getBooking() {
-//        return booking;
-//    }
-//
-//    public void setBooking(List<Booking> booking) {
-//        this.booking = booking;
-//    }
+    public List<Booking> getBooking() {
+        return booking;
+    }
 
+    public void setBooking(List<Booking> booking) {
+        this.booking = booking;
+    }
 }

@@ -36,7 +36,7 @@ public class AppConfig {
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/Assignment_2");
         dataSource.setUsername("postgres");
-        dataSource.setPassword("Ilovepheyeah98"); //Remember to modify
+        dataSource.setPassword("khoinguyen28100"); //Remember to modify
 
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         jpaVendorAdapter.setGenerateDdl(true);
