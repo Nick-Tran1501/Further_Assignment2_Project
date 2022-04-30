@@ -7,6 +7,7 @@ import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.repository.BookingRepo;
 import com.example.Assigment_2_Project.repository.CustomerRepo;
 import com.example.Assigment_2_Project.service.BookingService;
+import org.apache.catalina.util.ResourceSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
@@ -51,6 +52,8 @@ public class BookingController extends EntityController<Booking>{
 
 
 
-
-
+    @Override
+    public ResponseEntity<List<Booking>> inputDemoData(List<Booking> data) {
+        return null;
+    }
 }

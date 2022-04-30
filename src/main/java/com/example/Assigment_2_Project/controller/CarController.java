@@ -3,9 +3,11 @@ package com.example.Assigment_2_Project.controller;
 import com.example.Assigment_2_Project.model.Car;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import com.example.Assigment_2_Project.service.CarService;
+import org.apache.catalina.util.ResourceSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -13,6 +15,7 @@ import java.util.Optional;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping(path = "/cars")
 public class CarController extends EntityController<Car> {
@@ -42,16 +45,13 @@ public class CarController extends EntityController<Car> {
         return this.carService.addCar(car);
     }
 
+
 //    @GetMapping
-//    @RequestMapping(path = "/get")
+    @GetMapping(path = "/all")
     public ResponseEntity<List<Car>> getCars() {
         return this.carService.getCars();
     }
 
-//    @RequestMapping(path = "/search", method = RequestMethod.GET)
-//    public List<Car> getAvailableCars(@RequestParam String available) {
-//        return this.carService.getAvailableCars(available);
-//    }
 
     @GetMapping(path = "/search")
     public ResponseEntity<List<Car>> getAvailableCarSorted(@RequestParam(required = false) Optional<String> make,
@@ -59,20 +59,11 @@ public class CarController extends EntityController<Car> {
                                            @RequestParam(required = false) Optional<String> color,
                                            @RequestParam(required = false) Optional<Boolean> convertible,
                                            @RequestParam(required = false) Optional<Double> rating,
-                                           @RequestParam(required = false) Optional<String> rateKilometer) {
+                                           @RequestParam(required = false) Optional<Double> rateKilometer) {
         return this.carService.getAvailableCarSorted(make, model, color, convertible, rating, rateKilometer);
     }
 
-//    @GetMapping(path = "/{id}")
-//    public ResponseEntity<Car> getCarByID(@PathVariable("id") Long id) {
-//        try {
-//            Car car = carRepo.findById(id).get();
-//            return new ResponseEntity<>(car, HttpStatus.FOUND);
-//
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
+
     @Override
     @PutMapping(path = "/{id}")
     public ResponseEntity<Car> updateTableColumnById(@PathVariable("id") Long id, @RequestBody Map<String, String> contentField) {
@@ -110,7 +101,34 @@ public class CarController extends EntityController<Car> {
 //        }
         return null;
     }
+
+    @Override
+    @PostMapping(path = "/demo")
+    public ResponseEntity<List<Car>> inputDemoData(@Validated @RequestBody List<Car> data) {
+        try {
+            carRepo.saveAll(data);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
+
+
+//    @GetMapping(path = "/{id}")
+//    public ResponseEntity<Car> getCarByID(@PathVariable("id") Long id) {
+//        try {
+//            Car car = carRepo.findById(id).get();
+//            return new ResponseEntity<>(car, HttpStatus.FOUND);
+//
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+
+
+
 
 //    @RequestMapping(path = "/post", method = RequestMethod.POST)
 //    public Long createCar(@RequestBody Car car){

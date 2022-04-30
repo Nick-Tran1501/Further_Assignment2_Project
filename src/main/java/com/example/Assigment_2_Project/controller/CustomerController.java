@@ -4,6 +4,7 @@ import com.example.Assigment_2_Project.model.Car;
 import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.repository.CustomerRepo;
 import com.example.Assigment_2_Project.service.CustomerService;
+import org.apache.catalina.util.ResourceSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,15 @@ public class CustomerController extends EntityController<Customer>{
 //      "name" :"name",
 //    "phone" : "phone",
 //    "address" : "address"
+
+    @Override
+    public ResponseEntity<List<Customer>> inputDemoData(List<Customer> data) {
+        return null;
+    }
+
+
+    //  Add student on table
+
     @PostMapping(path = "/post")
     public ResponseEntity<Customer> addCustomer(@RequestBody Customer customers ) {
         return customerService.addCustomer(customers);
