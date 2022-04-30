@@ -44,7 +44,7 @@ public class BookingController extends EntityController<Booking>{
                                                            @RequestParam(required = false) Optional<String> color,
                                                            @RequestParam(required = false) Optional<Boolean> convertible,
                                                            @RequestParam(required = false) Optional<Double> rating,
-                                                           @RequestParam(required = false) Optional<String> rateKilometer) {
+                                                           @RequestParam(required = false) Optional<Double> rateKilometer) {
         return this.bookingService.getAvailableCarSorted(make, model, color, convertible, rating, rateKilometer);
     }
 

@@ -35,7 +35,7 @@ public class BookingService {
     public ResponseEntity<List<Car>> getAvailableCarSorted(
             Optional<String> make, Optional<String> model,
             Optional<String> color, Optional<Boolean> convertible,
-            Optional<Double> rating, Optional<String> rateKilometer) {
+            Optional<Double> rating, Optional<Double> rateKilometer) {
         try {
             String available = "yes";
             String unavailable = "Cannot find car";
@@ -62,13 +62,15 @@ public class BookingService {
 
 //  Booking car
 
-//    public ResponseEntity<Map<Customer,Car>> bookData(Long id, Long id){
+//    public ResponseEntity<Map<Customer,Car>> bookData(Long customerID, Long carID){
 //        try {
-//            List<Customer> customerTemp = customerRepo.findById(id);
-//            List<Car> carsTemp = carRepo.findById(id);
-//            if ()
-////            return carTemp == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-////                    : new ResponseEntity<>(carTemp, HttpStatus.OK);
+//            Optional<Customer> customerTemp = customerRepo.findById(customerID);
+//            Optional<Car> carsTemp = carRepo.findById(carID);
+//            Map<String,String> bookData = (Map<String, String>) bookData(customerID,carID);
+//
+//
+//            return bookData == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+//                    : new ResponseEntity<>(bookData, HttpStatus.OK);
 //        }
 //        catch (Exception e) {
 //            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
