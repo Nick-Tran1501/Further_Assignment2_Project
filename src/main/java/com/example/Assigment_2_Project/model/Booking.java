@@ -4,6 +4,7 @@ package com.example.Assigment_2_Project.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class Booking {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "booking_id")
     private long id;
 
     @CreatedDate
@@ -24,6 +25,20 @@ public class Booking {
 
     @Column
     private String startLocation;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_id")
+    private Car car;
+
+
+
+//    @Column(name = "customer_id")
+//    private long customerID;
+
 //
 //    @Column
 //    private String endLocation;
@@ -46,15 +61,12 @@ public class Booking {
 //    @JsonIgnore
 //    private Customer customer;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JsonIgnore
-    private Customer customer;
+//    @ManyToOne(cascade = CascadeType.PERSIST)
+//    @JsonIgnore
+//    private Customer customer;
 
 //    @OneToOne
 //    private Driver driver;
-
-    @OneToOne
-    private Car car;
 
     public Booking() {
 
@@ -90,19 +102,12 @@ public class Booking {
         this.startLocation = startLocation;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
+    public Customer getCustomer() { return customer;}
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+    public void setCustomer(Customer customer) { this.customer = customer;}
 
-    public Car getCar() {
-        return car;
-    }
+    public Car getCar() { return car; }
 
-    public void setCar(Car car) {
-        this.car = car;
-    }
+    public void setCar(Car car) { this.car = car; }
+
 }

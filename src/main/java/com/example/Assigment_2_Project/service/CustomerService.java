@@ -49,19 +49,20 @@ public class CustomerService {
     }
 
 
-    //  Get customer data by specific attribute
-    public ResponseEntity<List<Customer>> customerSearch(Optional<String> name, Optional<String> address, Optional<String> phone) {
+    // Get customer data by specific attribute
+    // Must follow structure of customer class
+    public ResponseEntity<List<Customer>> customerSearch(Optional<String> name, Optional<String> phone, Optional<String> address) {
         try {
-            List<Customer> customers = null;
-            if (name.isPresent() && address.isPresent() && phone.isPresent())
-                customers = ((CustomerRepo) customerRepo).findByNameAndPhoneAndAddress(name.get(), address.get(),
-                        phone.get());
+            List<Customer> customers = null; // result list
+            if (name.isPresent() && phone.isPresent() && address.isPresent()) // check 3 elements exist
+                customers = ((CustomerRepo) customerRepo).findByNameAndPhoneAndAddress(name.get(), phone.get(),
+                        address.get());
             else if (name.isPresent() && address.isPresent())
                 customers = ((CustomerRepo) customerRepo).findByNameAndAddress(name.get(), address.get());
             else if (name.isPresent() && phone.isPresent())
                 customers = ((CustomerRepo) customerRepo).findByNameAndPhone(name.get(), phone.get());
-            else if (address.isPresent() && phone.isPresent())
-                customers = ((CustomerRepo) customerRepo).findByPhoneAndAddress(address.get(), phone.get());
+            else if (phone.isPresent() && address.isPresent() )
+                customers = ((CustomerRepo) customerRepo).findByPhoneAndAddress(phone.get(), address.get());
             else if (name.isPresent())
                 customers = ((CustomerRepo) customerRepo).findByName(name.get());
             else if (address.isPresent())
