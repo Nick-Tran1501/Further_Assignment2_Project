@@ -33,9 +33,8 @@ public class Customer {
     private String address;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//  FetchType = Lazy ( better performance)
-//    @JoinColumn(name = "customer_id", nullable = false)
     private List<Booking> booking;
+
 
     public Customer() {};
 
@@ -86,4 +85,6 @@ public class Customer {
     public void setBooking(List<Booking> booking) {
         this.booking = booking;
     }
+
+
 }

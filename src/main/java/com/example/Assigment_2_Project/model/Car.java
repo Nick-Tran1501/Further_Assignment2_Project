@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "CAR")
@@ -44,7 +45,11 @@ public class Car {
     private String available;
 
     @OneToOne
-    private Driver driver;//refresh everyday
+    private Driver driver; //refresh everyday
+
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Booking> booking;
 
 
     public Car(){}
@@ -114,11 +119,11 @@ public class Car {
         this.licensePlate = licensePlate;
     }
 
-    public Double getRateKilometer() {
+    public double getRateKilometer() {
         return rateKilometer;
     }
 
-    public void setRateKilometer(Double rateKilometer) {
+    public void setRateKilometer(double rateKilometer) {
         this.rateKilometer = rateKilometer;
     }
 
@@ -136,5 +141,13 @@ public class Car {
 
     public void setDriver(Driver driver) {
         this.driver = driver;
+    }
+
+    public List<Booking> getBooking() {
+        return booking;
+    }
+
+    public void setBooking(List<Booking> booking) {
+        this.booking = booking;
     }
 }

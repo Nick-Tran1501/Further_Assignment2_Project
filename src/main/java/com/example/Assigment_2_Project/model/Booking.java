@@ -26,9 +26,19 @@ public class Booking {
     @Column
     private String startLocation;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
-    @Column(name = "customer_id", insertable = false, updatable = false)
-    private long customerID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_id")
+    private Car car;
+
+
+
+//    @Column(name = "customer_id")
+//    private long customerID;
+
 //
 //    @Column
 //    private String endLocation;
@@ -51,15 +61,12 @@ public class Booking {
 //    @JsonIgnore
 //    private Customer customer;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JsonIgnore
-    private Customer customer;
+//    @ManyToOne(cascade = CascadeType.PERSIST)
+//    @JsonIgnore
+//    private Customer customer;
 
 //    @OneToOne
 //    private Driver driver;
-
-    @OneToOne
-    private Car car;
 
     public Booking() {
 
@@ -95,27 +102,12 @@ public class Booking {
         this.startLocation = startLocation;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
+    public Customer getCustomer() { return customer;}
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+    public void setCustomer(Customer customer) { this.customer = customer;}
 
-    public Car getCar() {
-        return car;
-    }
+    public Car getCar() { return car; }
 
-    public void setCar(Car car) {
-        this.car = car;
-    }
+    public void setCar(Car car) { this.car = car; }
 
-    public long getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(long customerID) {
-        this.customerID = customerID;
-    }
 }

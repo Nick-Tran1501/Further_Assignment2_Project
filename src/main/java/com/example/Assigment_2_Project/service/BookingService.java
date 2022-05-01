@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import javax.transaction.UserTransaction;
 import java.awt.*;
@@ -28,10 +29,10 @@ import java.util.Optional;
 public class BookingService {
 
     @Autowired
-    private BookingRepo bookingRepo;
+    BookingRepo bookingRepo;
 
     @Autowired
-    private CarRepo carRepo;
+    CarRepo carRepo;
 
     @Autowired
     CustomerRepo customerRepo;
@@ -42,23 +43,49 @@ public class BookingService {
 //    @Autowired
 //    private CustomerService customerService;
 
+//    public ResponseEntity<List<Booking>> getAllBooking() {
+//        List<Booking> bookingList = bookingRepo.findAll();
+//        return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
+//    }
+
+//  Get all booking data
     public ResponseEntity<List<Booking>> getAllBooking() {
-        List<Booking> bookingList = bookingRepo.findAll();
-        return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
+        try {
+            List<Booking> booking = bookingRepo.findAll();
+            if (booking.size() == 0) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
+//  Delete all data
+    public ResponseEntity<HttpStatus> deleteAll() {
+        try {
+            bookingRepo.deleteAll();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-    public ResponseEntity<Booking> createBooking(Long customer_id, Booking booking) {
+//  Create booking
+    public ResponseEntity<Booking> createBooking(Long customer_id,Booking booking) {
         try {
             Customer customer = customerRepo.findCustomerById(customer_id);
-            booking.setCustomerID(customer.getId());
+//            Car car = carRepo.findCarById(car_id);
+            if (customer != null)
+            booking.setCustomer(customer);
+//            booking.setCar(car);
+            bookingRepo.save(booking);
 //            List<Booking> bookingList =  new ArrayList<>();
 //            bookingList.add(booking);
 //            customer.setBooking(bookingList);
 //            booking.setCustomer(customer);
-            bookingRepo.save(booking);
-
-            return new ResponseEntity<>(booking, HttpStatus.CREATED);
+            return customer == null ? new ResponseEntity<>(HttpStatus.valueOf("Booking invalid"))
+                    : new ResponseEntity<>(booking, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

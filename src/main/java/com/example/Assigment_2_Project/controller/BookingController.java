@@ -23,39 +23,17 @@ import java.util.Optional;
 
 public class BookingController extends EntityController<Booking>{
 
-
     @Autowired
     public BookingController(BookingRepo bookingRepo){
         super(bookingRepo);
     }
 
-    @Override
-    public ResponseEntity updateTableColumnById(Long id, Map contentField) {
-        return null;
-    }
-
     @Autowired
     private BookingService bookingService;
 
-
-    @GetMapping(path = "/search")
-    public ResponseEntity<List<Car>> getAvailableCarSorted(@RequestParam(required = false) Optional<String> make,
-                                                           @RequestParam(required = false) Optional<String> model,
-                                                           @RequestParam(required = false) Optional<String> color,
-                                                           @RequestParam(required = false) Optional<Boolean> convertible,
-                                                           @RequestParam(required = false) Optional<Double> rating,
-                                                           @RequestParam(required = false) Optional<Double> rateKilometer) {
-        return this.bookingService.getAvailableCarSorted(make, model, color, convertible, rating, rateKilometer);
-    }
-
-
-    @PostMapping(path = "/post/{id}")
-    public ResponseEntity<Booking> createBooking(@PathVariable("id") Long id, @RequestBody Booking booking){
-        return this.bookingService.createBooking(id, booking);
-    }
-
-    public ResponseEntity<List<Booking>> getAllBooking() {
-        return this.bookingService.getAllBooking();
+    @Override
+    public ResponseEntity updateTableColumnById(Long id, Map contentField) {
+        return null;
     }
 
     @Override
@@ -63,8 +41,35 @@ public class BookingController extends EntityController<Booking>{
         return null;
     }
 
-//    30/4
 
+//  Get available cars
+    @GetMapping(path = "/search")
+    public ResponseEntity<List<Car>> getAvailableCarSorted(@RequestParam(required = false) Optional<String> make,
+                                                           @RequestParam(required = false) Optional<String> model,
+                                                           @RequestParam(required = false) Optional<String> color,
+                                                           @RequestParam(required = false) Optional<Boolean> convertible,
+                                                           @RequestParam(required = false) Optional<Double> rating,
+                                                           @RequestParam(required = false) Optional<Double> rateKilometer) {
+        return bookingService.getAvailableCarSorted(make, model, color, convertible, rating, rateKilometer);
+    }
 
+//  Booking
+    @PostMapping(path = "/post/{id}")
+    public ResponseEntity<Booking> createBooking(@PathVariable("id") Long id,
+                                                 @RequestBody Booking booking){
+
+        return bookingService.createBooking(id,booking);
+    }
+
+//  Get all booking data
+    public ResponseEntity<List<Booking>> getAllBooking() {
+        return bookingService.getAllBooking();
+    }
+
+//   Delete data
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteAll(){
+        return bookingService.deleteAll();
+    }
 
 }
