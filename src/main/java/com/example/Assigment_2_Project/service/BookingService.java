@@ -72,6 +72,7 @@ public class BookingService {
     }
 
 //  Create booking
+// xu
     public ResponseEntity<Booking> createBooking(Long customer_id,Booking booking) {
         try {
             Customer customer = customerRepo.findCustomerById(customer_id);
