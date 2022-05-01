@@ -40,11 +40,13 @@ public class CustomerController extends EntityController<Customer>{
 
 
     //  Add student on table
+    //      "name" : "Name",
+    //      "phone" : "address"
+    //      "address" : "phone"
     @PostMapping(path = "/post")
     public ResponseEntity<Customer> addCustomer(@RequestBody Customer customers ) {
         return customerService.addCustomer(customers);
     }
-
 
 //  Get all customer data
     public ResponseEntity<List<Customer>> getCustomer(){
@@ -57,9 +59,9 @@ public class CustomerController extends EntityController<Customer>{
     @GetMapping(path = "/search")
     public ResponseEntity<List<Customer>> customerSearch(
             @RequestParam(required = false) Optional<String> name,
-            @RequestParam(required = false) Optional<String> address,
-            @RequestParam(required = false) Optional<String> phone){
-        return customerService.customerSearch(name,address,phone);
+            @RequestParam(required = false) Optional<String> phone,
+            @RequestParam(required = false) Optional<String> address){
+        return customerService.customerSearch(name,phone,address);
     }
 
 //  Find by ID
@@ -68,8 +70,11 @@ public class CustomerController extends EntityController<Customer>{
         return customerService.getByID(id);
     }
 
-
 // 
+
+
+
+
 
 
 ////   Old

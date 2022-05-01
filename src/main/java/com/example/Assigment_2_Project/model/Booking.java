@@ -4,6 +4,7 @@ package com.example.Assigment_2_Project.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class Booking {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "booking_id")
     private long id;
 
     @CreatedDate
@@ -24,6 +25,10 @@ public class Booking {
 
     @Column
     private String startLocation;
+
+
+    @Column(name = "customer_id", insertable = false, updatable = false)
+    private long customerID;
 //
 //    @Column
 //    private String endLocation;
@@ -104,5 +109,13 @@ public class Booking {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    public long getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(long customerID) {
+        this.customerID = customerID;
     }
 }

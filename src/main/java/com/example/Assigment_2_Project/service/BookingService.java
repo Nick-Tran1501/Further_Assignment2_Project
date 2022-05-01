@@ -51,11 +51,13 @@ public class BookingService {
     public ResponseEntity<Booking> createBooking(Long customer_id, Booking booking) {
         try {
             Customer customer = customerRepo.findCustomerById(customer_id);
-            List<Booking> bookingList =  new ArrayList<>();
-            bookingList.add(booking);
-            customer.setBooking(bookingList);
-            booking.setCustomer(customer);
+            booking.setCustomerID(customer.getId());
+//            List<Booking> bookingList =  new ArrayList<>();
+//            bookingList.add(booking);
+//            customer.setBooking(bookingList);
+//            booking.setCustomer(customer);
             bookingRepo.save(booking);
+
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -65,9 +67,8 @@ public class BookingService {
 
 //  Get available car for customer
     public ResponseEntity<List<Car>> getAvailableCarSorted(
-            Optional<String> make, Optional<String> model,
-            Optional<String> color, Optional<Boolean> convertible,
-            Optional<Double> rating, Optional<Double> rateKilometer) {
+            Optional<String> make, Optional<String> model, Optional<String> color,
+            Optional<Boolean> convertible, Optional<Double> rating, Optional<Double> rateKilometer) {
         try {
             String available = "yes";
             String unavailable = "Cannot find car";

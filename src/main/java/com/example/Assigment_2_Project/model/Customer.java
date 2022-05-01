@@ -16,7 +16,7 @@ public class Customer {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "customer_id")
     private long id;
 
     @CreatedDate
@@ -32,12 +32,10 @@ public class Customer {
     @Column
     private String address;
 
-
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//  FetchType = Lazy ( better performance)
+//    @JoinColumn(name = "customer_id", nullable = false)
     private List<Booking> booking;
-
-//    @OneToOne
-//    private Booking booking;
 
     public Customer() {};
 

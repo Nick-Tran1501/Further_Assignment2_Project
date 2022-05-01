@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 public class Car {
     @Id
     @Column(name = "VIN")
-    @GeneratedValue(strategy = GenerationType.AUTO) //Checking later
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "car_id") //Checking later
     private long id;
 
     @CreatedDate
@@ -38,7 +38,7 @@ public class Car {
     private String licensePlate;
 
     @Column
-    private Double rateKilometer;
+    private double rateKilometer;
 
     @Column
     private String available;
