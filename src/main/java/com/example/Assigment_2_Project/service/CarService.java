@@ -12,8 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Transactional
+
 @Service
+@Transactional
 public class CarService {
 
     @Autowired
@@ -25,6 +26,16 @@ public class CarService {
         try {
             carRepo.save(car);
             return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //Get all car convertible
+    public ResponseEntity<List<Car>> getConvertible() {
+        try {
+            List<Car> cars  =  carRepo.findByConvertibleTrue();
+            return new ResponseEntity<>(cars, HttpStatus.FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -53,21 +64,20 @@ public class CarService {
                                                            Optional<Double> rating, Optional<Double> rateKilometer) {
 
         try {
-            String available = "yes";
             String unavailable = "Cannot find car";
-            List<Car> carTemp = carRepo.findByAvailable(available);
+            List<Car> carTemp = carRepo.findByAvailableTrue();
             if (make.isPresent())
-                carTemp = carRepo.findByAvailableAndMake(available, make.get());
+                carTemp = carRepo.findByAvailableTrueAndMake(make.get());
             else if (model.isPresent())
-                carTemp =  carRepo.findByAvailableAndModel(available, model.get());
+                carTemp =  carRepo.findByAvailableTrueAndModel(model.get());
             else if (color.isPresent())
-                carTemp = carRepo.findByAvailableAndColor(available, color.get());
+                carTemp = carRepo.findByAvailableTrueAndColor(color.get());
             else if (convertible.isPresent())
-                carTemp = carRepo.findByAvailableAndConvertible(available, convertible.get());
+                carTemp = carRepo.findByAvailableTrueAndConvertibleTrue();
             else if (rating.isPresent())
-                carTemp = carRepo.findByAvailableAndRating(available, rating.get());
+                carTemp = carRepo.findByAvailableTrueAndRating(rating.get());
             else if (rateKilometer.isPresent())
-                carTemp = carRepo.findByAvailableAndRateKilometer(available, rateKilometer.get());
+                carTemp = carRepo.findByAvailableTrueAndRateKilometer(rateKilometer.get());
             return carTemp == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                     : new ResponseEntity<>(carTemp, HttpStatus.FOUND);
 

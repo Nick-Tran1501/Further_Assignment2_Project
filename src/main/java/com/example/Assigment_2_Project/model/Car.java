@@ -42,7 +42,7 @@ public class Car {
     private double rateKilometer;
 
     @Column
-    private String available;
+    private boolean available;
 
     @OneToOne
     private Driver driver; //refresh everyday
@@ -124,11 +124,11 @@ public class Car {
         this.rateKilometer = rateKilometer;
     }
 
-    public String getAvailable() {
+    public boolean isAvailable() {
         return available;
     }
 
-    public void setAvailable(String available) {
+    public void setAvailable(boolean available) {
         this.available = available;
     }
 

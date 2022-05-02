@@ -13,6 +13,7 @@ import org.springframework.boot.context.event.SpringApplicationEvent;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
@@ -38,6 +39,9 @@ public class BookingService {
 
 //    @Autowired
 //    private CustomerService customerService;
+
+    @Autowired
+    private CarService carService;
 
 //    @Autowired
 //    private CustomerService customerService;
@@ -97,20 +101,20 @@ public class BookingService {
             Optional<String> make, Optional<String> model, Optional<String> color,
             Optional<Boolean> convertible, Optional<Double> rating, Optional<Double> rateKilometer) {
         try {
-           boolean available = true;
-            List<Car> carTemp = carRepo.findByAvailable(String.valueOf(available));
+            String unavailable = "Cannot find car";
+            List<Car> carTemp = carRepo.findByAvailableTrue();
             if (make.isPresent())
-                carTemp = carRepo.findByAvailableAndMake(String.valueOf(available), make.get());
+                carTemp = carRepo.findByAvailableTrueAndMake(make.get());
             else if (model.isPresent())
-                carTemp =  carRepo.findByAvailableAndModel(String.valueOf(available), model.get());
+                carTemp =  carRepo.findByAvailableTrueAndModel( model.get());
             else if (color.isPresent())
-                carTemp = carRepo.findByAvailableAndColor(String.valueOf(available), color.get());
+                carTemp = carRepo.findByAvailableTrueAndColor(color.get());
             else if (convertible.isPresent())
-                carTemp = carRepo.findByAvailableAndConvertible(String.valueOf(available), convertible.get());
+                carTemp = carRepo.findByAvailableTrueAndConvertibleTrue();
             else if (rating.isPresent())
-                carTemp = carRepo.findByAvailableAndRating(String.valueOf(available), rating.get());
+                carTemp = carRepo.findByAvailableTrueAndRating(rating.get());
             else if (rateKilometer.isPresent())
-                carTemp = carRepo.findByAvailableAndRateKilometer(String.valueOf(available), rateKilometer.get());
+                carTemp = carRepo.findByAvailableTrueAndRateKilometer(rateKilometer.get());
             return carTemp == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                     : new ResponseEntity<>(carTemp, HttpStatus.OK);
 
@@ -118,6 +122,8 @@ public class BookingService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
 //    public ResponseEntity<Booking> addBooking (Long customerID){
 //        try{
