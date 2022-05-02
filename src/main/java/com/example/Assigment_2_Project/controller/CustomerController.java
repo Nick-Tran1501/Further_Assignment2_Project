@@ -8,6 +8,7 @@ import org.apache.catalina.util.ResourceSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,9 @@ public class CustomerController extends EntityController<Customer>{
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    CustomerRepo customerRepo;
+
 
     @Override
     @PutMapping("/{id}")
@@ -34,8 +38,15 @@ public class CustomerController extends EntityController<Customer>{
     }
 
     @Override
-    public ResponseEntity<List<Customer>> inputDemoData(List<Customer> data) {
-        return null;
+    @PostMapping(path = "/demo")
+    public ResponseEntity<List<Customer>> inputDemoData(@Validated @RequestBody List<Customer> data) {
+        try {
+            customerRepo.saveAll(data);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 

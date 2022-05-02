@@ -40,10 +40,16 @@ public class CarController extends EntityController<Car> {
 //    "rating" : "4.5",
 //    "licensePlate" : "50A1234",
 //    "rateKilometer" : "1.5",
-//    "available" : "yes"
+//    "available" : true
     @PostMapping(path = "/post")
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
         return carService.addCar(car);
+    }
+
+
+    @GetMapping(path = "/test")
+    public ResponseEntity<List<Car>> getCarByConvertible() {
+        return this.carService.getConvertible();
     }
 
 

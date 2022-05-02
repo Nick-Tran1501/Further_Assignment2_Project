@@ -21,7 +21,7 @@ public interface CarRepo extends JpaRepository<Car, Long> {
 
     Car findCarById(Long id);
 
-    List<Car> findByAvailable(String available);
+    List<Car> findByAvailableTrue();
     //2
     List<Car> findByMake(String make);
     //3
@@ -29,7 +29,7 @@ public interface CarRepo extends JpaRepository<Car, Long> {
     //4
     List<Car> findByColor(String color);
     //5
-    List<Car> findByConvertible(Boolean convertible);
+    List<Car> findByConvertibleTrue();
     //6
     List<Car> findByLicensePlate(String licensePlate);
     //7
@@ -39,17 +39,17 @@ public interface CarRepo extends JpaRepository<Car, Long> {
 
     //Find by available and (6)
     //Make
-    List<Car> findByAvailableAndMake(String available, String make);
+    List<Car> findByAvailableTrueAndMake(String make);
     //Model
-    List<Car> findByAvailableAndModel(String available, String model);
+    List<Car> findByAvailableTrueAndModel( String model);
     //Color
-    List<Car> findByAvailableAndColor(String available, String color);
+    List<Car> findByAvailableTrueAndColor( String color);
     //Convertible
-    List<Car> findByAvailableAndConvertible(String available, Boolean convertible);
+    List<Car> findByAvailableTrueAndConvertibleTrue();
     //Rating
-    List<Car> findByAvailableAndRating(String available, Double rating);
+    List<Car> findByAvailableTrueAndRating(Double rating);
     //RateKilometer
-    List<Car> findByAvailableAndRateKilometer(String available, Double rateKilometer);
+    List<Car> findByAvailableTrueAndRateKilometer(Double rateKilometer);
 
 
 }
