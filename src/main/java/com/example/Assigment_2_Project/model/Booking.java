@@ -26,6 +26,18 @@ public class Booking {
     @Column
     private String startLocation;
 
+    @Column
+    private String endLocation;
+
+    @Column
+    private ZonedDateTime pickupTime;
+
+    @Column
+    private ZonedDateTime dropTime;
+
+    @Column
+    private Double tripDistance;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -35,22 +47,11 @@ public class Booking {
     private Car car;
 
 
-
 //    @Column(name = "customer_id")
 //    private long customerID;
 
 //
-//    @Column
-//    private String endLocation;
-//
-//    @Column
-//    private ZonedDateTime pickupTime;
-//
-//    @Column
-//    private ZonedDateTime dropTime;
-//
-//    @Column
-//    private int tripDistance;
+
 
 //    private Map<String,String> bookData;
 

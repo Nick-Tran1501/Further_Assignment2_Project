@@ -45,6 +45,7 @@ public class Car {
     private boolean available;
 
     @OneToOne
+    @JoinColumn(name = "driver_id")
     private Driver driver; //refresh everyday
 
 

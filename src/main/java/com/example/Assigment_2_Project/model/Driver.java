@@ -34,6 +34,7 @@ public class Driver {
     private double rating;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_vin")
     private Car car; //Refresh everyday
 
     public Driver() {}

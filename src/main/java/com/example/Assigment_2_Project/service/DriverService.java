@@ -53,11 +53,12 @@ public class DriverService {
             Car car = carRepo.findCarById(car_id.get("car_id"));
             if (car.getDriver() == null){
                 car.setDriver(driver);
+                driver.setCar(car);
                 driverRepo.save(driver);
                 return new ResponseEntity<>(driver, HttpStatus.OK);
             }
             else {
-                return new ResponseEntity<>(HttpStatus.valueOf("Car assigned, choose again"));
+                return new ResponseEntity<>(driver, HttpStatus.valueOf("Car was assigned, please choose another"));
             }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
