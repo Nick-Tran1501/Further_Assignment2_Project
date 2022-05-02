@@ -37,22 +37,11 @@ public class Booking {
     private Car car;
 
 
-
 //    @Column(name = "customer_id")
 //    private long customerID;
 
 //
-//    @Column
-//    private String endLocation;
-//
-//    @Column
-//    private ZonedDateTime pickupTime;
-//
-//    @Column
-//    private ZonedDateTime dropTime;
-//
-//    @Column
-//    private int tripDistance;
+
 
 //    private Map<String,String> bookData;
 
