@@ -27,9 +27,21 @@ public class Booking {
     @Column
     private String startLocation;
 
+    @Column
+    private String endLocation;
+
+    @Column
+    private ZonedDateTime pickupTime;
+
+    @Column
+    private ZonedDateTime dropTime;
+
+    @Column
+    private Double tripDistance;
+
     @OneToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
     @JoinColumn(name = "customer_id")
+    @JsonBackReference
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
