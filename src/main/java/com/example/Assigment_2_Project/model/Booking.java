@@ -2,12 +2,16 @@ package com.example.Assigment_2_Project.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "booking")
@@ -19,8 +23,16 @@ public class Booking {
 
     @CreatedDate
     @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now();
 
+    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+
+    @Column
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private ZonedDateTime pickupTime;
+
+    @Column
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private ZonedDateTime dropTime;
 
 
     @Column
@@ -29,27 +41,13 @@ public class Booking {
     @Column
     private String endLocation;
 
-    private int date;
 
-    private int month;
-
-    private int hour;
-
-    private int minute;
-
-    @Column
-    private ZonedDateTime pickupTime;
-
-    @Column
-    private ZonedDateTime dropTime;
 
     @Column
     private Double tripDistance;
 
 
     @OneToOne(fetch = FetchType.LAZY)
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     @JsonBackReference
     private Customer customer;
@@ -128,7 +126,7 @@ public class Booking {
     }
 
     public void setPickupTime(ZonedDateTime pickupTime) {
-
+        this.pickupTime = pickupTime;
     }
 
     public ZonedDateTime getDropTime() {
@@ -137,5 +135,21 @@ public class Booking {
 
     public void setDropTime(ZonedDateTime dropTime) {
         this.dropTime = dropTime;
+    }
+
+    public String getEndLocation() {
+        return endLocation;
+    }
+
+    public void setEndLocation(String endLocation) {
+        this.endLocation = endLocation;
+    }
+
+    public Double getTripDistance() {
+        return tripDistance;
+    }
+
+    public void setTripDistance(Double tripDistance) {
+        this.tripDistance = tripDistance;
     }
 }

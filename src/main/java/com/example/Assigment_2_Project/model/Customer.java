@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class Customer {
 
     @CreatedDate
     @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now();
+    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
     @Column
     private String name;

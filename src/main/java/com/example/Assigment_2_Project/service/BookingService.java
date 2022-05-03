@@ -43,8 +43,6 @@ public class BookingService {
     @Autowired
     private CarService carService;
 
-    @Autowired
-    private CarService carService;
 
 //    @Autowired
 //    private CustomerService customerService;
@@ -97,6 +95,8 @@ public class BookingService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
 
 //  Get available car for customer

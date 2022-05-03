@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "invoice")
@@ -18,7 +19,7 @@ public class Invoice {
 
     @CreatedDate
     @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now();
+    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
     @Column
     public ZonedDateTime dateTime;

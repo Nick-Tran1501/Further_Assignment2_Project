@@ -1,11 +1,13 @@
 package com.example.Assigment_2_Project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Entity
@@ -18,7 +20,7 @@ public class Car {
 
     @CreatedDate
     @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now();
+    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
     @Column
     private String make;
@@ -46,6 +48,7 @@ public class Car {
 
     @OneToOne
     @JoinColumn(name = "driver_id")
+    @JsonBackReference
     private Driver driver; //refresh everyday
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

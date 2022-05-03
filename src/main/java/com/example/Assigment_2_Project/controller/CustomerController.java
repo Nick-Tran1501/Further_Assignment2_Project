@@ -32,8 +32,6 @@ public class CustomerController extends EntityController<Customer>{
 
     private CustomerRepo customerRepo;
 
-    CustomerRepo customerRepo;
-
 
 
     @Override

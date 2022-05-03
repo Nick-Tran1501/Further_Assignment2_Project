@@ -1,10 +1,15 @@
 package com.example.Assigment_2_Project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +24,9 @@ public class Driver {
 
     @CreatedDate
     @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now();
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy '' HH:mm:ss")
+    private ZonedDateTime createdDate = ZonedDateTime.now()
+            .truncatedTo(ChronoUnit.SECONDS);
 
     @Column
     private String name;
@@ -35,6 +42,7 @@ public class Driver {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_vin")
+    @JsonManagedReference
     private Car car; //Refresh everyday
 
     public Driver() {}
