@@ -35,8 +35,6 @@ public class BookingService {
     @Autowired
     private CarService carService;
 
-    @Autowired
-    private CarService carService;
 
 //    @Autowired
 //    private CustomerService customerService;
@@ -93,7 +91,7 @@ public class BookingService {
     }
 
 
-    //  Get available car for customer
+//  Get available car for customer
     public ResponseEntity<List<Car>> getAvailableCarSorted(
             Optional<String> make, Optional<String> model, Optional<String> color,
             Optional<Boolean> convertible, Optional<Double> rating, Optional<Double> rateKilometer) {
