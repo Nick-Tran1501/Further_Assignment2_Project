@@ -1,8 +1,7 @@
 package com.example.Assigment_2_Project.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.http.ResponseEntity;
 

@@ -4,24 +4,16 @@ package com.example.Assigment_2_Project.service;
 import com.example.Assigment_2_Project.model.Booking;
 import com.example.Assigment_2_Project.model.Car;
 import com.example.Assigment_2_Project.model.Customer;
-import com.example.Assigment_2_Project.model.Driver;
 import com.example.Assigment_2_Project.repository.BookingRepo;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import com.example.Assigment_2_Project.repository.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.SpringApplicationEvent;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
-import javax.transaction.UserTransaction;
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -76,18 +68,20 @@ public class BookingService {
 
 //  Create booking
 // xu
-    public ResponseEntity<Booking> createBooking(Long customer_id,Booking booking) {
+    public ResponseEntity<Booking> createBooking(Long customer_id,Long car_id ,Booking booking) {
         try {
             Customer customer = customerRepo.findCustomerById(customer_id);
-//            Car car = carRepo.findCarById(car_id);
-            if (customer != null)
+            List<Car> carList = carRepo.findByAvailableTrue();
+            Car carData = null;
+            for (Car car :  carList)
+                if (car.getId() == car_id)
+                    carData = car;
+
+            if (customer != null && carData != null) {
+                booking.setCar(carData);
                 booking.setCustomer(customer);
-//            booking.setCar(car);
+            }
             bookingRepo.save(booking);
-//            List<Booking> bookingList =  new ArrayList<>();
-//            bookingList.add(booking);
-//            customer.setBooking(bookingList);
-//            booking.setCustomer(customer);
             return customer == null ? new ResponseEntity<>(HttpStatus.valueOf("Booking invalid"))
                     : new ResponseEntity<>(booking, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -96,7 +90,7 @@ public class BookingService {
     }
 
 
-//  Get available car for customer
+    //  Get available car for customer
     public ResponseEntity<List<Car>> getAvailableCarSorted(
             Optional<String> make, Optional<String> model, Optional<String> color,
             Optional<Boolean> convertible, Optional<Double> rating, Optional<Double> rateKilometer) {
