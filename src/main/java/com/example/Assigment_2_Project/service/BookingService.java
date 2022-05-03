@@ -37,8 +37,11 @@ public class BookingService {
     @Autowired
     CustomerRepo customerRepo;
 
+//    @Autowired
+//    private CustomerService customerService;
+
     @Autowired
-    private CustomerService customerService;
+    private CarService carService;
 
     @Autowired
     private CarService carService;
@@ -52,14 +55,14 @@ public class BookingService {
 //    }
 
 //  Get all booking data
-    public ResponseEntity<List<Booking>> getAllBooking() {
+    public ResponseEntity<List<Booking>> getBookings() {
         try {
             List<Booking> booking = bookingRepo.findAll();
             if (booking.size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
+            return new ResponseEntity<>(booking, HttpStatus.OK);
+        }  catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
@@ -75,12 +78,13 @@ public class BookingService {
     }
 
 //  Create booking
+// xu
     public ResponseEntity<Booking> createBooking(Long customer_id,Booking booking) {
         try {
             Customer customer = customerRepo.findCustomerById(customer_id);
 //            Car car = carRepo.findCarById(car_id);
             if (customer != null)
-            booking.setCustomer(customer);
+                booking.setCustomer(customer);
 //            booking.setCar(car);
             bookingRepo.save(booking);
 //            List<Booking> bookingList =  new ArrayList<>();

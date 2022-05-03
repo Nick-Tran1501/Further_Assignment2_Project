@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@Validated
 @RequestMapping("/customer")
 public class CustomerController extends EntityController<Customer>{
 
@@ -28,7 +29,11 @@ public class CustomerController extends EntityController<Customer>{
     private CustomerService customerService;
 
     @Autowired
+
+    private CustomerRepo customerRepo;
+
     CustomerRepo customerRepo;
+
 
 
     @Override
@@ -36,6 +41,7 @@ public class CustomerController extends EntityController<Customer>{
     public ResponseEntity<Customer> updateTableColumnById(Long id, Map<String, String> contentField) {
         return null;
     }
+
 
     @Override
     @PostMapping(path = "/demo")
@@ -49,7 +55,6 @@ public class CustomerController extends EntityController<Customer>{
         }
     }
 
-
     //  Add student on table
     //      "name" : "Name",
     //      "phone" : "address"
@@ -60,9 +65,11 @@ public class CustomerController extends EntityController<Customer>{
     }
 
 //  Get all customer data
+    @GetMapping(path = "/all")
     public ResponseEntity<List<Customer>> getCustomer(){
-        return customerService.getCustomers();
+        return this.customerService.getCustomers();
     }
+
 
 //  Implement search customer function
 //  http://localhost:8080/Customer/search?name=Tuan (search 1 param)
