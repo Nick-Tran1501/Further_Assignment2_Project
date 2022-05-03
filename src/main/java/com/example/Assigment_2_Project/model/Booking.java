@@ -1,6 +1,7 @@
 package com.example.Assigment_2_Project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
@@ -26,7 +27,8 @@ public class Booking {
     @Column
     private String startLocation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

@@ -25,7 +25,6 @@ import java.util.Optional;
 
 @Service
 @Transactional
-
 public class BookingService {
 
     @Autowired
@@ -37,8 +36,8 @@ public class BookingService {
     @Autowired
     CustomerRepo customerRepo;
 
-    @Autowired
-    private CustomerService customerService;
+//    @Autowired
+//    private CustomerService customerService;
 
 //    @Autowired
 //    private CustomerService customerService;
@@ -49,14 +48,14 @@ public class BookingService {
 //    }
 
 //  Get all booking data
-    public ResponseEntity<List<Booking>> getAllBooking() {
+    public ResponseEntity<List<Booking>> getBookings() {
         try {
             List<Booking> booking = bookingRepo.findAll();
             if (booking.size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
+            return new ResponseEntity<>(booking, HttpStatus.OK);
+        }  catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
@@ -78,7 +77,7 @@ public class BookingService {
             Customer customer = customerRepo.findCustomerById(customer_id);
 //            Car car = carRepo.findCarById(car_id);
             if (customer != null)
-            booking.setCustomer(customer);
+                booking.setCustomer(customer);
 //            booking.setCar(car);
             bookingRepo.save(booking);
 //            List<Booking> bookingList =  new ArrayList<>();
@@ -98,21 +97,20 @@ public class BookingService {
             Optional<String> make, Optional<String> model, Optional<String> color,
             Optional<Boolean> convertible, Optional<Double> rating, Optional<Double> rateKilometer) {
         try {
-            String available = "yes";
-            String unavailable = "Cannot find car";
-            List<Car> carTemp = carRepo.findByAvailable(available);
+           boolean available = true;
+            List<Car> carTemp = carRepo.findByAvailable(String.valueOf(available));
             if (make.isPresent())
-                carTemp = carRepo.findByAvailableAndMake(available, make.get());
+                carTemp = carRepo.findByAvailableAndMake(String.valueOf(available), make.get());
             else if (model.isPresent())
-                carTemp =  carRepo.findByAvailableAndModel(available, model.get());
+                carTemp =  carRepo.findByAvailableAndModel(String.valueOf(available), model.get());
             else if (color.isPresent())
-                carTemp = carRepo.findByAvailableAndColor(available, color.get());
+                carTemp = carRepo.findByAvailableAndColor(String.valueOf(available), color.get());
             else if (convertible.isPresent())
-                carTemp = carRepo.findByAvailableAndConvertible(available, convertible.get());
+                carTemp = carRepo.findByAvailableAndConvertible(String.valueOf(available), convertible.get());
             else if (rating.isPresent())
-                carTemp = carRepo.findByAvailableAndRating(available, rating.get());
+                carTemp = carRepo.findByAvailableAndRating(String.valueOf(available), rating.get());
             else if (rateKilometer.isPresent())
-                carTemp = carRepo.findByAvailableAndRateKilometer(available, rateKilometer.get());
+                carTemp = carRepo.findByAvailableAndRateKilometer(String.valueOf(available), rateKilometer.get());
             return carTemp == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                     : new ResponseEntity<>(carTemp, HttpStatus.OK);
 

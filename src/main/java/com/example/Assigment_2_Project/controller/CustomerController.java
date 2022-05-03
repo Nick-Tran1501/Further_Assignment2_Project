@@ -8,6 +8,7 @@ import org.apache.catalina.util.ResourceSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@Validated
 @RequestMapping("/customer")
 public class CustomerController extends EntityController<Customer>{
 
@@ -26,6 +28,9 @@ public class CustomerController extends EntityController<Customer>{
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private CustomerRepo customerRepo;
+
 
     @Override
     @PutMapping("/{id}")
@@ -33,11 +38,18 @@ public class CustomerController extends EntityController<Customer>{
         return null;
     }
 
-    @Override
-    public ResponseEntity<List<Customer>> inputDemoData(List<Customer> data) {
-        return null;
-    }
 
+    @Override
+    @PostMapping(path = "/demo")
+    public ResponseEntity<List<Customer>> inputDemoData(@Validated @RequestBody List<Customer> data) {
+        try {
+            customerRepo.saveAll(data);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     //  Add student on table
     //      "name" : "Name",
@@ -49,9 +61,11 @@ public class CustomerController extends EntityController<Customer>{
     }
 
 //  Get all customer data
+    @GetMapping(path = "/all")
     public ResponseEntity<List<Customer>> getCustomer(){
-        return customerService.getCustomers();
+        return this.customerService.getCustomers();
     }
+
 
 //  Implement search customer function
 //  http://localhost:8080/Customer/search?name=Tuan (search 1 param)

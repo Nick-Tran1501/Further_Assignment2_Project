@@ -1,5 +1,6 @@
 package com.example.Assigment_2_Project.service;
 
+import com.example.Assigment_2_Project.model.Car;
 import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.repository.CustomerRepo;
 import org.hibernate.Criteria;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Query;
@@ -38,11 +40,11 @@ public class CustomerService {
     //  Get all customers data
     public ResponseEntity<List<Customer>> getCustomers() {
         try {
-            List<Customer> customers = customerRepo.findAll();
-            if (customers.size() == 0) {
+            List<Customer> customer = customerRepo.findAll();
+            if (customer.size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(customer, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

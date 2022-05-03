@@ -2,6 +2,7 @@ package com.example.Assigment_2_Project.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.http.ResponseEntity;
 
@@ -32,8 +33,9 @@ public class Customer {
     @Column
     private String address;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Booking> booking;
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private Booking booking;
 
 
     public Customer() {};
@@ -78,13 +80,11 @@ public class Customer {
         this.address = address;
     }
 
-    public List<Booking> getBooking() {
+    public Booking getBooking() {
         return booking;
     }
 
-    public void setBooking(List<Booking> booking) {
+    public void setBooking(Booking booking) {
         this.booking = booking;
     }
-
-
 }

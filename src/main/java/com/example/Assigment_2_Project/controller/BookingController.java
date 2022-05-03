@@ -8,10 +8,12 @@ import com.example.Assigment_2_Project.repository.BookingRepo;
 import com.example.Assigment_2_Project.repository.CustomerRepo;
 import com.example.Assigment_2_Project.service.BookingService;
 import org.apache.catalina.util.ResourceSet;
+import org.apache.tomcat.util.net.AprEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/booking")
-
+@Validated
 public class BookingController extends EntityController<Booking>{
 
     @Autowired
@@ -30,6 +32,9 @@ public class BookingController extends EntityController<Booking>{
 
     @Autowired
     private BookingService bookingService;
+
+//    @Autowired
+//    private BookingRepo bookingRepo;
 
     @Override
     public ResponseEntity updateTableColumnById(Long id, Map contentField) {
@@ -57,13 +62,13 @@ public class BookingController extends EntityController<Booking>{
     @PostMapping(path = "/post/{id}")
     public ResponseEntity<Booking> createBooking(@PathVariable("id") Long id,
                                                  @RequestBody Booking booking){
-
         return bookingService.createBooking(id,booking);
     }
 
 //  Get all booking data
-    public ResponseEntity<List<Booking>> getAllBooking() {
-        return bookingService.getAllBooking();
+    @GetMapping(path = "/all")
+    public ResponseEntity<List<Booking>> getBooking() {
+        return this.bookingService.getBookings();
     }
 
 //   Delete data

@@ -47,13 +47,10 @@ public class Car {
     @OneToOne
     private Driver driver; //refresh everyday
 
-
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Booking> booking;
 
-
     public Car(){}
-
 
     public long getId() {
         return id;
