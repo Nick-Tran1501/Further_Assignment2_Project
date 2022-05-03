@@ -60,9 +60,6 @@ public class Booking {
 //    @Column(name = "customer_id")
 //    private long customerID;
 
-//
-
-
 //    private Map<String,String> bookData;
 
 //    @OneToOne
