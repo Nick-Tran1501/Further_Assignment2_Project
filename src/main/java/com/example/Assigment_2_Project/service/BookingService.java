@@ -35,6 +35,9 @@ public class BookingService {
     @Autowired
     private CarService carService;
 
+    @Autowired
+    private CarService carService;
+
 //    @Autowired
 //    private CustomerService customerService;
 

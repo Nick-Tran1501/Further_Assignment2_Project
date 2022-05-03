@@ -29,7 +29,11 @@ public class CustomerController extends EntityController<Customer>{
     private CustomerService customerService;
 
     @Autowired
+
     private CustomerRepo customerRepo;
+
+    CustomerRepo customerRepo;
+
 
 
     @Override

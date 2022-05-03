@@ -1,15 +1,15 @@
 package com.example.Assigment_2_Project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
-import java.util.Map;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "booking")
@@ -23,11 +23,21 @@ public class Booking {
     @JsonIgnore
     private ZonedDateTime createdDate = ZonedDateTime.now();
 
+
+
     @Column
     private String startLocation;
 
     @Column
     private String endLocation;
+
+    private int date;
+
+    private int month;
+
+    private int hour;
+
+    private int minute;
 
     @Column
     private ZonedDateTime pickupTime;
@@ -38,7 +48,10 @@ public class Booking {
     @Column
     private Double tripDistance;
 
+
     @OneToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     @JsonBackReference
     private Customer customer;
@@ -112,4 +125,19 @@ public class Booking {
 
     public void setCar(Car car) { this.car = car; }
 
+    public ZonedDateTime getPickupTime() {
+        return pickupTime;
+    }
+
+    public void setPickupTime(ZonedDateTime pickupTime) {
+
+    }
+
+    public ZonedDateTime getDropTime() {
+        return dropTime;
+    }
+
+    public void setDropTime(ZonedDateTime dropTime) {
+        this.dropTime = dropTime;
+    }
 }
