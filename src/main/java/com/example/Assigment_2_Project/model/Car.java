@@ -3,6 +3,7 @@ package com.example.Assigment_2_Project.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "CAR")
+
 public class Car {
     @Id
     @Column(name = "VIN")
@@ -51,8 +53,8 @@ public class Car {
     @JsonBackReference
     private Driver driver; //refresh everyday
 
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Booking> booking;
+    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Booking booking;
 
     public Car(){}
 
@@ -144,11 +146,11 @@ public class Car {
         this.driver = driver;
     }
 
-    public List<Booking> getBooking() {
+    public Booking getBooking() {
         return booking;
     }
 
-    public void setBooking(List<Booking> booking) {
+    public void setBooking(Booking booking) {
         this.booking = booking;
     }
 }

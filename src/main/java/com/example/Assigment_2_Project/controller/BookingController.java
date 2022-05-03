@@ -77,10 +77,11 @@ public class BookingController extends EntityController<Booking>{
 
 
 //  Booking
-    @PostMapping(path = "/post/{id}")
-    public ResponseEntity<Booking> createBooking(@PathVariable("id") Long id,
+    @PostMapping(path = "/post/{customer_id}/{car_id}")
+    public ResponseEntity<Booking> createBooking(@PathVariable("customer_id") Long customer_id,
+                                                 @PathVariable("car_id") Long car_id,
                                                  @RequestBody Booking booking){
-        return bookingService.createBooking(id,booking);
+        return bookingService.createBooking(customer_id,car_id,booking);
     }
 
 //  Get all booking data
