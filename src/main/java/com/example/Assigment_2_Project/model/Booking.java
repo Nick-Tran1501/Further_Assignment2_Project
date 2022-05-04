@@ -16,6 +16,8 @@ import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "booking")
+@JsonIgnoreProperties("spring.jackson.serialization.FAIL_ON_EMPTY_BEANS=false")
+
 public class Booking {
 
     @Id
