@@ -26,7 +26,7 @@ public class Booking {
     @CreatedDate
     @JsonIgnore
 
-    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.MINUTES);
 
     @Column
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -49,11 +49,17 @@ public class Booking {
     private Double tripDistance;
 
 
+
+//    @OneToOne(fetch = FetchType.LAZY)
+
     @OneToOne
     @JoinColumn(name = "customer_id")
 //    @JsonBackReference
 //    @JsonIgnore
     private Customer customer;
+
+
+//    @OneToOne(fetch = FetchType.LAZY)
 
     @OneToOne
     @JoinColumn(name = "car_id")

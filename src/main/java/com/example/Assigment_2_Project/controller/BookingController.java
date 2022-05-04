@@ -13,11 +13,13 @@ import org.apache.catalina.util.ResourceSet;
 import org.apache.tomcat.util.net.AprEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -52,7 +54,8 @@ public class BookingController extends EntityController<Booking>{
 
     @Override
     @PostMapping(path = "/demo")
-    public ResponseEntity<List<Booking>> inputDemoData(@Validated @RequestBody List<Booking> data) {
+    public ResponseEntity<List<Booking>> inputDemoData(@Validated @RequestBody
+                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) List<Booking> data) {
         try {
             bookingRepo.saveAll(data);
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -77,12 +80,18 @@ public class BookingController extends EntityController<Booking>{
 
 
 //  Booking
-    @PostMapping(path = "/post/{customer_id}/{car_id}")
-    public ResponseEntity<Booking> createBooking(@PathVariable("customer_id") Long customer_id,
-                                                 @PathVariable("car_id") Long car_id,
-                                                 @RequestBody Booking booking){
-        return bookingService.createBooking(customer_id,car_id,booking);
-    }
+//    @PostMapping(path = "/post/{customer_id}/{car_id}")
+//    public ResponseEntity<Booking> createBooking(@PathVariable("customer_id") Long customer_id,
+//                                                 @PathVariable("car_id") Long car_id,
+//                                                 @RequestBody Booking booking){
+//        return bookingService.createBooking(customer_id,car_id,booking);
+//    }
+
+//    @PostMapping(path = "/test")
+//    public ResponseEntity<Booking> bookingTest(@RequestBody
+//                                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Map<String, ZonedDateTime> pickupTime) {
+//        return bookingService.bookingTest(pickupTime);
+//    }
 
 //  Get all booking data
 //    @GetMapping(path = "/car/{id}")
@@ -96,17 +105,30 @@ public class BookingController extends EntityController<Booking>{
         return bookingService.customerData(id);
     }
 
+
+    @GetMapping(path = "/car")
+    public ResponseEntity<List<Car>> getAvailableCar(@RequestParam
+                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime pickupTime) {
+        return bookingService.getAvailableCar(pickupTime);
+    }
+
 //   Get car data by booking data
     @GetMapping(path = "/car/{id}")
     public ResponseEntity<Car> carData(@PathVariable("id") Long id) {
         return bookingService.carData(id);
     }
 
-
 //   Delete data
     @DeleteMapping
     public ResponseEntity<HttpStatus> deleteAll(){
         return bookingService.deleteAll();
+    }
+
+    @PostMapping(path = "/post/{id}")
+    public ResponseEntity<Booking> createBookingTest(@PathVariable("id") Long carID,
+            @RequestBody Booking booking,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime pickupTime ) {
+        return bookingService.createBookingTest(carID, booking, pickupTime);
     }
 
 }

@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -69,10 +71,31 @@ public class BookingService {
 //        }
 //    }
     //  Get booking data by booking ID ( customer )
+    public ResponseEntity<List<Car>> getAvailableCar(ZonedDateTime pickupTime) {
+        try {
+            List<Car> carList = carRepo.findAll();
+            List<Booking> bookingList = bookingRepo.findAll();
+            for (Booking booking: bookingList) {
+                if (booking.getPickupTime().equals(pickupTime)) {
+                    carList.remove(booking.getCar());
+                    return new ResponseEntity<>(carList, HttpStatus.FOUND);
+                }
+            }
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     public ResponseEntity<Customer> customerData(Long id) {
         try {
             Booking booking = bookingRepo.findBookingById(id);
             Customer customer = booking.getCustomer();
+
+            return new ResponseEntity<>(customer, HttpStatus.NOT_FOUND);
+
             return customer == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                     : new ResponseEntity<>(customer, HttpStatus.OK);
         }
@@ -106,27 +129,52 @@ public class BookingService {
     }
 
 //  Create booking
-// xu
+
+    public ResponseEntity<Booking> createBookingTest(Long car_id ,Booking booking, ZonedDateTime pickupTime) {
+        try {
+            List<Car> carList = carRepo.findByAvailableTrue();
+            Car carData = null;
+            for (Car car :  carList)
+                if (car.getId() == car_id){
+                    carData = car;
+                }
+            if ( carData == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            }
+            booking.setPickupTime(pickupTime);
+            booking.setCar(carData);
+            bookingRepo.save(booking);
+            return  new ResponseEntity<>(booking, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // xu
     public ResponseEntity<Booking> createBooking(Long customer_id,Long car_id ,Booking booking) {
         try {
             Customer customer = customerRepo.findCustomerById(customer_id);
             List<Car> carList = carRepo.findByAvailableTrue();
             Car carData = null;
             for (Car car :  carList)
-                if (car.getId() == car_id)
+                if (car.getId() == car_id){
                     carData = car;
-
-            if (customer != null && carData != null) {
-                booking.setCar(carData);
-                booking.setCustomer(customer);
+                }
+            if (customer == null && carData == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
+            booking.setCar(carData);
+            booking.setCustomer(customer);
             bookingRepo.save(booking);
-            return customer == null ? new ResponseEntity<>(HttpStatus.valueOf("Booking invalid"))
-                    : new ResponseEntity<>(booking, HttpStatus.CREATED);
+            return  new ResponseEntity<>(booking, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+//    public ResponseEntity<List<Car>> getAvailableCar()
+
+
 
 
 //  Get available car for customer
