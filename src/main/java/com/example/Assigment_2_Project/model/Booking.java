@@ -4,6 +4,7 @@ package com.example.Assigment_2_Project.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -49,7 +50,8 @@ public class Booking {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
-    @JsonBackReference
+//    @JsonBackReference
+//    @JsonIgnore
     private Customer customer;
 
     @OneToOne(fetch = FetchType.LAZY)
