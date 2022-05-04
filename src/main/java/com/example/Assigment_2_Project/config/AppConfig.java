@@ -30,7 +30,7 @@ public class AppConfig {
         //For mysql
         //properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         properties.put("hibernate.show_sql", true);
-        properties.put("hibernate.hbm2ddl.auto", "create-drop");git
+        properties.put("hibernate.hbm2ddl.auto", "create-drop");
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");

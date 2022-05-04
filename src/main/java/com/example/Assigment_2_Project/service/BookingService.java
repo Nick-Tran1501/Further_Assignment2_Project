@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,21 +41,49 @@ public class BookingService {
 //    @Autowired
 //    private CustomerService customerService;
 
-//    public ResponseEntity<List<Booking>> getAllBooking() {
-//        List<Booking> bookingList = bookingRepo.findAll();
-//        return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
+
+
+
+
+//    @GetMapping(path = "/{id}")
+//    public ResponseEntity<T> getByID(@PathVariable("id") Long id) {
+//        try {
+//            return new ResponseEntity<>(repo.findById(id).get(), HttpStatus.FOUND);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
 //    }
 
-//  Get all booking data
-    public ResponseEntity<List<Booking>> getBookings() {
+//    //  Get booking data by booking ID ( car )
+//    public ResponseEntity<Car> carData(Long id) {
+//        try {
+//            Booking booking = bookingRepo.findBookingById(id);
+//            List<Car> carList = carRepo.findAll();
+//            Car car= null;
+//            for (Car carDATA :carList)
+//                if (booking.getCar().getId() == carDATA.getId())
+//                    car = carDATA;
+//            return car == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+//                    : new ResponseEntity<>(car, HttpStatus.OK);
+//        }
+//        catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+    //  Get booking data by booking ID ( customer )
+    public ResponseEntity<Customer> customerData(Long id) {
         try {
-            List<Booking> booking = bookingRepo.findAll();
-            if (booking.size() == 0) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(booking, HttpStatus.OK);
-        }  catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            Booking booking = bookingRepo.findBookingById(id);
+            List<Customer> customerList = customerRepo.findAll();
+            Customer customer= null;
+            for (Customer customerData : customerList)
+                if (booking.getCustomer().getId() == customerData.getId())
+                    customer = customerData;
+            return customer == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                    : new ResponseEntity<>(customer, HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -117,19 +147,5 @@ public class BookingService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
-//    public ResponseEntity<Booking> addBooking (Long customerID){
-//        try{
-//            ResponseEntity<List<Customer>> customer = customerService.getByID(customerID);
-//            Booking booking = new Booking();
-//            booking.setCustomer(customer);
-//            return new ResponseEntity<>(HttpStatus.CREATED);
-//        }
-//        catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 
 }

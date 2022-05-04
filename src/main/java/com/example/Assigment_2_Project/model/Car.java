@@ -53,8 +53,8 @@ public class Car {
     @JsonBackReference
     private Driver driver; //refresh everyday
 
-    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Booking booking;
+//    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Booking booking;
 
     public Car(){}
 
@@ -146,11 +146,11 @@ public class Car {
         this.driver = driver;
     }
 
-    public Booking getBooking() {
-        return booking;
-    }
-
-    public void setBooking(Booking booking) {
-        this.booking = booking;
-    }
+//    public Booking getBooking() {
+//        return booking;
+//    }
+//
+//    public void setBooking(Booking booking) {
+//        this.booking = booking;
+//    }
 }
