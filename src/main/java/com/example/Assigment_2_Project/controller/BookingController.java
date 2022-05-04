@@ -90,9 +90,16 @@ public class BookingController extends EntityController<Booking>{
 //        return this.bookingService.carData(id);
 //    }
 
+//   Get customer data by booking data
     @GetMapping(path = "/customer/{id}")
-    public ResponseEntity<Customer> getBooking(@PathVariable("id") Long id) {
+    public ResponseEntity<Customer> customerData(@PathVariable("id") Long id) {
         return bookingService.customerData(id);
+    }
+
+//   Get car data by booking data
+    @GetMapping(path = "/car/{id}")
+    public ResponseEntity<Car> carData(@PathVariable("id") Long id) {
+        return bookingService.carData(id);
     }
 
 
