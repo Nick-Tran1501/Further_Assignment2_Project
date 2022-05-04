@@ -16,8 +16,7 @@ import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "booking")
-@JsonIgnoreProperties("spring.jackson.serialization.FAIL_ON_EMPTY_BEANS=false")
-
+@JsonIgnoreProperties(  {"handler","hibernateLazyInitializer"} )
 public class Booking {
 
     @Id
@@ -50,13 +49,13 @@ public class Booking {
     private Double tripDistance;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "customer_id")
 //    @JsonBackReference
 //    @JsonIgnore
     private Customer customer;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "car_id")
     private Car car;
 
