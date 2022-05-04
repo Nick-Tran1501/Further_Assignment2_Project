@@ -1,7 +1,9 @@
 package com.example.Assigment_2_Project.service;
 
+import com.example.Assigment_2_Project.model.Booking;
 import com.example.Assigment_2_Project.model.Car;
 import com.example.Assigment_2_Project.model.Customer;
+import com.example.Assigment_2_Project.repository.BookingRepo;
 import com.example.Assigment_2_Project.repository.CustomerRepo;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -27,6 +29,9 @@ public class CustomerService {
     @Autowired
     CustomerRepo customerRepo;
 
+    @Autowired
+    private BookingRepo bookingRepo;
+
     // Add customers
     public ResponseEntity<Customer> addCustomer(Customer customers) {
         try {
@@ -49,6 +54,7 @@ public class CustomerService {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
+
 
 
     // Get customer data by specific attribute
