@@ -12,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -33,8 +31,8 @@ public class BookingService {
     @Autowired
     CustomerRepo customerRepo;
 
-//    @Autowired
-//    private CustomerService customerService;
+    @Autowired
+    private CustomerService customerService;
 
     @Autowired
     private CarService carService;
@@ -95,12 +93,30 @@ public class BookingService {
         try {
             Booking booking = bookingRepo.findBookingById(id);
             Customer customer = booking.getCustomer();
+
             return new ResponseEntity<>(customer, HttpStatus.NOT_FOUND);
+
+            return customer == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                    : new ResponseEntity<>(customer, HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<Car> carData(Long id) {
+        try {
+            Booking booking = bookingRepo.findBookingById(id);
+            Car car = booking.getCar();
+            return car == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                    : new ResponseEntity<>(car, HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
 //  Delete all data
     public ResponseEntity<HttpStatus> deleteAll() {
