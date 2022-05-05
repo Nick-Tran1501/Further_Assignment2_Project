@@ -92,7 +92,7 @@ public class BookingService {
         }
     }
 
-//  Get all booking data
+    //  Get all booking data
     public ResponseEntity<List<Booking>> getBookings() {
         try {
             List<Booking> bookings = bookingRepo.findAll();
@@ -105,9 +105,6 @@ public class BookingService {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
-
-
-
 
     //  get customer data (tuan)
     public ResponseEntity<Customer> customerData(Long id) {
