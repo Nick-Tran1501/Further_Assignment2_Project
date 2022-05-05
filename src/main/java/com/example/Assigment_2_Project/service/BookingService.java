@@ -95,9 +95,6 @@ public class BookingService {
             Customer customer = booking.getCustomer();
 
             return new ResponseEntity<>(customer, HttpStatus.NOT_FOUND);
-
-            return customer == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                    : new ResponseEntity<>(customer, HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
