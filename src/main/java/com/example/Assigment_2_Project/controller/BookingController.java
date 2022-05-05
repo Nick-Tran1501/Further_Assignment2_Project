@@ -96,6 +96,12 @@ public class BookingController extends EntityController<Booking>{
         return bookingService.deleteAll();
     }
 
+//  Finish trip
+    @PostMapping(path = "/finish/{id}")
+    public ResponseEntity<Booking> finishTrip(@PathVariable("id") Long id){
+        return bookingService.finishTrip(id);
+    }
+
 
 
 //  ---------- KHOI PART ------------

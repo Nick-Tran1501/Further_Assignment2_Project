@@ -155,16 +155,16 @@ public class BookingService {
     }
 
     // finish trip (tuan)
-//    public ResponseEntity<Booking> finishTrip (Long id){
-//        try {
-//            Booking booking = bookingRepo.findById(id);
-//
-//
-//        }
-//        catch (Exception e){
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    public ResponseEntity<Booking> finishTrip(Long id){
+        try {
+            Booking booking = bookingRepo.findBookingById(id);
+            booking.getCar().setAvailable(true);
+            return new ResponseEntity<>(booking, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 //    ------- KHOI PART --------
