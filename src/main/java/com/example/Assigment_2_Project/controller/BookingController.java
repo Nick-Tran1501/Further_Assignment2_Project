@@ -66,10 +66,10 @@ public class BookingController extends EntityController<Booking>{
 
 //  Booking
     @PostMapping(path = "/post/{customer_id}/{car_id}")
-    public ResponseEntity<Booking> createBooking(@PathVariable("cusID") Long cusID,
-                                                     @PathVariable("carID") Long carID,
-                                                     @RequestBody Map<String, String> booking) {
-        return bookingService.createBooking(cusID, carID, booking);
+    public ResponseEntity<Booking> createBooking(@PathVariable("customer_id") Long customer_id,
+                                                 @PathVariable("car_id") Long car_id,
+                                                 @RequestBody Map<String, String> booking) {
+        return bookingService.createBooking(customer_id,car_id,booking);
     }
 
 //  Get all booking data
@@ -107,14 +107,18 @@ public class BookingController extends EntityController<Booking>{
 //    }
 //
 
-
 //    @GetMapping(path = "/test")
 //    public ResponseEntity<List<Booking>> findByTime(@RequestBody
 //                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime pickupTime) {
 //        return bookingService.findByTime(pickupTime);
 //    }
 //
-
+//        @PostMapping(path = "/test/{cusID}/{carID}")
+//        public ResponseEntity<Booking> createBooingTest2(@PathVariable("cusID") Long cusID,
+//                                                         @PathVariable("carID") Long carID,
+//                                                         @RequestBody Map<String, String> booking) {
+//        return bookingService.createBookingTest2(cusID, carID, booking);
+//        }
 //    public ResponseEntity<Booking> bookingTest(@RequestBody
 //                                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Map<String, ZonedDateTime> pickupTime) {
 //        return bookingService.bookingTest(pickupTime);

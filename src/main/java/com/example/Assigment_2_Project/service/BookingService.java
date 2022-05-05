@@ -42,7 +42,42 @@ public class BookingService {
 //    private CustomerService customerService;
 
 
-    // input booking (tuan)
+    // Input booking
+    public ResponseEntity<Booking> createBooking(Long cusID, Long carID, Map<String, String> bookingBody) {
+        try {
+            Customer customer = customerRepo.findCustomerById(cusID);
+            Booking booking = new Booking();
+            List<Car> carList = carRepo.findByAvailableTrue();
+            Car carData = null;
+            for (Car cars :  carList)
+                if (cars.getId() == carID){
+                    carData = cars;
+                    cars.setAvailable(false); // return false value for car
+                }
+            if (customer == null && carData == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            }
+            booking.setCar(carData);
+            booking.setCustomer(customer);
+            if (bookingBody.containsKey("startLocation"))
+                booking.setStartLocation(bookingBody.get("startLocation"));
+            if (bookingBody.containsKey("endLocation"))
+                booking.setEndLocation(bookingBody.get("endLocation"));
+            if (bookingBody.containsKey("pickupTime")) {
+                ZonedDateTime pickupTime = ZonedDateTime.parse(bookingBody.get("pickupTime"));
+                booking.setPickupTime(pickupTime);
+            }
+            if (bookingBody.containsKey("tripDistance")){
+                Double tripDistance =  Double.parseDouble(bookingBody.get("tripDistance"));
+                booking.setTripDistance(tripDistance);
+            }
+
+            bookingRepo.save(booking);
+            return new ResponseEntity<>(booking, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     //  Get available car for customer (tuan)
     public ResponseEntity<List<Car>> getAvailableCarSorted(
@@ -96,7 +131,6 @@ public class BookingService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     //  get car data (tuan)
     public ResponseEntity<Car> carData(Long id) {
         try {
@@ -120,6 +154,17 @@ public class BookingService {
         }
     }
 
+    // finish trip (tuan)
+//    public ResponseEntity<Booking> finishTrip (Long id){
+//        try {
+//            Booking booking = bookingRepo.findById(id);
+//
+//
+//        }
+//        catch (Exception e){
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
 
 //    ------- KHOI PART --------
@@ -141,44 +186,6 @@ public class BookingService {
 //            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 //        }
 //    }
-
-    //    //  Create booking (khoi)
-
-    public ResponseEntity<Booking> createBooking(Long cusID, Long carID, Map<String, String> bookingBody) {
-        try {
-            Customer customer = customerRepo.findCustomerById(cusID);
-            Booking booking = new Booking();
-            List<Car> carList = carRepo.findByAvailableTrue();
-            Car carData = null;
-            for (Car cars :  carList)
-                if (cars.getId() == carID){
-                    carData = cars;
-                    cars.setAvailable(false); // return false value for car
-                }
-            if (customer == null && carData == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-            }
-            booking.setCar(carData);
-            booking.setCustomer(customer);
-            if (bookingBody.containsKey("startLocation"))
-                booking.setStartLocation(bookingBody.get("startLocation"));
-            if (bookingBody.containsKey("endLocation"))
-                booking.setEndLocation(bookingBody.get("endLocation"));
-            if (bookingBody.containsKey("pickupTime")) {
-                ZonedDateTime pickupTime = ZonedDateTime.parse(bookingBody.get("pickupTime"));
-                booking.setPickupTime(pickupTime);
-            }
-            if (bookingBody.containsKey("tripDistance")){
-                Double tripDistance =  Double.parseDouble(bookingBody.get("tripDistance"));
-                booking.setTripDistance(tripDistance);
-            }
-
-            bookingRepo.save(booking);
-            return new ResponseEntity<>(booking, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     public ResponseEntity<List<Booking>> findByTime(ZonedDateTime pickupTime) {
         try {
