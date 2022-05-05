@@ -24,8 +24,56 @@ public class Invoice {
 //    public ZonedDateTime dateTime;
 
 
+    @OneToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @OneToOne
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
+
     @Column
-    private int totalPayment;
+    private Double totalPayment;
 
     public Invoice(){}
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public ZonedDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
+
+    public Double getTotalPayment() {
+        return totalPayment;
+    }
+
+    public void setTotalPayment(Double totalPayment) {
+        this.totalPayment = totalPayment;
+    }
 }

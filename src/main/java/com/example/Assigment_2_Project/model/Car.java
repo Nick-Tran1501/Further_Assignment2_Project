@@ -22,7 +22,7 @@ public class Car {
 
     @CreatedDate
     @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
     @Column
     private String make;
