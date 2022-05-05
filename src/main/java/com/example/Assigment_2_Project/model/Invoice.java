@@ -13,16 +13,15 @@ import java.time.temporal.ChronoUnit;
 public class Invoice {
 
     @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "invoice_id")
     private long id;
 
     @CreatedDate
     @JsonIgnore
     private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
-    @Column
-    public ZonedDateTime dateTime;
+//    @Column
+//    public ZonedDateTime dateTime;
 
 
     @Column
