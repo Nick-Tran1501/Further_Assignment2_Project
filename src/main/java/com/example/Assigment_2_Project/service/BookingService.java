@@ -92,7 +92,7 @@ public class BookingService {
         }
     }
 
-//  Get all booking data
+    //  Get all booking data
     public ResponseEntity<List<Booking>> getBookings() {
         try {
             List<Booking> bookings = bookingRepo.findAll();
@@ -106,15 +106,11 @@ public class BookingService {
         }
     }
 
-
-
-
     //  get customer data (tuan)
     public ResponseEntity<Customer> customerData(Long id) {
         try {
             Booking booking = bookingRepo.findBookingById(id);
             Customer customer = booking.getCustomer();
-
             return new ResponseEntity<>(customer, HttpStatus.NOT_FOUND);
         }
         catch (Exception e) {
