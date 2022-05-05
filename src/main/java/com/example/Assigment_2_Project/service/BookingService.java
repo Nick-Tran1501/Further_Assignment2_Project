@@ -111,7 +111,6 @@ public class BookingService {
         try {
             Booking booking = bookingRepo.findBookingById(id);
             Customer customer = booking.getCustomer();
-
             return new ResponseEntity<>(customer, HttpStatus.NOT_FOUND);
         }
         catch (Exception e) {
