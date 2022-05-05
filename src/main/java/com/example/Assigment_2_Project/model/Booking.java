@@ -25,7 +25,6 @@ public class Booking {
 
     @CreatedDate
     @JsonIgnore
-
     private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.MINUTES);
 
     @Column
