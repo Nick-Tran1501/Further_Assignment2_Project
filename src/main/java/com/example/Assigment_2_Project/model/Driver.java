@@ -32,10 +32,10 @@ public class Driver {
     private String name;
 
     @Column
-    private String licenseNumber;
+    private String license;
 
     @Column
-    private String phoneNumber;
+    private String phone;
 
     @Column
     private double rating;
@@ -55,6 +55,14 @@ public class Driver {
         this.id = id;
     }
 
+    public ZonedDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
     public String getName() {
         return name;
     }
@@ -63,20 +71,20 @@ public class Driver {
         this.name = name;
     }
 
-    public String getLicenseNumber() {
-        return licenseNumber;
+    public String getLicense() {
+        return license;
     }
 
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
+    public void setLicense(String license) {
+        this.license = license;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public double getRating() {

@@ -25,7 +25,7 @@ public class Booking {
 
     @CreatedDate
     @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
     @Column
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -70,8 +70,9 @@ public class Booking {
 
 //    private Map<String,String> bookData;
 
-//    @OneToOne
-//    private Invoice invoice;
+    @OneToOne
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
 
 //    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 //    @JsonIgnore
@@ -110,22 +111,6 @@ public class Booking {
         this.createdDate = createdDate;
     }
 
-    public String getStartLocation() {
-        return startLocation;
-    }
-
-    public void setStartLocation(String startLocation) {
-        this.startLocation = startLocation;
-    }
-
-    public Customer getCustomer() { return customer;}
-
-    public void setCustomer(Customer customer) { this.customer = customer;}
-
-    public Car getCar() { return car; }
-
-    public void setCar(Car car) { this.car = car; }
-
     public ZonedDateTime getPickupTime() {
         return pickupTime;
     }
@@ -142,6 +127,14 @@ public class Booking {
         this.dropTime = dropTime;
     }
 
+    public String getStartLocation() {
+        return startLocation;
+    }
+
+    public void setStartLocation(String startLocation) {
+        this.startLocation = startLocation;
+    }
+
     public String getEndLocation() {
         return endLocation;
     }
@@ -156,5 +149,29 @@ public class Booking {
 
     public void setTripDistance(Double tripDistance) {
         this.tripDistance = tripDistance;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 }

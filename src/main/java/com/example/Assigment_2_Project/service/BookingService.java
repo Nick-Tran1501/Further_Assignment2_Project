@@ -1,18 +1,18 @@
 package com.example.Assigment_2_Project.service;
 
 
-import com.example.Assigment_2_Project.model.Booking;
-import com.example.Assigment_2_Project.model.Car;
-import com.example.Assigment_2_Project.model.Customer;
+import com.example.Assigment_2_Project.model.*;
 import com.example.Assigment_2_Project.repository.BookingRepo;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import com.example.Assigment_2_Project.repository.CustomerRepo;
+import com.example.Assigment_2_Project.repository.InvoiceRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +32,9 @@ public class BookingService {
     CustomerRepo customerRepo;
 
     @Autowired
+    InvoiceRepo invoiceRepo;
+
+    @Autowired
     private CustomerService customerService;
 
     @Autowired
@@ -48,7 +51,9 @@ public class BookingService {
             Customer customer = customerRepo.findCustomerById(cusID);
             Booking booking = new Booking();
             List<Car> carList = carRepo.findByAvailableTrue();
+            Invoice invoice = new Invoice();
             Car carData = null;
+            Double tripDistance = null;
             for (Car cars :  carList)
                 if (cars.getId() == carID){
                     carData = cars;
@@ -57,8 +62,7 @@ public class BookingService {
             if (customer == null && carData == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
-            booking.setCar(carData);
-            booking.setCustomer(customer);
+
             if (bookingBody.containsKey("startLocation"))
                 booking.setStartLocation(bookingBody.get("startLocation"));
             if (bookingBody.containsKey("endLocation"))
@@ -68,10 +72,20 @@ public class BookingService {
                 booking.setPickupTime(pickupTime);
             }
             if (bookingBody.containsKey("tripDistance")){
-                Double tripDistance =  Double.parseDouble(bookingBody.get("tripDistance"));
+                tripDistance =  Double.parseDouble(bookingBody.get("tripDistance"));
                 booking.setTripDistance(tripDistance);
             }
-
+            Driver driver = carData.getDriver();
+            Double rateKilometer = carData.getRateKilometer();
+            Double totalPay = tripDistance * rateKilometer;
+//            BigDecimal bigDecimal = new BigDecimal(totalPay);
+            invoice.setCustomer(customer);
+            invoice.setDriver(driver);
+            invoice.setTotalPayment(totalPay);
+            booking.setCar(carData);
+            booking.setCustomer(customer);
+            booking.setInvoice(invoice);
+            invoiceRepo.save(invoice);
             bookingRepo.save(booking);
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
         } catch (Exception e) {

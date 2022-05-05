@@ -52,7 +52,26 @@ public class DriverController extends EntityController<Driver> {
     @Override
     @PutMapping(path = "/{id}")
     public ResponseEntity<Driver> updateTableColumnById(@PathVariable("id") Long id, @RequestBody Map<String, String> contentField) {
-        return null;
+        try {
+            Driver driver = driverRepo.findDriverById(id);
+            if (contentField.containsKey("name")){
+                driver.setName(contentField.get("name"));
+            }
+            if (contentField.containsKey("license")){
+                driver.setLicense(contentField.get("license"));
+            }
+            if (contentField.containsKey("phone")){
+                driver.setPhone(contentField.get("phone"));
+            }
+            if (contentField.containsKey("rating")){
+                Double rating = Double.parseDouble(contentField.get("rating"));
+                driver.setRating(rating);
+            }
+            driverRepo.save(driver);
+            return new ResponseEntity<>(driver, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
