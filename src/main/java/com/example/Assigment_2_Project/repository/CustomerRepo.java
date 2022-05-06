@@ -31,6 +31,5 @@ public interface CustomerRepo extends JpaRepository<Customer, Long> {
 
     List<Customer> findByNameAndPhoneAndAddress(String name, String phone, String address);
 
-//    List<Customer> findAllByName(String name, Pageable pageable);
 
 }
