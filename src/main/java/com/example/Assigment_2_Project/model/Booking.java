@@ -1,18 +1,24 @@
 package com.example.Assigment_2_Project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Type;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.time.ZonedDateTime;
-import java.util.Map;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "booking")
+@JsonIgnoreProperties(  {"handler","hibernateLazyInitializer"} )
 public class Booking {
 
     @Id
@@ -21,7 +27,15 @@ public class Booking {
 
     @CreatedDate
     @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now();
+    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+
+    @Column
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private ZonedDateTime pickupTime;
+
+    @Column
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private ZonedDateTime dropTime;
 
     @Column
     private String startLocation;
@@ -30,33 +44,19 @@ public class Booking {
     private String endLocation;
 
     @Column
-    private ZonedDateTime pickupTime;
-
-    @Column
-    private ZonedDateTime dropTime;
-
-    @Column
     private Double tripDistance;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "car_id")
     private Car car;
 
-
-//    @Column(name = "customer_id")
-//    private long customerID;
-
-//
-
-
-//    private Map<String,String> bookData;
-
-//    @OneToOne
-//    private Invoice invoice;
+    @OneToOne
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
 
 //    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 //    @JsonIgnore
@@ -95,6 +95,22 @@ public class Booking {
         this.createdDate = createdDate;
     }
 
+    public ZonedDateTime getPickupTime() {
+        return pickupTime;
+    }
+
+    public void setPickupTime(ZonedDateTime pickupTime) {
+        this.pickupTime = pickupTime;
+    }
+
+    public ZonedDateTime getDropTime() {
+        return dropTime;
+    }
+
+    public void setDropTime(ZonedDateTime dropTime) {
+        this.dropTime = dropTime;
+    }
+
     public String getStartLocation() {
         return startLocation;
     }
@@ -103,12 +119,43 @@ public class Booking {
         this.startLocation = startLocation;
     }
 
-    public Customer getCustomer() { return customer;}
+    public String getEndLocation() {
+        return endLocation;
+    }
 
-    public void setCustomer(Customer customer) { this.customer = customer;}
+    public void setEndLocation(String endLocation) {
+        this.endLocation = endLocation;
+    }
 
-    public Car getCar() { return car; }
+    public Double getTripDistance() {
+        return tripDistance;
+    }
 
-    public void setCar(Car car) { this.car = car; }
+    public void setTripDistance(Double tripDistance) {
+        this.tripDistance = tripDistance;
+    }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
 }

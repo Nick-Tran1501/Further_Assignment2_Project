@@ -1,10 +1,15 @@
 package com.example.Assigment_2_Project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,22 +24,25 @@ public class Driver {
 
     @CreatedDate
     @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now();
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy '' HH:mm:ss")
+    private ZonedDateTime createdDate = ZonedDateTime.now()
+            .truncatedTo(ChronoUnit.SECONDS);
 
     @Column
     private String name;
 
     @Column
-    private String licenseNumber;
+    private String license;
 
     @Column
-    private String phoneNumber;
+    private String phone;
 
     @Column
     private double rating;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_vin")
+    @JsonManagedReference
     private Car car; //Refresh everyday
 
     public Driver() {}
@@ -47,6 +55,14 @@ public class Driver {
         this.id = id;
     }
 
+    public ZonedDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(ZonedDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
     public String getName() {
         return name;
     }
@@ -55,20 +71,20 @@ public class Driver {
         this.name = name;
     }
 
-    public String getLicenseNumber() {
-        return licenseNumber;
+    public String getLicense() {
+        return license;
     }
 
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
+    public void setLicense(String license) {
+        this.license = license;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public double getRating() {

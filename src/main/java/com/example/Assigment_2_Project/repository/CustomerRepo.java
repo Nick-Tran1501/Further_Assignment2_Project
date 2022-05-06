@@ -5,6 +5,7 @@ import org.springframework.aop.interceptor.CustomizableTraceInterceptor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +30,6 @@ public interface CustomerRepo extends JpaRepository<Customer, Long> {
     List<Customer> findByNameAndPhone(String name, String phone);
 
     List<Customer> findByNameAndPhoneAndAddress(String name, String phone, String address);
+
 
 }
