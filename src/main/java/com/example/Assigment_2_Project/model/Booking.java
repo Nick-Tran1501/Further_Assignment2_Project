@@ -13,6 +13,8 @@ import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "booking")
@@ -35,40 +37,22 @@ public class Booking {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private ZonedDateTime dropTime;
 
-
     @Column
     private String startLocation;
 
     @Column
     private String endLocation;
 
-
-
     @Column
     private Double tripDistance;
 
-
-
-//    @OneToOne(fetch = FetchType.LAZY)
-
     @OneToOne
     @JoinColumn(name = "customer_id")
-//    @JsonBackReference
-//    @JsonIgnore
     private Customer customer;
-
-
-//    @OneToOne(fetch = FetchType.LAZY)
 
     @OneToOne
     @JoinColumn(name = "car_id")
     private Car car;
-
-
-//    @Column(name = "customer_id")
-//    private long customerID;
-
-//    private Map<String,String> bookData;
 
     @OneToOne
     @JoinColumn(name = "invoice_id")
