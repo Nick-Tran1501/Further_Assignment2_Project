@@ -26,7 +26,7 @@ public class Driver {
     @JsonIgnore
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy '' HH:mm:ss")
     private ZonedDateTime createdDate = ZonedDateTime.now()
-            .truncatedTo(ChronoUnit.SECONDS);
+            .truncatedTo(ChronoUnit.MINUTES);
 
     @Column
     private String name;
