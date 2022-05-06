@@ -6,6 +6,7 @@ import com.example.Assigment_2_Project.repository.BookingRepo;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import com.example.Assigment_2_Project.repository.CustomerRepo;
 import com.example.Assigment_2_Project.repository.InvoiceRepo;
+import net.bytebuddy.ClassFileVersion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
@@ -183,8 +186,27 @@ public class BookingService {
     }
 
     // car used by month
+    public ResponseEntity<List<String>> carsUsed(String year, String month){
+        try{
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+            String date = year + "-" + month;
+            ZonedDateTime checkTime = ZonedDateTime.parse(date,formatter);
 
-
+//            ZonedDateTime checkYear = ZonedDateTime.parse(year);
+//            ZonedDateTime checkMonth = ZonedDateTime.parse(month);
+            List<Booking> bookingList = bookingRepo.findAll();
+            List<String> carList = null;
+            for (Booking booking :bookingList )
+                if (booking.getCreatedDate().isEqual(checkTime)){
+                    carList.add(booking.getCar().getLicensePlate());
+                }
+            return carList == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                    : new ResponseEntity<>(carList, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 //    ------- KHOI PART --------
