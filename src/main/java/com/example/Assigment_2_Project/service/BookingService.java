@@ -8,6 +8,7 @@ import com.example.Assigment_2_Project.repository.CustomerRepo;
 import com.example.Assigment_2_Project.repository.InvoiceRepo;
 import net.bytebuddy.ClassFileVersion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -232,6 +233,17 @@ public class BookingService {
     public ResponseEntity<List<Booking>> findByTime(ZonedDateTime pickupTime) {
         try {
             List<Booking> bookingList = bookingRepo.findByPickupTime(pickupTime);
+            return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<List<Booking>> findByPeriod(String startDate, String endDate) {
+        try {
+            ZonedDateTime start = ZonedDateTime.parse(startDate);
+            ZonedDateTime end = ZonedDateTime.parse(endDate);
+            List<Booking> bookingList = bookingRepo.findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(start, end);
             return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
