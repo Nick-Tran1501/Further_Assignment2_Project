@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -62,7 +63,6 @@ public class BookingService {
             if (customer == null && carData == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
-
             if (bookingBody.containsKey("startLocation"))
                 booking.setStartLocation(bookingBody.get("startLocation"));
             if (bookingBody.containsKey("endLocation"))
@@ -173,6 +173,8 @@ public class BookingService {
         try {
             Booking booking = bookingRepo.findBookingById(id);
             booking.getCar().setAvailable(true);
+            ZonedDateTime dropTime =  ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+            booking.setDropTime(dropTime);
             return new ResponseEntity<>(booking, HttpStatus.OK);
         }
         catch (Exception e){
