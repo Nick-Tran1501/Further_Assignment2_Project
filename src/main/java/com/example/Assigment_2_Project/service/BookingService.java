@@ -243,7 +243,7 @@ public class BookingService {
         try {
             ZonedDateTime start = ZonedDateTime.parse(startDate);
             ZonedDateTime end = ZonedDateTime.parse(endDate);
-            List<Booking> bookingList = bookingRepo.findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(start, end);
+            List<Booking> bookingList = bookingRepo.findByCreatedDateAfterAndCreatedDateBefore(start, end);
             return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
