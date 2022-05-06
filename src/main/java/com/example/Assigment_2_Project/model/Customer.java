@@ -22,7 +22,7 @@ public class Customer {
 
     @CreatedDate
     @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.MINUTES);
 
     @Column
     private String name;
