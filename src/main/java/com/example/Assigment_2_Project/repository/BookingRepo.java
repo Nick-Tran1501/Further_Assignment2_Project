@@ -22,6 +22,10 @@ public interface BookingRepo extends JpaRepository<Booking, Long> {
     List<Booking> findByPickupTimeBefore(ZonedDateTime zonedDateTime);
     List<Booking> findByPickupTime(ZonedDateTime pickupTime);
 
+    List<Booking> findByCreatedDateIsBetween(ZonedDateTime startTime, ZonedDateTime endTime);
+    List<Booking> findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(ZonedDateTime startTime,
+                                                                                  ZonedDateTime endTime);
+
 //    List<Booking> findByPickupTime(ZonedDateTime pickupTime);
 //    List<Booking> findByCreateDate(ZonedDateTime date);ß
 //    List<Booking> findByStartEndDate(ZonedDateTime startDate, ZonedDateTime endDate);

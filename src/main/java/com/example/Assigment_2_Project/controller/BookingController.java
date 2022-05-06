@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Book;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
@@ -129,6 +130,11 @@ public class BookingController extends EntityController<Booking>{
 //                                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Map<String, ZonedDateTime> pickupTime) {
 //        return bookingService.bookingTest(pickupTime);
 //    }
+    @GetMapping(path = "/search/test")
+    public ResponseEntity<List<Booking>> findByPeriod(@RequestParam String startDate,
+                                                      @RequestParam String endDate) {
+        return bookingService.findByPeriod(startDate, endDate);
+    }
 
     @Override
     @PostMapping(path = "/demo")
