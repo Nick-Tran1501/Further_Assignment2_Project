@@ -86,9 +86,14 @@ public class BookingService {
             invoice.setCustomer(customer);
             invoice.setDriver(driver);
             invoice.setTotalPayment(totalPay);
+
+
             booking.setCar(carData);
             booking.setCustomer(customer);
             booking.setInvoice(invoice);
+
+            customer.getInvoiceList().add(invoice);
+
             invoiceRepo.save(invoice);
             bookingRepo.save(booking);
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
@@ -243,7 +248,8 @@ public class BookingService {
         try {
             ZonedDateTime start = ZonedDateTime.parse(startDate);
             ZonedDateTime end = ZonedDateTime.parse(endDate);
-            List<Booking> bookingList = bookingRepo.findByCreatedDateAfterAndCreatedDateBefore(start, end);
+//            List<Booking> bookingList = bookingRepo.findByCreatedDateAfterAndCreatedDateBefore(start, end);
+            List<Booking> bookingList = bookingRepo.findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(start, end);
             return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
