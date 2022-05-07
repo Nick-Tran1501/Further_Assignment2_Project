@@ -10,10 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Access;
 import java.util.List;
@@ -38,6 +35,20 @@ public class InvoiceController extends EntityController<Invoice> {
     @GetMapping(path = "/test")
     public ResponseEntity<List<Invoice>> findByPeriod(@RequestParam String start, @RequestParam String end){
         return invoiceService.findByPeriod(start, end);
+    }
+
+    @GetMapping(path = "/customer/{id}")
+    public ResponseEntity<List<Invoice>> findByCustomer(@PathVariable("id") Long cusID,
+                                                        @RequestParam String startDate,
+                                                        @RequestParam String endDate) {
+        return invoiceService.findByCustomer(cusID, startDate, endDate);
+    }
+
+    @GetMapping(path = "/driver/{id}")
+    public ResponseEntity<List<Invoice>> findByDriver(@PathVariable("id") Long driverID,
+                                                      @RequestParam String start,
+                                                      @RequestParam String end){
+        return invoiceService.findByDriver(driverID, start, end);
     }
 
     @Override
