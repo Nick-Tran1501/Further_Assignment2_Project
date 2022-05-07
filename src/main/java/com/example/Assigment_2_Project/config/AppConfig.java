@@ -48,7 +48,7 @@ public class AppConfig {
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
         entityManagerFactoryBean.setJpaProperties(properties);
-//Test 
+//Test
         return entityManagerFactoryBean;
     }
 
