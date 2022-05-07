@@ -20,12 +20,10 @@ public class Invoice {
     private long id;
 
     @CreatedDate
-    @JsonIgnore
     private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.MINUTES);
 
 //    @Column
 //    public ZonedDateTime dateTime;
-
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

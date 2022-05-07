@@ -40,10 +40,10 @@ public class Driver {
     @Column
     private double rating;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "car_vin")
-    @JsonManagedReference
-    private Car car; //Refresh everyday
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "car_vin")
+//    @JsonBackReference
+//    private Car car; //Refresh everyday
 
     @OneToMany(mappedBy = "driver", fetch = FetchType.EAGER)
     private List<Invoice> invoiceList;
@@ -98,11 +98,19 @@ public class Driver {
         this.rating = rating;
     }
 
-    public Car getCar() {
-        return car;
+//    public Car getCar() {
+//        return car;
+//    }
+//
+//    public void setCar(Car car) {
+//        this.car = car;
+//    }
+
+    public List<Invoice> getInvoiceList() {
+        return invoiceList;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setInvoiceList(List<Invoice> invoiceList) {
+        this.invoiceList = invoiceList;
     }
 }
