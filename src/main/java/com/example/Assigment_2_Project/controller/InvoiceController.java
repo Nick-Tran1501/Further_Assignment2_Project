@@ -51,6 +51,14 @@ public class InvoiceController extends EntityController<Invoice> {
         return invoiceService.findByDriver(driverID, start, end);
     }
 
+    @GetMapping(path = "/revenue/{id}")
+    public ResponseEntity<Double> getRevenue(@PathVariable("id") Long id,
+                                             @RequestParam String searchBy,
+                                             @RequestParam String start,
+                                             @RequestParam String end) {
+        return invoiceService.getRevenue(id, searchBy, start, end);
+    }
+
     @Override
     public ResponseEntity<Invoice> updateTableColumnById(Long id, Map<String, String> contentField) {
         return null;
