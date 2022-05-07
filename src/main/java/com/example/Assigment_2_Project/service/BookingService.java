@@ -93,6 +93,7 @@ public class BookingService {
             booking.setInvoice(invoice);
 
             customer.getInvoiceList().add(invoice);
+            driver.getInvoiceList().add(invoice);
 
             invoiceRepo.save(invoice);
             bookingRepo.save(booking);

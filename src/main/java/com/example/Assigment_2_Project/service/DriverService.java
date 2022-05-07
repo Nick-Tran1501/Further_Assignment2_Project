@@ -53,7 +53,6 @@ public class DriverService {
             Car car = carRepo.findCarById(car_id.get("car_id"));
             if (car.getDriver() == null){
                 car.setDriver(driver);
-                driver.setCar(car);
                 driverRepo.save(driver);
                 return new ResponseEntity<>(driver, HttpStatus.OK);
             }
