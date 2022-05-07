@@ -46,7 +46,7 @@ public class Booking {
     @Column
     private Double tripDistance;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
