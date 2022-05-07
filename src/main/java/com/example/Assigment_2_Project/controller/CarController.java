@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -125,7 +126,7 @@ public class CarController extends EntityController<Car> {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-}
+
 
 
 //    @GetMapping(path = "/{id}")
@@ -166,3 +167,10 @@ public class CarController extends EntityController<Car> {
 //    public ResponseEntity<Car> updateTableColumnById(Long id, Map<String, String> contentField) {
 //        return null;
 //    }
+
+    //   Get cars used
+    @GetMapping(path = "/carsUsed")
+    public ResponseEntity<HashMap<String,Integer>> carsUsed(@RequestParam String year, @RequestParam String month){
+        return carService.carsUsed(year,month);
+    }
+}

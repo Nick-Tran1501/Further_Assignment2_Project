@@ -1,6 +1,8 @@
 package com.example.Assigment_2_Project.service;
 
+import com.example.Assigment_2_Project.model.Booking;
 import com.example.Assigment_2_Project.model.Car;
+import com.example.Assigment_2_Project.repository.BookingRepo;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,6 +22,9 @@ public class CarService {
 
     @Autowired
     CarRepo carRepo;
+
+    @Autowired
+    private BookingRepo bookingRepo;
 
 
     //Create car
@@ -82,6 +88,33 @@ public class CarService {
                     : new ResponseEntity<>(carTemp, HttpStatus.FOUND);
 
         } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // car used by month
+    public ResponseEntity<HashMap<String,Integer>> carsUsed(String year, String month){
+        try{
+            List<Booking> bookingList = bookingRepo.findAll();
+            HashMap<String, Integer> result = new HashMap<>();
+            for (Booking booking : bookingList) {
+                String bookingYear = String.valueOf(booking.getCreatedDate().getYear());
+                String bookingMonth = String.valueOf(booking.getCreatedDate().getMonth());
+                if (bookingYear.equalsIgnoreCase(year) && bookingMonth.equalsIgnoreCase(month)){
+                    String key = booking.getCar().getLicensePlate();
+                    if (result.containsKey(key)){
+                        Integer days = result.get(key) + 1;
+                        result.remove(key);
+                        result.put(key,days);
+                    }
+                    else {
+                        result.put(key,1);
+                    }
+                }
+            }
+            return new ResponseEntity<HashMap<String,Integer>>(result, HttpStatus.FOUND);
+        }
+        catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -46,7 +46,6 @@ public class Driver {
     private Car car; //Refresh everyday
 
     @OneToMany(mappedBy = "driver", fetch = FetchType.EAGER)
-    @JsonManagedReference
     private List<Invoice> invoiceList;
 
     public Driver() {}
