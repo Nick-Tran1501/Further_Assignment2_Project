@@ -36,6 +36,14 @@ public class Customer {
 //    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 ////    @JsonManagedReference
 //    private Booking booking;
+//    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+////    @JoinColumn(name = "booking")
+//    @JsonManagedReference
+//    private List<Booking> bookingList;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Invoice> invoiceList;
 
 
     public Customer() {};
@@ -80,7 +88,24 @@ public class Customer {
         this.address = address;
     }
 
-//    public Booking getBooking() {
+    public List<Invoice> getInvoiceList() {
+        return invoiceList;
+    }
+
+    public void setInvoiceList(List<Invoice> invoiceList) {
+        this.invoiceList = invoiceList;
+    }
+
+    //    public List<Booking> getBookingList() {
+//        return bookingList;
+//    }
+//
+//    public void setBookingList(List<Booking> bookingList) {
+//        this.bookingList = bookingList;
+//    }
+
+
+    //    public Booking getBooking() {
 //        return booking;
 //    }
 //

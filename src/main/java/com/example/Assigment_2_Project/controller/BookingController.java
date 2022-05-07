@@ -103,12 +103,6 @@ public class BookingController extends EntityController<Booking>{
         return bookingService.finishTrip(id);
     }
 
-//   Get cars used
-    @GetMapping(path = "/carInMonth/{year}/{month}")
-    public ResponseEntity<List<String>> carsUsed(@PathVariable("year") String year,@PathVariable("month") String month){
-        return bookingService.carsUsed(year,month);
-    }
-
 
 //  ---------- KHOI PART ------------
     //  ( khoi)

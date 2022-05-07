@@ -86,9 +86,15 @@ public class BookingService {
             invoice.setCustomer(customer);
             invoice.setDriver(driver);
             invoice.setTotalPayment(totalPay);
+
+
             booking.setCar(carData);
             booking.setCustomer(customer);
             booking.setInvoice(invoice);
+
+            customer.getInvoiceList().add(invoice);
+            driver.getInvoiceList().add(invoice);
+
             invoiceRepo.save(invoice);
             bookingRepo.save(booking);
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
@@ -186,30 +192,6 @@ public class BookingService {
         }
     }
 
-    // car used by month
-    public ResponseEntity<List<String>> carsUsed(String year, String month){
-        try{
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
-            String date = year + "-" + month;
-            ZonedDateTime checkTime = ZonedDateTime.parse(date,formatter);
-
-//            ZonedDateTime checkYear = ZonedDateTime.parse(year);
-//            ZonedDateTime checkMonth = ZonedDateTime.parse(month);
-            List<Booking> bookingList = bookingRepo.findAll();
-            List<String> carList = null;
-            for (Booking booking :bookingList )
-                if (booking.getCreatedDate().isEqual(checkTime)){
-                    carList.add(booking.getCar().getLicensePlate());
-                }
-            return carList == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                    : new ResponseEntity<>(carList, HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
 //    ------- KHOI PART --------
 
     //    //  Get available car list (khoi)
@@ -243,7 +225,8 @@ public class BookingService {
         try {
             ZonedDateTime start = ZonedDateTime.parse(startDate);
             ZonedDateTime end = ZonedDateTime.parse(endDate);
-            List<Booking> bookingList = bookingRepo.findByCreatedDateAfterAndCreatedDateBefore(start, end);
+//            List<Booking> bookingList = bookingRepo.findByCreatedDateAfterAndCreatedDateBefore(start, end);
+            List<Booking> bookingList = bookingRepo.findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(start, end);
             return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

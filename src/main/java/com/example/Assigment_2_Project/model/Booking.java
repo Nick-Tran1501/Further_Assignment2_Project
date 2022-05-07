@@ -46,7 +46,7 @@ public class Booking {
     @Column
     private Double tripDistance;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -58,9 +58,6 @@ public class Booking {
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 
-//    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-//    @JsonIgnore
-//    private Customer customer;
 
 //    @ManyToOne(cascade = CascadeType.PERSIST)
 //    @JsonIgnore
