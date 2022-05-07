@@ -32,7 +32,6 @@ public class Invoice {
 
     @ManyToOne
     @JoinColumn(name = "driver_id")
-    @JsonIgnore
     private Driver driver;
 
     @Column
