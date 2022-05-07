@@ -43,9 +43,12 @@ public class InvoiceService {
 
     public ResponseEntity<List<Invoice>> findByCustomer(Long cusID, String startDate, String endDate){
         try {
+            String time = "T00:00:00.000Z";
+            String startTime = startDate + time;
+            String endTime = endDate + time;
             Customer customer  = customerRepo.findCustomerById(cusID);
-            ZonedDateTime start = ZonedDateTime.parse(startDate);
-            ZonedDateTime end = ZonedDateTime.parse(endDate);
+            ZonedDateTime start = ZonedDateTime.parse(startTime);
+            ZonedDateTime end = ZonedDateTime.parse(endTime);
             List<Invoice> invoiceList =
                     invoiceRepo.findByCustomerAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(customer, start, end);
             return invoiceList == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
@@ -57,9 +60,12 @@ public class InvoiceService {
 
     public ResponseEntity<List<Invoice>> findByDriver(Long driverID, String startDate, String endDate){
         try {
+            String time = "T00:00:00.000Z";
             Driver driver = driverRepo.findDriverById(driverID);
-            ZonedDateTime start = ZonedDateTime.parse(startDate);
-            ZonedDateTime end = ZonedDateTime.parse(endDate);
+            String startTime = startDate + time;
+            String endTime = endDate + time;
+            ZonedDateTime start = ZonedDateTime.parse(startTime);
+            ZonedDateTime end = ZonedDateTime.parse(endTime);
             List<Invoice> invoiceList =
                     invoiceRepo.findByDriverAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(driver, start, end);
             return invoiceList == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
@@ -69,23 +75,33 @@ public class InvoiceService {
         }
     }
 
-    public ResponseEntity<Double> getRevenue( Long ID, String searchBy, String startDate, String endDate) {
+
+
+    public ResponseEntity<Double> getRevenue(Long ID, String searchBy, String startDate, String endDate) {
         try{
             Double revenue = 0.0;
-
-            ZonedDateTime start = ZonedDateTime.parse(startDate);
-            ZonedDateTime end = ZonedDateTime.parse(endDate);
-            if (searchBy == "customer") {
+            String time = "T00:00:00.000Z";
+            String startTime = startDate + time;
+            String endTime = endDate + time;
+            ZonedDateTime start = ZonedDateTime.parse(startTime);
+            ZonedDateTime end = ZonedDateTime.parse(endTime);
+            if (searchBy.equalsIgnoreCase("customer")) {
                 Customer customer = customerRepo.findCustomerById(ID);
                 List<Invoice> invoiceList =
                         invoiceRepo.findByCustomerAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(customer, start, end);
                 for (Invoice invoice : invoiceList)
                     revenue += invoice.getTotalPayment();
             }
-            if (searchBy == "driver"){
+            if (searchBy.equalsIgnoreCase("driver")){
                 Driver driver = driverRepo.findDriverById(ID);
                 List<Invoice> invoiceList =
                         invoiceRepo.findByDriverAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(driver, start, end);
+                for (Invoice invoice : invoiceList)
+                    revenue += invoice.getTotalPayment();
+            }
+            if (searchBy.equalsIgnoreCase("all")){
+                List<Invoice> invoiceList =
+                        invoiceRepo.findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(start,end);
                 for (Invoice invoice : invoiceList)
                     revenue += invoice.getTotalPayment();
             }
