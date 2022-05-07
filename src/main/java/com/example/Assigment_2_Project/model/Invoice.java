@@ -34,7 +34,6 @@ public class Invoice {
 
     @ManyToOne
     @JoinColumn(name = "driver_id")
-    @JsonBackReference
     private Driver driver;
 
     @Column
