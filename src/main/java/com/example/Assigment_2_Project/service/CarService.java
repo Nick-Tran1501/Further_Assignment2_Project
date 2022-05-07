@@ -1,6 +1,8 @@
 package com.example.Assigment_2_Project.service;
 
+import com.example.Assigment_2_Project.model.Booking;
 import com.example.Assigment_2_Project.model.Car;
+import com.example.Assigment_2_Project.repository.BookingRepo;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,9 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 
 @Service
@@ -19,6 +21,9 @@ public class CarService {
 
     @Autowired
     CarRepo carRepo;
+
+    @Autowired
+    private BookingRepo bookingRepo;
 
 
     //Create car
