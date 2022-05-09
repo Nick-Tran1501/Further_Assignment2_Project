@@ -36,28 +36,28 @@ public class InvoiceController extends EntityController<Invoice> {
     public ResponseEntity<List<Invoice>> findByPeriod(@RequestParam String start, @RequestParam String end){
         return invoiceService.findByPeriod(start, end);
     }
-//
-//    @GetMapping(path = "/byCustomer/{id}")
-//    public ResponseEntity<List<Invoice>> findByCustomer(@PathVariable("id") Long cusID,
-//                                                        @RequestParam String startDate,
-//                                                        @RequestParam String endDate) {
-//        return invoiceService.findByCustomer(cusID, startDate, endDate);
-//    }
-//
-//    @GetMapping(path = "/byDriver/{id}")
-//    public ResponseEntity<List<Invoice>> findByDriver(@PathVariable("id") Long driverID,
-//                                                      @RequestParam String start,
-//                                                      @RequestParam String end){
-//        return invoiceService.findByDriver(driverID, start, end);
-//    }
-//
-//    @GetMapping(path = "/revenue/{id}")
-//    public ResponseEntity<Double> getRevenue(@PathVariable("id") Long id,
-//                                             @RequestParam String searchBy,
-//                                             @RequestParam String start,
-//                                             @RequestParam String end) {
-//        return invoiceService.getRevenue(id, searchBy, start, end);
-//    }
+
+    @GetMapping(path = "/byCustomer")
+    public ResponseEntity<List<Invoice>> findByCustomer(@RequestParam Long cusID,
+                                                        @RequestParam String startDate,
+                                                        @RequestParam String endDate) {
+        return invoiceService.findByCustomer(cusID, startDate, endDate);
+    }
+
+    @GetMapping(path = "/byDriver/{id}")
+    public ResponseEntity<List<Invoice>> findByDriver(@PathVariable("id") Long driverID,
+                                                      @RequestParam String start,
+                                                      @RequestParam String end){
+        return invoiceService.findByDriver(driverID, start, end);
+    }
+
+    @GetMapping(path = "/revenue")
+    public ResponseEntity<Double> getRevenue(@RequestParam Long id,
+                                             @RequestParam String searchBy,
+                                             @RequestParam String start,
+                                             @RequestParam String end) {
+        return invoiceService.getRevenue(id, searchBy, start, end);
+    }
 
     @Override
     public ResponseEntity<Invoice> updateTableColumnById(Long id, Map<String, String> contentField) {

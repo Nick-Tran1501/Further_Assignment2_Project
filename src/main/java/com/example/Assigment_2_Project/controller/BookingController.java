@@ -129,7 +129,7 @@ public class BookingController extends EntityController<Booking>{
 //                                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Map<String, ZonedDateTime> pickupTime) {
 //        return bookingService.bookingTest(pickupTime);
 //    }
-    @GetMapping(path = "/search/test")
+    @GetMapping(path = "/between")
     public ResponseEntity<List<Booking>> findByPeriod(@RequestParam String startDate,
                                                       @RequestParam String endDate) {
         return bookingService.findByPeriod(startDate, endDate);

@@ -67,37 +67,35 @@ public class BookingService {
             if (customer == null && carData == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
-            if (bookingBody.containsKey("startLocation"))
-                booking.setStartLocation(bookingBody.get("startLocation"));
-            if (bookingBody.containsKey("endLocation"))
-                booking.setEndLocation(bookingBody.get("endLocation"));
-            if (bookingBody.containsKey("pickupTime")) {
-                ZonedDateTime pickupTime = ZonedDateTime.parse(bookingBody.get("pickupTime"));
-                booking.setPickupTime(pickupTime);
-            }
-            if (bookingBody.containsKey("tripDistance")){
-                tripDistance =  Double.parseDouble(bookingBody.get("tripDistance"));
-                booking.setTripDistance(tripDistance);
-            }
-            Driver driver = carData.getDriver();
-            Double rateKilometer = carData.getRateKilometer();
-            Double totalPay = tripDistance * rateKilometer;
-//            BigDecimal bigDecimal = new BigDecimal(totalPay);
+//            if (bookingBody.containsKey("startLocation"))
+//                booking.setStartLocation(bookingBody.get("startLocation"));
+//            if (bookingBody.containsKey("endLocation"))
+//                booking.setEndLocation(bookingBody.get("endLocation"));
+//            if (bookingBody.containsKey("pickupTime")) {
+//                ZonedDateTime pickupTime = ZonedDateTime.parse(bookingBody.get("pickupTime"));
+//                booking.setPickupTime(pickupTime);
+//            }
+//            if (bookingBody.containsKey("tripDistance")){
+//                tripDistance =  Double.parseDouble(bookingBody.get("tripDistance"));
+//                booking.setTripDistance(tripDistance);
+//            }
+//            Driver driver = carData.getDriver();
+//            Double rateKilometer = carData.getRateKilometer();
+//            Double totalPay = tripDistance * rateKilometer;
+////            BigDecimal bigDecimal = new BigDecimal(totalPay);
 //            invoice.setCustomer(customer);
 //            invoice.setDriver(driver);
-            invoice.setTotalPayment(totalPay);
-            customer.getInvoiceList().add(invoice);
-            driver.getInvoiceList().add(invoice);
+//            invoice.setTotalPayment(totalPay);
 
 
             booking.setCar(carData);
             booking.setCustomer(customer);
-            booking.setInvoice(invoice);
+//            booking.setInvoice(invoice);
 
 //            customer.getInvoiceList().add(invoice);
 //            driver.getInvoiceList().add(invoice);
 
-            invoiceRepo.save(invoice);
+//            invoiceRepo.save(invoice);
             bookingRepo.save(booking);
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -196,24 +194,6 @@ public class BookingService {
 
 //    ------- KHOI PART --------
 
-    //    //  Get available car list (khoi)
-//    public ResponseEntity<List<Car>> getAvailableCar(ZonedDateTime pickupTime) {
-//        try {
-//            List<Car> carList = carRepo.findAll();
-//            List<Booking> bookingList = bookingRepo.findAll();
-//            for (Booking booking: bookingList) {
-//                if (booking.getPickupTime().equals(pickupTime)) {
-//                    carList.remove(booking.getCar());
-//                    return new ResponseEntity<>(carList, HttpStatus.FOUND);
-//                }
-//            }
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
     public ResponseEntity<List<Booking>> findByTime(ZonedDateTime pickupTime) {
         try {
             List<Booking> bookingList = bookingRepo.findByPickupTime(pickupTime);
@@ -225,9 +205,11 @@ public class BookingService {
 
     public ResponseEntity<List<Booking>> findByPeriod(String startDate, String endDate) {
         try {
-            ZonedDateTime start = ZonedDateTime.parse(startDate);
-            ZonedDateTime end = ZonedDateTime.parse(endDate);
-//            List<Booking> bookingList = bookingRepo.findByCreatedDateAfterAndCreatedDateBefore(start, end);
+            String time = "T00:00:00.000Z";
+            String startTime = startDate + time;
+            String endTime = endDate + time;
+            ZonedDateTime start = ZonedDateTime.parse(startTime);
+            ZonedDateTime end = ZonedDateTime.parse(endTime);
             List<Booking> bookingList = bookingRepo.findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(start, end);
             return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
         } catch (Exception e) {
