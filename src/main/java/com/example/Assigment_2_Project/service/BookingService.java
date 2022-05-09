@@ -67,35 +67,35 @@ public class BookingService {
             if (customer == null && carData == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
-            if (bookingBody.containsKey("startLocation"))
-                booking.setStartLocation(bookingBody.get("startLocation"));
-            if (bookingBody.containsKey("endLocation"))
-                booking.setEndLocation(bookingBody.get("endLocation"));
-            if (bookingBody.containsKey("pickupTime")) {
-                ZonedDateTime pickupTime = ZonedDateTime.parse(bookingBody.get("pickupTime"));
-                booking.setPickupTime(pickupTime);
-            }
-            if (bookingBody.containsKey("tripDistance")){
-                tripDistance =  Double.parseDouble(bookingBody.get("tripDistance"));
-                booking.setTripDistance(tripDistance);
-            }
-            Driver driver = carData.getDriver();
-            Double rateKilometer = carData.getRateKilometer();
-            Double totalPay = tripDistance * rateKilometer;
-//            BigDecimal bigDecimal = new BigDecimal(totalPay);
-            invoice.setCustomer(customer);
-            invoice.setDriver(driver);
-            invoice.setTotalPayment(totalPay);
+//            if (bookingBody.containsKey("startLocation"))
+//                booking.setStartLocation(bookingBody.get("startLocation"));
+//            if (bookingBody.containsKey("endLocation"))
+//                booking.setEndLocation(bookingBody.get("endLocation"));
+//            if (bookingBody.containsKey("pickupTime")) {
+//                ZonedDateTime pickupTime = ZonedDateTime.parse(bookingBody.get("pickupTime"));
+//                booking.setPickupTime(pickupTime);
+//            }
+//            if (bookingBody.containsKey("tripDistance")){
+//                tripDistance =  Double.parseDouble(bookingBody.get("tripDistance"));
+//                booking.setTripDistance(tripDistance);
+//            }
+//            Driver driver = carData.getDriver();
+//            Double rateKilometer = carData.getRateKilometer();
+//            Double totalPay = tripDistance * rateKilometer;
+////            BigDecimal bigDecimal = new BigDecimal(totalPay);
+//            invoice.setCustomer(customer);
+//            invoice.setDriver(driver);
+//            invoice.setTotalPayment(totalPay);
 
 
             booking.setCar(carData);
             booking.setCustomer(customer);
-            booking.setInvoice(invoice);
+//            booking.setInvoice(invoice);
 
 //            customer.getInvoiceList().add(invoice);
 //            driver.getInvoiceList().add(invoice);
 
-            invoiceRepo.save(invoice);
+//            invoiceRepo.save(invoice);
             bookingRepo.save(booking);
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
         } catch (Exception e) {
