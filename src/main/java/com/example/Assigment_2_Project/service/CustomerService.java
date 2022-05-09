@@ -27,7 +27,7 @@ import java.util.Optional;
 public class CustomerService {
 
     @Autowired
-    CustomerRepo customerRepo;
+    private CustomerRepo customerRepo;
 
     @Autowired
     private BookingRepo bookingRepo;
