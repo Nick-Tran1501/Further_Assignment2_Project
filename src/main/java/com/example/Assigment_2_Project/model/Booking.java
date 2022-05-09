@@ -1,10 +1,7 @@
 package com.example.Assigment_2_Project.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -56,6 +53,7 @@ public class Booking {
 
     @OneToOne
     @JoinColumn(name = "invoice_id")
+    @JsonManagedReference
     private Invoice invoice;
 
 

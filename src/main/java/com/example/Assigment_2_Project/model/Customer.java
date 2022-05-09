@@ -22,7 +22,7 @@ public class Customer {
 
     @CreatedDate
     @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS );
 
     @Column
     private String name;
@@ -41,7 +41,7 @@ public class Customer {
 //    @JsonManagedReference
 //    private List<Booking> bookingList;
 
-//    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+//    @OneToMany(cascade = CascadeType.ALL)
 //    private List<Invoice> invoiceList;
 
 
