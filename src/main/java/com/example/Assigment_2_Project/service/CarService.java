@@ -21,7 +21,7 @@ import java.util.Optional;
 public class CarService {
 
     @Autowired
-    CarRepo carRepo;
+    private CarRepo carRepo;
 
     @Autowired
     private BookingRepo bookingRepo;
@@ -30,8 +30,13 @@ public class CarService {
     //Create car
     public ResponseEntity<Car> addCar(Car car) {
         try {
-            carRepo.save(car);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            List<Car> carList = carRepo.findAll();
+            for (Car temp: carList)
+                if (car.getLicensePlate().equalsIgnoreCase(temp.getLicensePlate())){
+                    return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+                }
+                carRepo.save(car);
+                return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

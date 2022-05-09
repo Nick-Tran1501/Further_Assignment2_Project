@@ -39,14 +39,10 @@ public class BookingController extends EntityController<Booking>{
     public CarController carController;
 
     @Autowired
-    BookingRepo bookingRepo;
-
+    private BookingRepo bookingRepo;
 
     @Autowired
     private BookingService bookingService;
-
-    @Autowired
-    private CarService carService;
 
     @Override
     public ResponseEntity updateTableColumnById(Long id, Map contentField) {
