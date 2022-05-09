@@ -83,9 +83,11 @@ public class BookingService {
             Double rateKilometer = carData.getRateKilometer();
             Double totalPay = tripDistance * rateKilometer;
 //            BigDecimal bigDecimal = new BigDecimal(totalPay);
-            invoice.setCustomer(customer);
-            invoice.setDriver(driver);
+//            invoice.setCustomer(customer);
+//            invoice.setDriver(driver);
             invoice.setTotalPayment(totalPay);
+            customer.getInvoiceList().add(invoice);
+            driver.getInvoiceList().add(invoice);
 
 
             booking.setCar(carData);

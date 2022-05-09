@@ -20,18 +20,18 @@ public class Invoice {
     private long id;
 
     @CreatedDate
-    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+    private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
 //    @Column
 //    public ZonedDateTime dateTime;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
-    @ManyToOne
-    @JoinColumn(name = "driver_id")
-    private Driver driver;
+//    @ManyToOne
+//    @JoinColumn(name = "customer_id")
+//    private Customer customer;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "driver_id")
+//    private Driver driver;
 
     @Column
     private Double totalPayment;
@@ -54,21 +54,21 @@ public class Invoice {
         this.createdDate = createdDate;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
+//    public Customer getCustomer() {
+//        return customer;
+//    }
+//
+//    public void setCustomer(Customer customer) {
+//        this.customer = customer;
+//    }
+//
+//    public Driver getDriver() {
+//        return driver;
+//    }
+//
+//    public void setDriver(Driver driver) {
+//        this.driver = driver;
+//    }
 
     public Double getTotalPayment() {
         return totalPayment;
