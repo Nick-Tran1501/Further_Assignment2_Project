@@ -10,6 +10,7 @@ import com.example.Assigment_2_Project.repository.CustomerRepo;
 import com.example.Assigment_2_Project.service.BookingService;
 import com.example.Assigment_2_Project.service.CarService;
 import org.apache.catalina.util.ResourceSet;
+import org.apache.tomcat.jni.Time;
 import org.apache.tomcat.util.net.AprEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Book;
 import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -57,12 +59,19 @@ public class BookingController extends EntityController<Booking>{
     }
 
 //  Booking
+//    @PostMapping(path = "/post/{customer_id}/{car_id}")
+//    public ResponseEntity<Booking> createBooking(@PathVariable("customer_id") Long customer_id,
+//                                                 @PathVariable("car_id") Long car_id,
+//                                                 @RequestBody Map<String, String> booking) {
+//        return bookingService.createBooking(customer_id,car_id,booking);
+//    }
     @PostMapping(path = "/post/{customer_id}/{car_id}")
     public ResponseEntity<Booking> createBooking(@PathVariable("customer_id") Long customer_id,
                                                  @PathVariable("car_id") Long car_id,
                                                  @RequestBody Map<String, String> booking) {
-        return bookingService.createBooking(customer_id,car_id,booking);
+        return bookingService.createBookingTest(customer_id,car_id,booking);
     }
+
 
 //  Get all booking data
     @GetMapping(path = "/all")

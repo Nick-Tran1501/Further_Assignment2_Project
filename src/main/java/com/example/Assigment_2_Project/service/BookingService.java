@@ -68,7 +68,7 @@ public class BookingService {
                             && pickupTime.getDayOfMonth() == ZonedDateTime.now().getDayOfMonth())
                         cars.setAvailable(false); // return false value for car
                 }
-            if (customer == null || carData == null) {
+            if (customer == null && carData == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
             if (bookingBody.containsKey("startLocation"))
@@ -86,7 +86,6 @@ public class BookingService {
             Driver driver = carData.getDriver();
             Double rateKilometer = carData.getRateKilometer();
             Double totalPay = tripDistance * rateKilometer;
-//            BigDecimal bigDecimal = new BigDecimal(totalPay);
             invoice.setCustomer(customer);
             invoice.setDriver(driver);
             invoice.setTotalPayment(totalPay);
@@ -97,10 +96,76 @@ public class BookingService {
             booking.setCustomer(customer);
             booking.setInvoice(invoice);
 
+            customer.getInvoiceList().add(invoice);
+            driver.getInvoiceList().add(invoice);
+
+            invoiceRepo.save(invoice);
+            bookingRepo.save(booking);
+            return new ResponseEntity<>(booking, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    public ResponseEntity<Booking> createBookingTest(Long cusID, Long carID, Map<String, String> bookingBody) {
+        try {
+            Customer customer = customerRepo.findCustomerById(cusID);
+            Booking booking = new Booking();
+            String date = "";
+            String time = "";
+
+            if (bookingBody.containsKey("Date"))
+                date += bookingBody.get("Date");
+
+            if (bookingBody.containsKey("Time"))
+                time += bookingBody.get("Time");
+
+            String pickup = date + "T" + time + "00.000Z";
+
+
+            ZonedDateTime pickupTime = ZonedDateTime.parse(pickup);
+            List<Car> carList = carRepo.findByAvailableTrue();
+            Invoice invoice = new Invoice();
+            Car carData = null;
+            Double tripDistance = null;
+            for (Car cars :  carList)
+                if (cars.getId() == carID){
+                    carData = cars;
+                    if(pickupTime.getMonth().equals(ZonedDateTime.now().getMonth())
+                            && pickupTime.getYear() == ZonedDateTime.now().getYear()
+                            && pickupTime.getDayOfMonth() == ZonedDateTime.now().getDayOfMonth())
+                        cars.setAvailable(false); // return false value for car
+                }
+            if (customer == null && carData == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            }
+            if (bookingBody.containsKey("startLocation"))
+                booking.setStartLocation(bookingBody.get("startLocation"));
+            if (bookingBody.containsKey("endLocation"))
+                booking.setEndLocation(bookingBody.get("endLocation"));
+            if (bookingBody.containsKey("tripDistance"))
+                tripDistance =  Double.parseDouble(bookingBody.get("tripDistance"));
+                booking.setTripDistance(tripDistance);
+
+//            Driver driver = carData.getDriver();
+            Double rateKilometer = carData.getRateKilometer();
+            Double totalPay = tripDistance * rateKilometer;
+//            invoice.setCustomer(customer);
+//            invoice.setDriver(driver);
+            invoice.setTotalPayment(totalPay);
+            invoice.setCreatedDate(pickupTime);
+
+            booking.setPickupTime(pickupTime);
+            booking.setCreatedDate(pickupTime);
+            booking.setCar(carData);
+            booking.setCustomer(customer);
+            booking.setInvoice(invoice);
+
 //            customer.getInvoiceList().add(invoice);
 //            driver.getInvoiceList().add(invoice);
 
-            invoiceRepo.save(invoice);
+//            invoiceRepo.save(invoice);
             bookingRepo.save(booking);
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -130,34 +195,6 @@ public class BookingService {
         }
     }
 
-
-
-
-//    public ResponseEntity<List<Car>> getAvailableCarSorted(
-//            Optional<String> make, Optional<String> model, Optional<String> color,
-//            Optional<Boolean> convertible, Optional<Double> rating, Optional<Double> rateKilometer) {
-//        try {
-//            String unavailable = "Cannot find car";
-//            List<Car> carTemp = carRepo.findByAvailableTrue();
-//            if (make.isPresent())
-//                carTemp = carRepo.findByAvailableTrueAndMake(make.get());
-//            else if (model.isPresent())
-//                carTemp =  carRepo.findByAvailableTrueAndModel( model.get());
-//            else if (color.isPresent())
-//                carTemp = carRepo.findByAvailableTrueAndColor(color.get());
-//            else if (convertible.isPresent())
-//                carTemp = carRepo.findByAvailableTrueAndConvertibleTrue();
-//            else if (rating.isPresent())
-//                carTemp = carRepo.findByAvailableTrueAndRating(rating.get());
-//            else if (rateKilometer.isPresent())
-//                carTemp = carRepo.findByAvailableTrueAndRateKilometer(rateKilometer.get());
-//            return carTemp == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-//                    : new ResponseEntity<>(carTemp, HttpStatus.OK);
-//
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 
     //  Get all booking data
     public ResponseEntity<List<Booking>> getBookings() {
@@ -207,11 +244,30 @@ public class BookingService {
         }
     }
 
+//    public List<Booking> autoCancel() {
+//        List<Booking> bookingList = bookingRepo.findAll();
+//        for (Booking booking : bookingList) {
+//            Integer pickupTime = booking.getPickupTime().getDayOfMonth();
+//            Integer now = ZonedDateTime.now().getDayOfMonth();
+//            if (pickupTime.compareTo(now) < 0 && booking.getStatus().equals("Ready")) {
+//                booking.getCar().setAvailable(true);
+//                booking.setStatus("Cancelled");
+//                bookingRepo.save(booking);
+//            }
+//        }
+//        return bookingList;
+//    }
+
     // finish trip (tuan)
     public ResponseEntity<Booking> finishTrip(Long id){
         try {
             Booking booking = bookingRepo.findBookingById(id);
+            if (booking.getPickupTime().compareTo(ZonedDateTime.now()) < 0){
+                booking.getCar().setAvailable(true);
+                booking.setStatus("Cancelled");
+            }
             booking.getCar().setAvailable(true);
+            booking.setStatus("Finished");
             ZonedDateTime dropTime =  ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
             booking.setDropTime(dropTime);
             return new ResponseEntity<>(booking, HttpStatus.OK);
@@ -234,6 +290,7 @@ public class BookingService {
 
     public ResponseEntity<List<Booking>> findByPeriod(String startDate, String endDate) {
         try {
+//            autoCancel();
             String time = "T00:00:00.000Z";
             String startTime = startDate + time;
             String endTime = endDate + time;

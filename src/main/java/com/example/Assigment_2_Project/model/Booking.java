@@ -51,27 +51,17 @@ public class Booking {
     @JoinColumn(name = "car_id")
     private Car car;
 
+    @Column
+    private String status;
+
     @OneToOne
     @JoinColumn(name = "invoice_id")
     @JsonManagedReference
     private Invoice invoice;
 
-
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @JsonIgnore
-//    private Customer customer;
-
-//    @OneToOne
-//    private Driver driver;
-
     public Booking() {
 
     }
-
-//    Get & Set date time
-//    public String getPickupTime() {
-//        return new SimpleDateFormat("dd/MM/yyyy").format(pickupTime);
-//    }
 
 
     public long getId() {
@@ -152,5 +142,13 @@ public class Booking {
 
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

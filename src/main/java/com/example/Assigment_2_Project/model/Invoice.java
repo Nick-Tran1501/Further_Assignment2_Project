@@ -28,11 +28,11 @@ public class Invoice {
 //    public ZonedDateTime dateTime;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "driver_id")
+    @JsonIgnore
     private Driver driver;
 
     @OneToOne
