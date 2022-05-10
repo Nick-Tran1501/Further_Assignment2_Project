@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sun.source.tree.LambdaExpressionTree;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -20,18 +21,24 @@ public class Invoice {
     private long id;
 
     @CreatedDate
+    @JsonIgnore
     private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
 //    @Column
 //    public ZonedDateTime dateTime;
 
-//    @ManyToOne
-//    @JoinColumn(name = "customer_id")
-//    private Customer customer;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "driver_id")
-//    private Driver driver;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
+
+    @OneToOne
+    @JoinColumn(name = "booking_id")
+    @JsonBackReference
+    private Booking booking;
 
     @Column
     private Double totalPayment;
@@ -54,21 +61,21 @@ public class Invoice {
         this.createdDate = createdDate;
     }
 
-//    public Customer getCustomer() {
-//        return customer;
-//    }
-//
-//    public void setCustomer(Customer customer) {
-//        this.customer = customer;
-//    }
-//
-//    public Driver getDriver() {
-//        return driver;
-//    }
-//
-//    public void setDriver(Driver driver) {
-//        this.driver = driver;
-//    }
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
 
     public Double getTotalPayment() {
         return totalPayment;

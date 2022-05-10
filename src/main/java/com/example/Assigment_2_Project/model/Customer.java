@@ -41,8 +41,8 @@ public class Customer {
 //    @JsonManagedReference
 //    private List<Booking> bookingList;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Invoice> invoiceList;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<Invoice> invoiceList;
 
 
     public Customer() {};
@@ -87,13 +87,13 @@ public class Customer {
         this.address = address;
     }
 
-    public List<Invoice> getInvoiceList() {
-        return invoiceList;
-    }
-
-    public void setInvoiceList(List<Invoice> invoiceList) {
-        this.invoiceList = invoiceList;
-    }
+//    public List<Invoice> getInvoiceList() {
+//        return invoiceList;
+//    }
+//
+//    public void setInvoiceList(List<Invoice> invoiceList) {
+//        this.invoiceList = invoiceList;
+//    }
 
     //    public List<Booking> getBookingList() {
 //        return bookingList;

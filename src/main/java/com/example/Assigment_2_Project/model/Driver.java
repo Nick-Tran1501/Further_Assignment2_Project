@@ -45,8 +45,8 @@ public class Driver {
 //    @JsonBackReference
 //    private Car car; //Refresh everyday
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Invoice> invoiceList;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<Invoice> invoiceList;
 
     public Driver() {}
 
@@ -106,11 +106,11 @@ public class Driver {
 //        this.car = car;
 //    }
 
-    public List<Invoice> getInvoiceList() {
-        return invoiceList;
-    }
-
-    public void setInvoiceList(List<Invoice> invoiceList) {
-        this.invoiceList = invoiceList;
-    }
+//    public List<Invoice> getInvoiceList() {
+//        return invoiceList;
+//    }
+//
+//    public void setInvoiceList(List<Invoice> invoiceList) {
+//        this.invoiceList = invoiceList;
+//    }
 }

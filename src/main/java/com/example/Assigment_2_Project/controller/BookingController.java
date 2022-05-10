@@ -56,13 +56,8 @@ public class BookingController extends EntityController<Booking>{
 
 //  Get available cars
     @GetMapping(path = "/search")
-    public ResponseEntity<List<Car>> getAvailableCarSorted(@RequestParam(required = false) Optional<String> make,
-                                                           @RequestParam(required = false) Optional<String> model,
-                                                           @RequestParam(required = false) Optional<String> color,
-                                                           @RequestParam(required = false) Optional<Boolean> convertible,
-                                                           @RequestParam(required = false) Optional<Double> rating,
-                                                           @RequestParam(required = false) Optional<Double> rateKilometer) {
-        return bookingService.getAvailableCarSorted(make, model, color, convertible, rating, rateKilometer);
+    public ResponseEntity<List<Car>> getAvailableCar(@RequestParam String date, @RequestParam String time) {
+        return bookingService.getAvailableCar(date, time);
     }
 
 //  Booking
