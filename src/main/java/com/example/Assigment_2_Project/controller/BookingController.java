@@ -39,14 +39,10 @@ public class BookingController extends EntityController<Booking>{
     public CarController carController;
 
     @Autowired
-    BookingRepo bookingRepo;
-
+    private BookingRepo bookingRepo;
 
     @Autowired
     private BookingService bookingService;
-
-    @Autowired
-    private CarService carService;
 
     @Override
     public ResponseEntity updateTableColumnById(Long id, Map contentField) {
@@ -56,7 +52,7 @@ public class BookingController extends EntityController<Booking>{
 
 //  Get available cars
     @GetMapping(path = "/search")
-    public ResponseEntity<List<Car>> getAvailableCar(@RequestParam String date, @RequestParam String time) {
+    public ResponseEntity<List<Car>> getAvailableCar(@RequestParam String date, @RequestParam String time ){
         return bookingService.getAvailableCar(date, time);
     }
 

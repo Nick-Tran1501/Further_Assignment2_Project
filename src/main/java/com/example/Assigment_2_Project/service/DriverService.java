@@ -21,10 +21,10 @@ import java.util.Map;
 public class DriverService {
 
     @Autowired
-    DriverRepo driverRepo;
+    private DriverRepo driverRepo;
 
     @Autowired
-    CarRepo carRepo;
+    private CarRepo carRepo;
 
 
     public ResponseEntity<List<Driver>> getAllDriver() {
@@ -39,8 +39,14 @@ public class DriverService {
 
     public ResponseEntity<Driver> addDriver(Driver driver) {
         try {
-            driverRepo.save(driver);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            List<Driver> driverList = driverRepo.findAll();
+            for (Driver temp: driverList)
+                if (driver.getLicense().equalsIgnoreCase(temp.getLicense())){
+                    return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+                }
+                driverRepo.save(driver);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

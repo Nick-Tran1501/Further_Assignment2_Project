@@ -60,7 +60,8 @@ public class InvoiceController extends EntityController<Invoice> {
     }
 
     @Override
-    public ResponseEntity<Invoice> updateTableColumnById(Long id, Map<String, String> contentField) {
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<Invoice> updateTableColumnById(@PathVariable("id") Long id, @RequestParam Map<String, String> contentField) {
         return null;
     }
 

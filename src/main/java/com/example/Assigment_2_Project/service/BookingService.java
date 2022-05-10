@@ -28,16 +28,16 @@ import java.util.Optional;
 public class BookingService {
 
     @Autowired
-    BookingRepo bookingRepo;
+    private BookingRepo bookingRepo;
 
     @Autowired
-    CarRepo carRepo;
+    private CarRepo carRepo;
 
     @Autowired
-    CustomerRepo customerRepo;
+    private CustomerRepo customerRepo;
 
     @Autowired
-    InvoiceRepo invoiceRepo;
+    private InvoiceRepo invoiceRepo;
 
     @Autowired
     private CustomerService customerService;
@@ -68,7 +68,7 @@ public class BookingService {
                             && pickupTime.getDayOfMonth() == ZonedDateTime.now().getDayOfMonth())
                         cars.setAvailable(false); // return false value for car
                 }
-            if (customer == null && carData == null) {
+            if (customer == null || carData == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
             if (bookingBody.containsKey("startLocation"))
@@ -166,7 +166,7 @@ public class BookingService {
             if (bookings.size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-        return new ResponseEntity<>(bookings, HttpStatus.OK);
+            return new ResponseEntity<>(bookings, HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

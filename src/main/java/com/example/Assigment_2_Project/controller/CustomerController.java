@@ -36,18 +36,18 @@ public class CustomerController extends EntityController<Customer>{
 
     @Override
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateTableColumnById(@PathVariable Long id, Map<String, String> contentField) {
+    public ResponseEntity<Customer> updateTableColumnById(@PathVariable("id") Long id, @RequestBody Map<String, String> contentField) {
         try {
             Customer customer = customerRepo.findCustomerById(id);
-            if (contentField.containsKey("name")) {
+            if (contentField.containsKey("name"))
                 customer.setName(contentField.get("name"));
-            }
-            if (contentField.containsKey("address")){
+
+            if (contentField.containsKey("address"))
                 customer.setAddress(contentField.get("address"));
-            }
-            if (contentField.containsKey("phone")){
+
+            if (contentField.containsKey("phone"))
                 customer.setPhone(contentField.get("phone"));
-            }
+
             customerRepo.save(customer);
             return new ResponseEntity<>(customer, HttpStatus.OK);
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class CustomerController extends EntityController<Customer>{
 //  Get all customer data
     @GetMapping(path = "/all")
     public ResponseEntity<List<Customer>> getCustomer(){
-        return this.customerService.getCustomers();
+        return customerService.getCustomers();
     }
 
 
