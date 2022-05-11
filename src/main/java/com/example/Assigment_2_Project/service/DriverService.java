@@ -119,6 +119,7 @@ public class DriverService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    //Test
     // delete all driver
     public ResponseEntity<HttpStatus> deleteAll() {
         try {
