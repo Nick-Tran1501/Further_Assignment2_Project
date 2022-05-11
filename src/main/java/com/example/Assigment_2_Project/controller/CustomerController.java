@@ -1,10 +1,8 @@
 package com.example.Assigment_2_Project.controller;
 
-import com.example.Assigment_2_Project.model.Car;
 import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.repository.CustomerRepo;
 import com.example.Assigment_2_Project.service.CustomerService;
-import org.apache.catalina.util.ResourceSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -101,7 +99,16 @@ public class CustomerController extends EntityController<Customer>{
         return customerService.getByID(id);
     }
 
+    // Delete all customer
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteAll(){
+        return customerService.deleteAll();
+    }
 
+    @DeleteMapping(path = "/deleteID/{id}")
+    public ResponseEntity<Customer> deleteByID(@PathVariable("id") Long id){
+        return customerService.deleteByID(id);
+    }
 // 
 
 

@@ -55,8 +55,6 @@ public class CustomerService {
         }
     }
 
-
-
     // Get customer data by specific attribute
     // Must follow structure of customer class
     public ResponseEntity<List<Customer>> customerSearch(Optional<String> name, Optional<String> phone, Optional<String> address) {
@@ -85,6 +83,7 @@ public class CustomerService {
         }
     }
 
+//  Get customer by id
     public ResponseEntity<Customer> getByID(Long id){
         try {
             Customer customers = customerRepo.findCustomerById(id);
@@ -96,5 +95,24 @@ public class CustomerService {
         }
     }
 
-}
+//  Delete by ID
+    public ResponseEntity<Customer> deleteByID(Long id){
+        try{
+            customerRepo.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        }
+// delete all
+    public ResponseEntity<HttpStatus> deleteAll() {
+         try {
+             customerRepo.deleteAll();
+             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+         } catch (Exception e){
+             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+          }
+    }
 
+}
