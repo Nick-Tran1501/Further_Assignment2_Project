@@ -51,14 +51,13 @@ public class BookingController extends EntityController<Booking>{
         return null;
     }
 
-
-//  Get available cars
+    //  Get available cars
     @GetMapping(path = "/search")
     public ResponseEntity<List<Car>> getAvailableCar(@RequestParam String date, @RequestParam String time ){
         return bookingService.getAvailableCar(date, time);
     }
 
-//  Booking
+    // Create booking
     @PostMapping(path = "/post/{customer_id}/{car_id}")
     public ResponseEntity<Booking> createBooking(@PathVariable("customer_id") Long customer_id,
                                                  @PathVariable("car_id") Long car_id,
@@ -68,66 +67,39 @@ public class BookingController extends EntityController<Booking>{
 
 
 //  Get all booking data
+
+    //  Get all booking data
+
     public ResponseEntity<List<Booking>> getBooking() {
-        bookingService.autoFinished();
         return bookingService.getBookings();
     }
 
-//   Get customer data by booking data
-    @GetMapping(path = "/customer/{id}")
-    public ResponseEntity<Customer> customerData(@PathVariable("id") Long id) {
-        return bookingService.customerData(id);
-    }
+    //   Get customer data by booking data
+//    @GetMapping(path = "/customer/{id}")
+//    public ResponseEntity<Customer> customerData(@PathVariable("id") Long id) {
+//        return bookingService.customerData(id);
+//    }
 
-//   Get car data by booking data
-    @GetMapping(path = "/car/{id}")
-    public ResponseEntity<Car> carData(@PathVariable("id") Long id) {
-        return bookingService.carData(id);
-    }
+    //   Get car data by booking data
+//    @GetMapping(path = "/car/{id}")
+//    public ResponseEntity<Car> carData(@PathVariable("id") Long id) {
+//        return bookingService.carData(id);
+//    }
 
-//   Delete data
-    @DeleteMapping
-    public ResponseEntity<HttpStatus> deleteAll(){
-        return bookingService.deleteAll();
-    }
 
-//  Finish trip
+    //  Finish trip
     @PostMapping(path = "/finish/{id}")
     public ResponseEntity<Booking> finishTrip(@PathVariable("id") Long id){
         return bookingService.finishTrip(id);
     }
 
-
-//  ---------- KHOI PART ------------
-    //  ( khoi)
-//    @GetMapping(path = "/car")
-//    public ResponseEntity<List<Car>> getAvailableCar(@RequestParam
-//                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime pickupTime) {
-//        return bookingService.getAvailableCar(pickupTime);
-//    }
-//
-
-//    @GetMapping(path = "/test")
-//    public ResponseEntity<List<Booking>> findByTime(@RequestBody
-//                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime pickupTime) {
-//        return bookingService.findByTime(pickupTime);
-//    }
-//
-//        @PostMapping(path = "/test/{cusID}/{carID}")
-//        public ResponseEntity<Booking> createBooingTest2(@PathVariable("cusID") Long cusID,
-//                                                         @PathVariable("carID") Long carID,
-//                                                         @RequestBody Map<String, String> booking) {
-//        return bookingService.createBookingTest2(cusID, carID, booking);
-//        }
-//    public ResponseEntity<Booking> bookingTest(@RequestBody
-//                                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Map<String, ZonedDateTime> pickupTime) {
-//        return bookingService.bookingTest(pickupTime);
-//    }
+    // Get booking by time
     @GetMapping(path = "/between")
     public ResponseEntity<List<Booking>> findByPeriod(@RequestParam String startDate,
                                                       @RequestParam String endDate) {
         return bookingService.findByPeriod(startDate, endDate);
     }
+
 
     @Override
     @PostMapping(path = "/demo")

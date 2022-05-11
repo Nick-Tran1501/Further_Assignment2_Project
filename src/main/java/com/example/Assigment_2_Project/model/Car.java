@@ -13,8 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Entity
-@Table(name = "CAR")
-
+@Table(name = "car")
 public class Car {
     @Id
     @Column(name = "VIN")
@@ -49,7 +48,7 @@ public class Car {
     @Column
     private boolean available;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "driver_id")
     @JsonManagedReference
     private Driver driver; //refresh everyday
