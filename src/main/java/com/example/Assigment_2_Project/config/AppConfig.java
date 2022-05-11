@@ -37,7 +37,7 @@ public class AppConfig {
         dataSource.setUrl("jdbc:postgresql://localhost:5432/Assignment_2");
         dataSource.setUsername("postgres");
 
-        dataSource.setPassword("Duan0971727927"); //Remember to modify
+        dataSource.setPassword("Nam15012001"); //Remember to modify
 
 
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();

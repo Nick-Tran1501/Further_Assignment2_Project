@@ -17,7 +17,7 @@ public interface CustomerRepo extends JpaRepository<Customer, Long> {
 
     Customer findCustomerById(Long id);
 
-    Customer deleteCustomerById(Long id);
+//    Customer deleteCustomerById(Long id);
 
     List<Customer> findByName(String name);
 
