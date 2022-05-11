@@ -37,7 +37,7 @@ public class InvoiceController extends EntityController<Invoice> {
 //        return invoiceService.findByPeriod(start, end);
 //    }
 
-//    @GetMapping(path = "/byCustomer")
+    //    @GetMapping(path = "/byCustomer")
 //    public ResponseEntity<List<Invoice>> findByCustomer(@RequestParam Long cusID,
 //                                                        @RequestParam String startDate,
 //                                                        @RequestParam String endDate) {

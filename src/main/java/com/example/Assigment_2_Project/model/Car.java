@@ -40,7 +40,7 @@ public class Car {
     @Column
     private double rating;
 
-    @Column
+    @Column(unique = true)
     private String licensePlate;
 
     @Column
@@ -146,5 +146,5 @@ public class Car {
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
-    
+
 }

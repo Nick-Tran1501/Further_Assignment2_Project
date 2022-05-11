@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resources;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Validated
 @RestController
@@ -25,7 +26,7 @@ public class DriverController extends EntityController<Driver> {
     private DriverService driverService;
 
     @Autowired
-    DriverRepo driverRepo;
+    private DriverRepo driverRepo;
 
     @Autowired
     public DriverController(DriverRepo driverRepo) {
@@ -33,9 +34,17 @@ public class DriverController extends EntityController<Driver> {
     }
 
 
-//    @GetMapping
+    //    @GetMapping
     public ResponseEntity<List<Driver>> getAllDriver() {
         return this.driverService.getAllDriver();
+    }
+
+    @GetMapping(path = "/search")
+    public ResponseEntity<List<Driver>> getDriverSorted(@RequestParam(required = false)Optional<String> name,
+                                                        @RequestParam(required = false)Optional<String> phone,
+                                                        @RequestParam(required = false)Optional<String> license,
+                                                        @RequestParam(required = false)Optional<Double> rating){
+        return driverService.getDriverSorted(name, phone, license, rating);
     }
 
 
@@ -46,7 +55,7 @@ public class DriverController extends EntityController<Driver> {
 
     @PostMapping(path = "/{id}")
     public ResponseEntity<Driver> selectCar(@PathVariable("id") Long id, @RequestParam("Car id") Long carID) {
-        return this.driverService.selectCar(id, carID);
+        return driverService.selectCar(id, carID);
     }
 
     @Override
@@ -58,7 +67,6 @@ public class DriverController extends EntityController<Driver> {
                 driver.setName(contentField.get("name"));
             if (contentField.containsKey("license"))
                 driver.setLicense(contentField.get("license"));
-
             if (contentField.containsKey("phone"))
                 driver.setPhone(contentField.get("phone"));
             if (contentField.containsKey("rating"))

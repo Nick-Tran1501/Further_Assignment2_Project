@@ -34,7 +34,7 @@ public class CarController extends EntityController<Car> {
     CarRepo carRepo;
 
 
-//    "make" : "USA",
+    //    "make" : "USA",
 //    "color" : "color",
 //    "model" : "model",
 //    "convertible" : "True",
@@ -54,7 +54,7 @@ public class CarController extends EntityController<Car> {
     }
 
 
-//    @GetMapping
+    //    @GetMapping
     @GetMapping(path = "/all")
     public ResponseEntity<List<Car>> getCars() {
         return this.carService.getCars();
@@ -68,11 +68,11 @@ public class CarController extends EntityController<Car> {
 
     @GetMapping(path = "/search")
     public ResponseEntity<List<Car>> getAvailableCarSorted(@RequestParam(required = false) Optional<String> make,
-                                           @RequestParam(required = false) Optional<String> model,
-                                           @RequestParam(required = false) Optional<String> color,
-                                           @RequestParam(required = false) Optional<Boolean> convertible,
-                                           @RequestParam(required = false) Optional<Double> rating,
-                                           @RequestParam(required = false) Optional<Double> rateKilometer) {
+                                                           @RequestParam(required = false) Optional<String> model,
+                                                           @RequestParam(required = false) Optional<String> color,
+                                                           @RequestParam(required = false) Optional<Boolean> convertible,
+                                                           @RequestParam(required = false) Optional<Double> rating,
+                                                           @RequestParam(required = false) Optional<Double> rateKilometer) {
         return this.carService.getAvailableCarSorted(make, model, color, convertible, rating, rateKilometer);
     }
 

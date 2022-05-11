@@ -17,6 +17,9 @@ public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
     }
 
     Invoice findInvoiceById(Long id);
+    Invoice deleteInvoiceById(Long id);
+
+
     List<Invoice> findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(ZonedDateTime startTime, ZonedDateTime endOTime);
     List<Invoice> findByCustomerAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(Customer customer, ZonedDateTime startDate,
                                                                                           ZonedDateTime endDate);

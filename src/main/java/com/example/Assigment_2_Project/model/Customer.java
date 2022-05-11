@@ -15,7 +15,6 @@ import java.util.Map;
 @Table(name = "customer")
 public class Customer {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "customer_id")
     private long id;
@@ -27,13 +26,13 @@ public class Customer {
     @Column
     private String name;
 
-    @Column
+    @Column(unique = true)
     private String phone;
 
     @Column
     private String address;
 
-//    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 ////    @JsonManagedReference
 //    private Booking booking;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

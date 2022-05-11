@@ -17,6 +17,7 @@ public interface BookingRepo extends JpaRepository<Booking, Long> {
 
 
     Booking findBookingById(Long id);
+    Booking deleteBookingById(Long id);
 
     List<Booking> findByDropTimeBefore(ZonedDateTime zonedDateTime);
     List<Booking> findByPickupTimeBefore(ZonedDateTime zonedDateTime);
@@ -27,7 +28,4 @@ public interface BookingRepo extends JpaRepository<Booking, Long> {
 
     List<Booking> findByCreatedDateAfterAndCreatedDateBefore(ZonedDateTime startDate, ZonedDateTime endDate);
 
-//    List<Booking> findByPickupTime(ZonedDateTime pickupTime);
-//    List<Booking> findByCreateDate(ZonedDateTime date);ß
-//    List<Booking> findByStartEndDate(ZonedDateTime startDate, ZonedDateTime endDate);
 }
