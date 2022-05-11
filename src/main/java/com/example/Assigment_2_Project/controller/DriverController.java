@@ -1,6 +1,7 @@
 package com.example.Assigment_2_Project.controller;
 
 import com.example.Assigment_2_Project.model.Car;
+import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.model.Driver;
 import com.example.Assigment_2_Project.repository.DriverRepo;
 import com.example.Assigment_2_Project.service.CarService;
@@ -34,19 +35,18 @@ public class DriverController extends EntityController<Driver> {
     }
 
 
-    //    @GetMapping
+    // Get all driver
     public ResponseEntity<List<Driver>> getAllDriver() {
         return this.driverService.getAllDriver();
     }
 
     @GetMapping(path = "/search")
-    public ResponseEntity<List<Driver>> getDriverSorted(@RequestParam(required = false)Optional<String> name,
+    public ResponseEntity<List<Driver>> searchDriver(@RequestParam(required = false)Optional<String> name,
                                                         @RequestParam(required = false)Optional<String> phone,
                                                         @RequestParam(required = false)Optional<String> license,
                                                         @RequestParam(required = false)Optional<Double> rating){
-        return driverService.getDriverSorted(name, phone, license, rating);
+        return driverService.searchDriver(name, phone, license, rating);
     }
-
 
     @PostMapping(path = "/post")
     public ResponseEntity<Driver> addDriver(@RequestBody Driver driver) {
@@ -89,6 +89,23 @@ public class DriverController extends EntityController<Driver> {
         }
     }
 
+    //  Find by ID
+    @GetMapping(path = "/searchID/{id}")
+    public ResponseEntity<Driver> getById(@PathVariable("id") Long id){
+        return driverService.getByID(id);
+    }
+
+    // Delete all driver
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteAll(){
+        return driverService.deleteAll();
+    }
+
+    // Delete driver by ID
+    @DeleteMapping(path = "/deleteByID/{id}")
+    public ResponseEntity<Driver> deleteByID(@PathVariable("id") Long id){
+        return driverService.deleteByID(id);
+    }
 
 //    @RequestMapping(path = "/driver", method = RequestMethod.POST)
 //    public Long addDriver(@RequestBody Driver driver) {

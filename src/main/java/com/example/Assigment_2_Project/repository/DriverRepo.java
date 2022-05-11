@@ -14,8 +14,6 @@ public interface DriverRepo extends JpaRepository<Driver, Long> {
     }
 
     Driver findDriverById(Long id);
-    Driver deleteDriverById(Long id);
-
     List<Driver> findByLicense(String license);
     List<Driver> findByPhone(String phone);
     List<Driver> findByRating(Double rating);

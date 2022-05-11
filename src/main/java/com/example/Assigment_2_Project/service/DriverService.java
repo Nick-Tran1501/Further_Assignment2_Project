@@ -2,6 +2,7 @@ package com.example.Assigment_2_Project.service;
 
 import com.example.Assigment_2_Project.controller.CarController;
 import com.example.Assigment_2_Project.model.Car;
+import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.model.Driver;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import com.example.Assigment_2_Project.repository.DriverRepo;
@@ -27,7 +28,7 @@ public class DriverService {
     @Autowired
     private CarRepo carRepo;
 
-
+    // Get all driver
     public ResponseEntity<List<Driver>> getAllDriver() {
         try {
             List<Driver> drivers = driverRepo.findAll();
@@ -37,7 +38,7 @@ public class DriverService {
         }
     }
 
-
+    // Create driver manual
     public ResponseEntity<Driver> addDriver(Driver driver) {
         try {
             List<Driver> driverList = driverRepo.findAll();
@@ -53,6 +54,7 @@ public class DriverService {
         }
     }
 
+    // Select car
     public ResponseEntity<Driver> selectCar(Long driverID, Long carID) {
         try {
             Driver driver = driverRepo.findDriverById(driverID);
@@ -72,7 +74,8 @@ public class DriverService {
         }
     }
 
-    public ResponseEntity<List<Driver>> getDriverSorted(Optional<String> name, Optional<String> phone,
+    // Get car by variables
+    public ResponseEntity<List<Driver>> searchDriver(Optional<String> name, Optional<String> phone,
                                                         Optional<String> license, Optional<Double> rating){
         try{
             List<Driver> driverList = null;
@@ -90,6 +93,38 @@ public class DriverService {
                 driverList = driverRepo.findByNameAndRating(name.get(), rating.get());
             return driverList == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                     : new ResponseEntity<>(driverList, HttpStatus.FOUND);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //  Get driver by id
+    public ResponseEntity<Driver> getByID(Long id){
+        try {
+            Driver driver = driverRepo.findDriverById(id);
+            return driver == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                    : new ResponseEntity<>(driver, HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //  Delete driver by ID
+    public ResponseEntity<Driver> deleteByID(Long id){
+        try{
+            driverRepo.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    // delete all driver
+    public ResponseEntity<HttpStatus> deleteAll() {
+        try {
+            driverRepo.deleteAll();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

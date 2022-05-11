@@ -21,8 +21,6 @@ public interface CarRepo extends JpaRepository<Car, Long> {
 
     Car findCarById(Long id);
 
-    Car deleteCarById(Long id);
-
     List<Car> findByAvailableTrue();
     //2
     List<Car> findByMake(String make);

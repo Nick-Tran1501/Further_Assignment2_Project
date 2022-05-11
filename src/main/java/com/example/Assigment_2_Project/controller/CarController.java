@@ -1,9 +1,9 @@
 package com.example.Assigment_2_Project.controller;
 
 import com.example.Assigment_2_Project.model.Car;
+import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import com.example.Assigment_2_Project.service.CarService;
-import org.apache.catalina.util.ResourceSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,52 +31,38 @@ public class CarController extends EntityController<Car> {
 
 
     @Autowired
-    CarRepo carRepo;
+    private CarRepo carRepo;
 
-
-    //    "make" : "USA",
-//    "color" : "color",
-//    "model" : "model",
-//    "convertible" : "True",
-//    "rating" : "4.5",
-//    "licensePlate" : "50A1234",
-//    "rateKilometer" : "1.5",
-//    "available" : true
+    // create car manual
     @PostMapping(path = "/post")
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
         return carService.addCar(car);
     }
 
-
-    @GetMapping(path = "/test")
-    public ResponseEntity<List<Car>> getCarByConvertible() {
-        return this.carService.getConvertible();
-    }
-
-
-    //    @GetMapping
+    // Get all car
     @GetMapping(path = "/all")
     public ResponseEntity<List<Car>> getCars() {
         return this.carService.getCars();
     }
 
-
+    // Get car by ID
     @GetMapping(path = "/search/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable("id") Long id){
         return this.carService.getCarById(id);
     }
 
+    // search car by variables
     @GetMapping(path = "/search")
-    public ResponseEntity<List<Car>> getAvailableCarSorted(@RequestParam(required = false) Optional<String> make,
+    public ResponseEntity<List<Car>> searchCar(@RequestParam(required = false) Optional<String> make,
                                                            @RequestParam(required = false) Optional<String> model,
                                                            @RequestParam(required = false) Optional<String> color,
                                                            @RequestParam(required = false) Optional<Boolean> convertible,
                                                            @RequestParam(required = false) Optional<Double> rating,
                                                            @RequestParam(required = false) Optional<Double> rateKilometer) {
-        return this.carService.getAvailableCarSorted(make, model, color, convertible, rating, rateKilometer);
+        return this.carService.searchCar(make, model, color, convertible, rating, rateKilometer);
     }
 
-
+    // update car by ID
     @Override
     @PutMapping(path = "/{id}")
     public ResponseEntity<Car> updateTableColumnById(@PathVariable("id") Long id, @RequestBody Map<String, String> contentField) {
@@ -103,6 +89,7 @@ public class CarController extends EntityController<Car> {
         }
     }
 
+    // create list car sample
     @Override
     @PostMapping(path = "/demo")
     public ResponseEntity<List<Car>> inputDemoData(@Validated @RequestBody List<Car> data) {
@@ -115,6 +102,23 @@ public class CarController extends EntityController<Car> {
         }
     }
 
+    //   Get cars used in month
+    @GetMapping(path = "/carsUsed")
+    public ResponseEntity<HashMap<String,Integer>> carsUsed(@RequestParam String year, @RequestParam String month){
+        return carService.carsUsed(year,month);
+    }
+
+    // Delete all car
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteAll(){
+        return carService.deleteAll();
+    }
+
+    // Delete by ID
+    @DeleteMapping(path = "/deleteID/{id}")
+    public ResponseEntity<Car> deleteByID(@PathVariable("id") Long id){
+        return carService.deleteByID(id);
+    }
 
 
 //    @GetMapping(path = "/{id}")
@@ -156,9 +160,5 @@ public class CarController extends EntityController<Car> {
 //        return null;
 //    }
 
-    //   Get cars used
-    @GetMapping(path = "/carsUsed")
-    public ResponseEntity<HashMap<String,Integer>> carsUsed(@RequestParam String year, @RequestParam String month){
-        return carService.carsUsed(year,month);
-    }
+
 }
