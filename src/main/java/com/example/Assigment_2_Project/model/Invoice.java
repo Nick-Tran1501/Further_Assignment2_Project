@@ -27,16 +27,16 @@ public class Invoice {
 //    @Column
 //    public ZonedDateTime dateTime;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     private Driver driver;
 
-    @OneToOne
-    @JsonBackReference
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private Booking booking;
 
     @Column

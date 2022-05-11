@@ -46,10 +46,6 @@ public class BookingService {
     private DriverRepo driverRepo;
 
 
-//    @Autowired
-//    private CustomerService customerService;
-
-
     // Input booking
     public ResponseEntity<Booking> createBooking(Long cusID, Long carID, Map<String, String> bookingBody) {
         try {
@@ -119,7 +115,7 @@ public class BookingService {
         }
     }
 
-    //  Get available car for customer (tuan)
+    //  Get available car for customer
     public ResponseEntity<List<Car>> getAvailableCar(String date, String time){
         try{
             String strDateTime = date + "T" + time+ ":00.000Z";
@@ -141,26 +137,26 @@ public class BookingService {
         }
     }
 
-
-
     //  Get all booking data
     public ResponseEntity<List<Booking>> getBookings() {
         try {
-            ZonedDateTime zonedDateTime = ZonedDateTime.now();
-            Integer nowDate = zonedDateTime.getDayOfMonth();
-            Integer bDate = null;
-            List<Booking> bookings = bookingRepo.findAll();
-            if (bookings.size() == 0) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(bookings, HttpStatus.OK);
+//            ZonedDateTime zonedDateTime = ZonedDateTime.now();
+//            Integer nowDate = zonedDateTime.getDayOfMonth();
+//            Integer bDate = null;
+//            List<Booking> bookings = bookingRepo.findAll();
+//            if (bookings.size() == 0) {
+//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            }
+//            return new ResponseEntity<>(bookings, HttpStatus.OK);
+            List<Booking> bookingList = bookingRepo.findAll();
+            return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
-    //  get customer data (tuan)
+    //  get customer data
     public ResponseEntity<Customer> customerData(Long id) {
         try {
             Booking booking = bookingRepo.findBookingById(id);
@@ -171,7 +167,7 @@ public class BookingService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    //  get car data (tuan)
+    //  get car data
     public ResponseEntity<Car> carData(Long id) {
         try {
             Booking booking = bookingRepo.findBookingById(id);
@@ -184,17 +180,9 @@ public class BookingService {
         }
     }
 
-    //  Delete all data (tuan)
-    public ResponseEntity<HttpStatus> deleteAll() {
-        try {
-            bookingRepo.deleteAll();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
-    // finish trip (tuan)
+
+    // Finish trip
     public ResponseEntity<Booking> finishTrip(Long id){
         try {
             Booking booking = bookingRepo.findBookingById(id);
@@ -209,17 +197,7 @@ public class BookingService {
         }
     }
 
-//    ------- KHOI PART --------
-
-    public ResponseEntity<List<Booking>> findByTime(ZonedDateTime pickupTime) {
-        try {
-            List<Booking> bookingList = bookingRepo.findByPickupTime(pickupTime);
-            return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
+    // Find by booking by time
     public ResponseEntity<List<Booking>> findByPeriod(String startDate, String endDate) {
         try {
             String time = "T00:00:00.000Z";

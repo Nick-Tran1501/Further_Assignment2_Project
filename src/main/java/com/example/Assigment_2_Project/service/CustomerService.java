@@ -104,7 +104,7 @@ public class CustomerService {
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        }
+    }
 // delete all
     public ResponseEntity<HttpStatus> deleteAll() {
          try {

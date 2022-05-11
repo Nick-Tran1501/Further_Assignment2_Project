@@ -45,17 +45,16 @@ public class Booking {
     @Column
     private String status;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     @JsonIgnore
     private Customer customer;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @OneToOne
-    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL)
     private Invoice invoice;
 
     public Booking() {
