@@ -2,6 +2,7 @@ package com.example.Assigment_2_Project.service;
 
 import com.example.Assigment_2_Project.model.Booking;
 import com.example.Assigment_2_Project.model.Car;
+import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.repository.BookingRepo;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class CarService {
     private BookingRepo bookingRepo;
 
 
-    //Create car
+    // Create car manual
     public ResponseEntity<Car> addCar(Car car) {
         try {
             List<Car> carList = carRepo.findAll();
@@ -42,17 +43,7 @@ public class CarService {
         }
     }
 
-    //Get all car convertible
-    public ResponseEntity<List<Car>> getConvertible() {
-        try {
-            List<Car> cars  =  carRepo.findByConvertibleTrue();
-            return new ResponseEntity<>(cars, HttpStatus.FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    //Get all car
+    // Get all car
     public ResponseEntity<List<Car>> getCars() {
         try {
             List<Car> cars = carRepo.findAll();
@@ -65,12 +56,14 @@ public class CarService {
         }
     }
 
-    //Get car by id
+    // Get car by id
     public ResponseEntity<Car> getCarById(Long id){
         Car car =  carRepo.findCarById(id);
         return new ResponseEntity<>(car, HttpStatus.FOUND);
     }
-    public ResponseEntity<List<Car>> getAvailableCarSorted(Optional<String> make, Optional<String> model,
+
+    // search car by variables
+    public ResponseEntity<List<Car>> searchCar(Optional<String> make, Optional<String> model,
                                                            Optional<String> color, Optional<Boolean> convertible,
                                                            Optional<Double> rating, Optional<Double> rateKilometer) {
 
@@ -124,6 +117,32 @@ public class CarService {
         }
     }
 
+    //  Delete car by ID
+    public ResponseEntity<Car> deleteByID(Long id){
+        try{
+            carRepo.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Delete all car
+    public ResponseEntity<HttpStatus> deleteAll() {
+        try {
+            carRepo.deleteAll();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+}
+
+
+
 
 
 //    public ResponseEntity<List<Car>> getAvailableCars(Map<String, String> fields) {
@@ -144,7 +163,6 @@ public class CarService {
 
 
 
-}
 //    private List<Car> carList;
 //
 //    private List<Driver> drivers;
