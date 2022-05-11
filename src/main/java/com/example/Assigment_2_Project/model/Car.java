@@ -13,8 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Entity
-@Table(name = "CAR")
-
+@Table(name = "car")
 public class Car {
     @Id
     @Column(name = "VIN")
