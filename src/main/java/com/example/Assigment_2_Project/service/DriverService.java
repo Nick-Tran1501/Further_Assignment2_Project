@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -44,21 +45,22 @@ public class DriverService {
                 if (driver.getLicense().equalsIgnoreCase(temp.getLicense())){
                     return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
                 }
-                driverRepo.save(driver);
-                return new ResponseEntity<>(HttpStatus.CREATED);
+            driverRepo.save(driver);
+            return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    public ResponseEntity<Driver> selectCar(Long driverID, Map<String, Long> car_id) {
+    public ResponseEntity<Driver> selectCar(Long driverID, Long carID) {
         try {
             Driver driver = driverRepo.findDriverById(driverID);
             List<Car> cars = carRepo.findAll();
-            Car car = carRepo.findCarById(car_id.get("car_id"));
+            Car car = carRepo.findCarById(carID);
             if (car.getDriver() == null){
                 car.setDriver(driver);
+                driver.setCar(car);
                 driverRepo.save(driver);
                 return new ResponseEntity<>(driver, HttpStatus.OK);
             }
@@ -66,6 +68,29 @@ public class DriverService {
                 return new ResponseEntity<>(driver, HttpStatus.valueOf("Car was assigned, please choose another"));
             }
         } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<List<Driver>> getDriverSorted(Optional<String> name, Optional<String> phone,
+                                                        Optional<String> license, Optional<Double> rating){
+        try{
+            List<Driver> driverList = null;
+            if (name.isPresent())
+                driverList = driverRepo.findByName(name.get());
+            if (phone.isPresent())
+                driverList = driverRepo.findByPhone(phone.get());
+            if (license.isPresent())
+                driverList = driverRepo.findByLicense(license.get());
+            if (rating.isPresent())
+                driverList = driverRepo.findByRating(rating.get());
+            if (name.isPresent() && phone.isPresent())
+                driverList = driverRepo.findByNameAndPhone(name.get(), phone.get());
+            if (name.isPresent() && rating.isPresent())
+                driverList = driverRepo.findByNameAndRating(name.get(), rating.get());
+            return driverList == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                    : new ResponseEntity<>(driverList, HttpStatus.FOUND);
+        } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

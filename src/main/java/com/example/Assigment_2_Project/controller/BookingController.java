@@ -65,7 +65,6 @@ public class BookingController extends EntityController<Booking>{
     }
 
 //  Get all booking data
-    @GetMapping(path = "/all")
     public ResponseEntity<List<Booking>> getBooking() {
         return bookingService.getBookings();
     }
