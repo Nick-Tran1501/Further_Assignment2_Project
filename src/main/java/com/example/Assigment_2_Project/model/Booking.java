@@ -15,7 +15,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "booking")
-@JsonIgnoreProperties(  {"handler","hibernateLazyInitializer"} )
 public class Booking {
 
     @Id
@@ -43,8 +42,12 @@ public class Booking {
     @Column
     private Double tripDistance;
 
+    @Column
+    private String status;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private Customer customer;
 
     @OneToOne
@@ -52,27 +55,11 @@ public class Booking {
     private Car car;
 
     @OneToOne
-    @JoinColumn(name = "invoice_id")
     @JsonManagedReference
     private Invoice invoice;
 
-
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @JsonIgnore
-//    private Customer customer;
-
-//    @OneToOne
-//    private Driver driver;
-
     public Booking() {
-
     }
-
-//    Get & Set date time
-//    public String getPickupTime() {
-//        return new SimpleDateFormat("dd/MM/yyyy").format(pickupTime);
-//    }
-
 
     public long getId() {
         return id;
@@ -128,6 +115,14 @@ public class Booking {
 
     public void setTripDistance(Double tripDistance) {
         this.tripDistance = tripDistance;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Customer getCustomer() {

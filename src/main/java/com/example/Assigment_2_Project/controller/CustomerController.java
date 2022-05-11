@@ -77,14 +77,14 @@ public class CustomerController extends EntityController<Customer>{
         return customerService.addCustomer(customers);
     }
 
-//  Get all customer data
+    //  Get all customer data
     @GetMapping(path = "/all")
     public ResponseEntity<List<Customer>> getCustomer(){
         return customerService.getCustomers();
     }
 
 
-//  Implement search customer function
+    //  Implement search customer function
 //  http://localhost:8080/Customer/search?name=Tuan (search 1 param)
 //  http://localhost:8080/Customer/search?name=Tuan&&address=Sky Garden (search > 1 params) (%20 = space)
     @GetMapping(path = "/search")
@@ -95,7 +95,7 @@ public class CustomerController extends EntityController<Customer>{
         return customerService.customerSearch(name,phone,address);
     }
 
-//  Find by ID
+    //  Find by ID
     @GetMapping(path = "/id/{id}")
     public ResponseEntity<Customer> getById(@PathVariable("id") Long id){
         return customerService.getByID(id);

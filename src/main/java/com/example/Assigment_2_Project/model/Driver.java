@@ -31,22 +31,23 @@ public class Driver {
     @Column
     private String name;
 
-    @Column
+    @Column(unique = true)
     private String license;
 
-    @Column
+    @Column(unique = true)
     private String phone;
 
     @Column
     private double rating;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "car_vin")
-//    @JsonBackReference
-//    private Car car; //Refresh everyday
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_vin")
+    @JsonBackReference
+    private Car car;
 
-//    @OneToMany(mappedBy = "driver", fetch = FetchType.EAGER)
-//    private List<Invoice> invoiceList;
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Invoice> invoiceList;
 
     public Driver() {}
 
@@ -98,19 +99,19 @@ public class Driver {
         this.rating = rating;
     }
 
-//    public Car getCar() {
-//        return car;
-//    }
-//
-//    public void setCar(Car car) {
-//        this.car = car;
-//    }
+    public Car getCar() {
+        return car;
+    }
 
-//    public List<Invoice> getInvoiceList() {
-//        return invoiceList;
-//    }
-//
-//    public void setInvoiceList(List<Invoice> invoiceList) {
-//        this.invoiceList = invoiceList;
-//    }
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public List<Invoice> getInvoiceList() {
+        return invoiceList;
+    }
+
+    public void setInvoiceList(List<Invoice> invoiceList) {
+        this.invoiceList = invoiceList;
+    }
 }

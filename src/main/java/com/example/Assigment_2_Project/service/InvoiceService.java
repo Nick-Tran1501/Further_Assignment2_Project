@@ -30,54 +30,68 @@ public class InvoiceService {
     @Autowired
     private DriverRepo driverRepo;
 
-    public ResponseEntity<List<Invoice>> findByPeriod(String startTime, String endTime) {
-        try{
-            ZonedDateTime start = ZonedDateTime.parse(startTime);
-            ZonedDateTime end = ZonedDateTime.parse(endTime);
-            List<Invoice> invoiceList = invoiceRepo.findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(start, end);
-            return new ResponseEntity<>(invoiceList, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    public ResponseEntity<List<Invoice>> findByPeriod(String startDate, String endDate) {
+//        try{
+//            String time = "T00:00:00.000Z";
+//            ZonedDateTime start = ZonedDateTime.parse(startDate + time);
+//            ZonedDateTime end = ZonedDateTime.parse(endDate + time);
+//            List<Invoice> invoiceList = invoiceRepo.findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(start, end);
+//            return new ResponseEntity<>(invoiceList, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
-    public ResponseEntity<List<Invoice>> findByCustomer(Long cusID, String startDate, String endDate){
+    public ResponseEntity<List<Invoice>> findInvoice(String searchBy,  Long ID, String startDate, String endDate){
         try {
             String time = "T00:00:00.000Z";
             String startTime = startDate + time;
             String endTime = endDate + time;
-            Customer customer  = customerRepo.findCustomerById(cusID);
             ZonedDateTime start = ZonedDateTime.parse(startTime);
             ZonedDateTime end = ZonedDateTime.parse(endTime);
-            List<Invoice> invoiceList =
-                    invoiceRepo.findByCustomerAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(customer, start, end);
-            return invoiceList == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                    : new ResponseEntity<>(invoiceList, HttpStatus.FOUND);
+            if (searchBy.equalsIgnoreCase("customer")){
+                Customer customer  = customerRepo.findCustomerById(ID);
+                List<Invoice> invoiceList =
+                        invoiceRepo.findByCustomerAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(customer, start, end);
+                return new ResponseEntity<>(invoiceList, HttpStatus.FOUND);
+            }
+            if (searchBy.equalsIgnoreCase("driver")){
+                Driver driver = driverRepo.findDriverById(ID);
+                List<Invoice> invoiceList =
+                        invoiceRepo.findByDriverAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(driver, start, end);
+                return new ResponseEntity<>(invoiceList, HttpStatus.FOUND);
+            }
+            if (searchBy.equalsIgnoreCase("all")){
+                List<Invoice> invoiceList = invoiceRepo.findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(start, end);
+                return new ResponseEntity<>(invoiceList, HttpStatus.OK);
+            }
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    public ResponseEntity<List<Invoice>> findByDriver(Long driverID, String startDate, String endDate){
-        try {
-            String time = "T00:00:00.000Z";
-            Driver driver = driverRepo.findDriverById(driverID);
-            String startTime = startDate + time;
-            String endTime = endDate + time;
-            ZonedDateTime start = ZonedDateTime.parse(startTime);
-            ZonedDateTime end = ZonedDateTime.parse(endTime);
-            List<Invoice> invoiceList =
-                    invoiceRepo.findByDriverAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(driver, start, end);
-            return invoiceList == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                    : new ResponseEntity<>(invoiceList, HttpStatus.FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    public ResponseEntity<List<Invoice>> findByDriver(Long driverID, String startDate, String endDate){
+//        try {
+//            String time = "T00:00:00.000Z";
+//            Driver driver = driverRepo.findDriverById(driverID);
+//            String startTime = startDate + time;
+//            String endTime = endDate + time;
+//            ZonedDateTime start = ZonedDateTime.parse(startTime);
+//            ZonedDateTime end = ZonedDateTime.parse(endTime);
+//            List<Invoice> invoiceList =
+//                    invoiceRepo.findByDriverAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(driver, start, end);
+//            return invoiceList == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+//                    : new ResponseEntity<>(invoiceList, HttpStatus.FOUND);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
 
 
-    public ResponseEntity<Double> getRevenue(Long ID, String searchBy, String startDate, String endDate) {
+    public ResponseEntity<Double> getRevenue(String searchBy, Long ID, String startDate, String endDate) {
         try{
             Double revenue = 0.0;
             String time = "T00:00:00.000Z";
@@ -91,6 +105,7 @@ public class InvoiceService {
                         invoiceRepo.findByCustomerAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(customer, start, end);
                 for (Invoice invoice : invoiceList)
                     revenue += invoice.getTotalPayment();
+                return new ResponseEntity<>(revenue, HttpStatus.OK);
             }
             if (searchBy.equalsIgnoreCase("driver")){
                 Driver driver = driverRepo.findDriverById(ID);
@@ -98,14 +113,16 @@ public class InvoiceService {
                         invoiceRepo.findByDriverAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(driver, start, end);
                 for (Invoice invoice : invoiceList)
                     revenue += invoice.getTotalPayment();
+                return new ResponseEntity<>(revenue, HttpStatus.OK);
             }
             if (searchBy.equalsIgnoreCase("all")){
                 List<Invoice> invoiceList =
                         invoiceRepo.findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(start,end);
                 for (Invoice invoice : invoiceList)
                     revenue += invoice.getTotalPayment();
+                return new ResponseEntity<>(revenue, HttpStatus.OK);
             }
-            return new ResponseEntity<>(revenue, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

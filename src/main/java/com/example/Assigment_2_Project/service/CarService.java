@@ -35,8 +35,8 @@ public class CarService {
                 if (car.getLicensePlate().equalsIgnoreCase(temp.getLicensePlate())){
                     return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
                 }
-                carRepo.save(car);
-                return new ResponseEntity<>(HttpStatus.CREATED);
+            carRepo.save(car);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -123,6 +123,7 @@ public class CarService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 
 //    public ResponseEntity<List<Car>> getAvailableCars(Map<String, String> fields) {
