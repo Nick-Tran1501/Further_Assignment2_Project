@@ -36,7 +36,6 @@ public class Invoice {
     private Driver driver;
 
     @OneToOne
-    @JoinColumn(name = "booking_id")
     @JsonBackReference
     private Booking booking;
 
@@ -75,6 +74,14 @@ public class Invoice {
 
     public void setDriver(Driver driver) {
         this.driver = driver;
+    }
+
+    public Booking getBooking() {
+        return booking;
+    }
+
+    public void setBooking(Booking booking) {
+        this.booking = booking;
     }
 
     public Double getTotalPayment() {

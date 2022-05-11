@@ -43,26 +43,24 @@ public class Booking {
     @Column
     private Double tripDistance;
 
+    @Column
+    private String status;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private Customer customer;
 
     @OneToOne
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @Column
-    private String status;
-
     @OneToOne
-    @JoinColumn(name = "invoice_id")
     @JsonManagedReference
     private Invoice invoice;
 
     public Booking() {
-
     }
-
 
     public long getId() {
         return id;
@@ -120,6 +118,14 @@ public class Booking {
         this.tripDistance = tripDistance;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Customer getCustomer() {
         return customer;
     }
@@ -142,13 +148,5 @@ public class Booking {
 
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }

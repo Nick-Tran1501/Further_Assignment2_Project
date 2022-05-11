@@ -51,7 +51,7 @@ public class Car {
 
     @OneToOne
     @JoinColumn(name = "driver_id")
-    @JsonBackReference
+    @JsonManagedReference
     private Driver driver; //refresh everyday
 
 //    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -146,12 +146,5 @@ public class Car {
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
-
-//    public Booking getBooking() {
-//        return booking;
-//    }
-//
-//    public void setBooking(Booking booking) {
-//        this.booking = booking;
-//    }
+    
 }

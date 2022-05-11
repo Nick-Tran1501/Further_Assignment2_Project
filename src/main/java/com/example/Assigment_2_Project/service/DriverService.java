@@ -52,13 +52,14 @@ public class DriverService {
         }
     }
 
-    public ResponseEntity<Driver> selectCar(Long driverID, Map<String, Long> car_id) {
+    public ResponseEntity<Driver> selectCar(Long driverID, Long carID) {
         try {
             Driver driver = driverRepo.findDriverById(driverID);
             List<Car> cars = carRepo.findAll();
-            Car car = carRepo.findCarById(car_id.get("car_id"));
+            Car car = carRepo.findCarById(carID);
             if (car.getDriver() == null){
                 car.setDriver(driver);
+                driver.setCar(car);
                 driverRepo.save(driver);
                 return new ResponseEntity<>(driver, HttpStatus.OK);
             }
