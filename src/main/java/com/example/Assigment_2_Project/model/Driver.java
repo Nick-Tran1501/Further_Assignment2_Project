@@ -45,6 +45,7 @@ public class Driver {
     @JsonBackReference
     private Car car;
 
+
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Invoice> invoiceList;
@@ -56,6 +57,8 @@ public class Driver {
     }
 
     public void setId(long id) {
+
+
         this.id = id;
     }
 

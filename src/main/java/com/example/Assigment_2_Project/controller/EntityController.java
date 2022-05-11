@@ -73,7 +73,7 @@ public abstract class EntityController<T> {
     public ResponseEntity<HttpStatus> deleteAll() {
         try {
             repo.deleteAll();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
