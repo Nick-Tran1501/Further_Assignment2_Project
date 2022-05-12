@@ -1,6 +1,7 @@
 package com.example.Assigment_2_Project.service;
 
 
+import com.example.Assigment_2_Project.model.Booking;
 import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.model.Driver;
 import com.example.Assigment_2_Project.model.Invoice;
@@ -41,6 +42,15 @@ public class InvoiceService {
 //            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 //        }
 //    }
+
+    public Invoice addInvoice(Customer customer, Driver driver, Double rateKilometer, Double tripDistance) {
+            Invoice invoice =  new Invoice();
+            Double totalPayment = rateKilometer * tripDistance;
+            invoice.setCustomer(customer);
+            invoice.setDriver(driver);
+            invoice.setTotalPayment(totalPayment);
+            return invoice;
+    }
 
     public ResponseEntity<List<Invoice>> findInvoice(String searchBy,  Long ID, String startDate, String endDate){
         try {

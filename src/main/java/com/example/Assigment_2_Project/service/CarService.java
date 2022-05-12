@@ -37,7 +37,7 @@ public class CarService {
                     return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
                 }
             carRepo.save(car);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(car, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
