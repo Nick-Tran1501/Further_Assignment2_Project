@@ -107,17 +107,18 @@ public class BookingService {
     }
 
     public List<Car> getAvailableCar(ZonedDateTime pickupTime) {
-        List<Car> carList = carRepo.findAll();
+        List<Car> carList = carRepo.findByAvailableTrue();
         List<Booking> bookingList = bookingRepo.findAll();
         ZonedDateTime timeTemp = null;
         for (Booking booking : bookingList) {
-            timeTemp = booking.getCreatedDate();
+            timeTemp = booking.getPickupTime();
             if (timeTemp.getYear() == pickupTime.getYear()
                     && timeTemp.getMonth().equals(pickupTime.getMonth())
                     && timeTemp.getDayOfMonth() == pickupTime.getDayOfMonth()){
                 carList.remove(booking.getCar());
             }
         }
+        carList.removeIf(car -> car.getDriver() == null);
         return carList;
     }
 
@@ -126,11 +127,11 @@ public class BookingService {
         try{
             String strDateTime = date + "T" + time+ ":00.000Z";
             ZonedDateTime pickupTime = ZonedDateTime.parse(strDateTime);
-            List<Car> carList = carRepo.findAll();
+            List<Car> carList = carRepo.findByAvailableTrue();
             List<Booking> bookingList = bookingRepo.findAll();
             ZonedDateTime timeTemp = null;
             for (Booking booking : bookingList) {
-                timeTemp = booking.getCreatedDate();
+                timeTemp = booking.getPickupTime();
                 if (timeTemp.getYear() == pickupTime.getYear()
                         && timeTemp.getMonth().equals(pickupTime.getMonth())
                         && timeTemp.getDayOfMonth() == pickupTime.getDayOfMonth()){
@@ -182,10 +183,12 @@ public class BookingService {
     public ResponseEntity<Booking> finishTrip(Long id){
         try {
             Booking booking = bookingRepo.findBookingById(id);
-            booking.getCar().setAvailable(true);
+            Car car  = booking.getCar();
+            car.setAvailable(true);
             ZonedDateTime dropTime =  ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
             booking.setDropTime(dropTime);
-            booking.setStatus("Finished");
+            carRepo.save(car);
+
             return new ResponseEntity<>(booking, HttpStatus.OK);
         }
         catch (Exception e){
