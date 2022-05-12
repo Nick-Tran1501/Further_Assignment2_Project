@@ -137,6 +137,7 @@ public class BookingService {
                     carList.remove(booking.getCar());
                 }
             }
+            carList.removeIf(car -> car.getDriver() == null);
             return new ResponseEntity<>(carList, HttpStatus.FOUND);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
