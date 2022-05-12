@@ -47,7 +47,7 @@ public class DriverService {
                     return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
                 }
             driverRepo.save(driver);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(driver, HttpStatus.CREATED);
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -58,7 +58,6 @@ public class DriverService {
     public ResponseEntity<Driver> selectCar(Long driverID, Long carID) {
         try {
             Driver driver = driverRepo.findDriverById(driverID);
-            List<Car> cars = carRepo.findAll();
             Car car = carRepo.findCarById(carID);
             if (car.getDriver() == null){
                 car.setDriver(driver);
@@ -67,7 +66,7 @@ public class DriverService {
                 return new ResponseEntity<>(driver, HttpStatus.OK);
             }
             else {
-                return new ResponseEntity<>(driver, HttpStatus.valueOf("Car was assigned, please choose another"));
+                return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
             }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

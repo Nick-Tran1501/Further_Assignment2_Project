@@ -31,10 +31,10 @@ public class Driver {
     @Column
     private String name;
 
-    @Column(unique = true)
+    @Column
     private String license;
 
-    @Column(unique = true)
+    @Column
     private String phone;
 
     @Column

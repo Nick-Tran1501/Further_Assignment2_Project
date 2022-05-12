@@ -39,7 +39,7 @@ public class Car {
     @Column
     private double rating;
 
-    @Column(unique = true)
+    @Column
     private String licensePlate;
 
     @Column
