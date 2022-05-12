@@ -34,10 +34,8 @@ public class BookingController extends EntityController<Booking>{
     public BookingController(BookingRepo bookingRepo){
         super(bookingRepo);
     }
-
-    @Autowired
-    public CarController carController;
-
+//
+//
     @Autowired
     private BookingRepo bookingRepo;
 
