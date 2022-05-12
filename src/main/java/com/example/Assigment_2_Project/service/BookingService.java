@@ -37,35 +37,43 @@ public class BookingService {
     private InvoiceRepo invoiceRepo;
 
     @Autowired
-    private CustomerService customerService;
-
-    @Autowired
-    private CarService carService;
+    private InvoiceService invoiceService;
 
     @Autowired
     private DriverRepo driverRepo;
 
 
+    public Booking createBookingBody(ZonedDateTime pickupDate, String startLocation,
+                                     String endLocation, Double tripDistance,
+                                     Invoice invoice, Car car, Customer customer) {
+        Booking booking = new Booking();
+        booking.setPickupTime(pickupDate);
+        booking.setStartLocation(startLocation);
+        booking.setEndLocation(endLocation);
+        booking.setInvoice(invoice);
+        booking.setCar(car);
+        booking.setTripDistance(tripDistance);
+        booking.setCreatedDate(pickupDate);
+        booking.setCustomer(customer);
+        return booking;
+    }
+
     // Input booking
     public ResponseEntity<Booking> createBooking(Long cusID, Long carID, Map<String, String> bookingBody) {
         try {
             Customer customer = customerRepo.findCustomerById(cusID);
-            Booking booking = new Booking();
-            String date = null;
-            String time = null;
-            if (bookingBody.containsKey("Date")){
-                date = bookingBody.get("Date");
-            }
-            if (bookingBody.containsKey("Time")){
-                time = bookingBody.get("Time");
-            }
+
+            String startLocation  = bookingBody.get("startLocation");
+            String endLocation = bookingBody.get("endLocation");
+            Double tripDistance = Double.parseDouble(bookingBody.get("tripDistance"));
+
+            String date = bookingBody.get("Date");
+            String time = bookingBody.get("Time");
 
             String strPickup = date + "T" + time + ":00.000Z";
             ZonedDateTime pickupTime = ZonedDateTime.parse(strPickup);
-            List<Car> carList = carRepo.findByAvailableTrue();
-            Invoice invoice = new Invoice();
+            List<Car> carList = getAvailableCar(pickupTime);
             Car carData = null;
-            Double tripDistance = null;
             for (Car cars :  carList)
                 if (cars.getId() == carID){
                     carData = cars;
@@ -74,45 +82,43 @@ public class BookingService {
                             && pickupTime.getDayOfMonth() == ZonedDateTime.now().getDayOfMonth())
                         cars.setAvailable(false); // return false value for car
                 }
+
             if (customer == null || carData == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
-            if (bookingBody.containsKey("startLocation"))
-                booking.setStartLocation(bookingBody.get("startLocation"));
-            if (bookingBody.containsKey("endLocation"))
-                booking.setEndLocation(bookingBody.get("endLocation"));
-            if (bookingBody.containsKey("tripDistance")){
-                tripDistance =  Double.parseDouble(bookingBody.get("tripDistance"));
-                booking.setTripDistance(tripDistance);
-            }
+
             Driver driver = carData.getDriver();
             Double rateKilometer = carData.getRateKilometer();
-            Double totalPay = tripDistance * rateKilometer;
 
-            invoice.setCustomer(customer);
-            invoice.setDriver(driver);
-            invoice.setTotalPayment(totalPay);
-            invoice.setCreatedDate(pickupTime);
-            invoice.setBooking(booking);
-
-            booking.setCreatedDate(pickupTime);
-            booking.setCar(carData);
-            booking.setCustomer(customer);
-            booking.setInvoice(invoice);
-            booking.setPickupTime(pickupTime);
-            booking.setStatus("Ready");
+            Invoice invoice = invoiceService.addInvoice(customer, driver, rateKilometer, tripDistance);
+            Booking booking = createBookingBody(pickupTime, startLocation, endLocation, tripDistance, invoice, carData, customer);
 
             customer.getInvoiceList().add(invoice);
             customer.getBookingList().add(booking);
             driver.getInvoiceList().add(invoice);
 
-
             invoiceRepo.save(invoice);
             bookingRepo.save(booking);
+
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public List<Car> getAvailableCar(ZonedDateTime pickupTime) {
+        List<Car> carList = carRepo.findAll();
+        List<Booking> bookingList = bookingRepo.findAll();
+        ZonedDateTime timeTemp = null;
+        for (Booking booking : bookingList) {
+            timeTemp = booking.getCreatedDate();
+            if (timeTemp.getYear() == pickupTime.getYear()
+                    && timeTemp.getMonth().equals(pickupTime.getMonth())
+                    && timeTemp.getDayOfMonth() == pickupTime.getDayOfMonth()){
+                carList.remove(booking.getCar());
+            }
+        }
+        return carList;
     }
 
     //  Get available car for customer

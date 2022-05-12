@@ -124,53 +124,44 @@ class DriverControllerTest {
 //
     }
 //
-//    @Test
-//    @Order(7)
-//    void deleteDriverById() {
+    @Test
+    @Order(7)
+    void deleteDriverById() {
+
+        Long id = 1L;
+        System.out.println(driverRepo.findDriverById(id).getName());
+        ResponseEntity<Driver> res = driverController.deleteByID(id);
+        System.out.println(driverRepo.findAll());
+        assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
+
+    }
 //
-//        Long id = null;
-//        for (Driver driver : driverList) {
-//            id = driver.getId();
-//            ResponseEntity<Driver> res = driverController.deleteByID(id);
-//
-//            assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
-//        }
-//    }
-//
-//    @Test
-//    @Order(8)
-//    void deleteAllDriver() {
-//        Driver driver = new Driver();
-//        driver.setName("Khoi Solid");
-//        driver.setLicense("07A2025");
-//        driver.setPhone("0777042805");
-//        driver.setRating(9.5);
-//
-//        ResponseEntity<Driver> newDriver = driverController.addDriver(driver);
-//        ResponseEntity<HttpStatus> res =  driverController.deleteAll();
-//
-//        assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
-//    }
-//
+    @Test
+    @Order(8)
+    void deleteAllDriver() {
+        Driver driver = new Driver();
+        driver.setName("Khoi Solid");
+        driver.setLicense("07A2025");
+        driver.setPhone("0777042805");
+        driver.setRating(9.5);
+
+        ResponseEntity<Driver> newDriver = driverController.addDriver(driver);
+        ResponseEntity<HttpStatus> res =  driverController.deleteAll();
+
+        assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
+    }
+
     @Test
     @Order(6)
     void searchDriver() {
-//        Driver driver = new Driver();
-//        driver.setName("Khoi Solid");
-//        driver.setLicense("07A2026");
-//        driver.setPhone("0777042806");
-//        driver.setRating(9.5);
-
         Optional<String> name = Optional.of("Khoi Solid");
         Optional<String> license = Optional.empty();
         Optional<String> phone = Optional.empty();
         Optional<Double> rating = Optional.empty();
 
-
         ResponseEntity<List<Driver>> res = driverController.searchDriver(name, phone, license, rating);
-        ;
 
-        assertEquals(res.getBody(), res);
+//        assertEquals(res.getBody(), driverRepo);
         assertEquals(res.getStatusCode(), HttpStatus.FOUND);
 
     }
