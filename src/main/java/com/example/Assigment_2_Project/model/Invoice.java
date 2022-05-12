@@ -28,11 +28,9 @@ public class Invoice {
 //    public ZonedDateTime dateTime;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnore
     private Customer customer;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnore
     private Driver driver;
 
     @OneToOne(cascade = CascadeType.ALL)

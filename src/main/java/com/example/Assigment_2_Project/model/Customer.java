@@ -36,9 +36,11 @@ public class Customer {
 ////    @JsonManagedReference
 //    private Booking booking;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Booking> bookingList;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Invoice> invoiceList;
 
 

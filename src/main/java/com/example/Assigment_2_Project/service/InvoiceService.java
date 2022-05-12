@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -52,7 +53,7 @@ public class InvoiceService {
             return invoice;
     }
 
-    public ResponseEntity<List<Invoice>> findInvoice(String searchBy,  Long ID, String startDate, String endDate){
+    public ResponseEntity<List<Invoice>> findInvoice(String searchBy, Long ID, String startDate, String endDate){
         try {
             String time = "T00:00:00.000Z";
             String startTime = startDate + time;
