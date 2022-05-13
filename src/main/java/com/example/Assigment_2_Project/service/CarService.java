@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,6 +138,53 @@ public class CarService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+//    public ResponseEntity<List<Car>> getAvailableCar(String date, String time){
+//        try{
+//            String strDateTime = date + "T" + time+ ":00.000Z";
+//            ZonedDateTime pickupTime = ZonedDateTime.parse(strDateTime);
+//            List<Car> carList = carRepo.findByAvailableTrue();
+//            List<Booking> bookingList = bookingRepo.findAll();
+//            ZonedDateTime timeTemp = null;
+//            for (Booking booking : bookingList) {
+//                timeTemp = booking.getPickupTime();
+//                if (timeTemp.getYear() == pickupTime.getYear()
+//                        && timeTemp.getMonth().equals(pickupTime.getMonth())
+//                        && timeTemp.getDayOfMonth() == pickupTime.getDayOfMonth()){
+//                    carList.remove(booking.getCar());
+//                }
+//            }
+//            carList.removeIf(car -> car.getDriver() == null);
+//            return new ResponseEntity<>(carList, HttpStatus.FOUND);
+//        } catch (Exception e){
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+    public List<Car> getAvailableCar(String date, String time) {
+        String strDateTime = date + "T" + time+ ":00.000Z";
+        ZonedDateTime pickupTime = ZonedDateTime.parse(strDateTime);
+        List<Car> carList = carRepo.findByAvailableTrue();
+        List<Booking> bookingList = bookingRepo.findAll();
+        ZonedDateTime timeTemp = null;
+        for (Booking booking : bookingList) {
+            timeTemp = booking.getPickupTime();
+            if (timeTemp.getYear() == pickupTime.getYear()
+                    && timeTemp.getMonth().equals(pickupTime.getMonth())
+                    && timeTemp.getDayOfMonth() == pickupTime.getDayOfMonth()){
+                carList.remove(booking.getCar());
+            }
+        }
+        carList.removeIf(car -> car.getDriver() == null);
+        return carList;
+    }
+
+    public void setCarAvailableFinish(Car car){
+        car.setAvailable(true);
+        carRepo.save(car);
+    }
+
 
 
 }

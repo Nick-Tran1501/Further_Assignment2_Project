@@ -50,6 +50,9 @@ public class InvoiceService {
             invoice.setCustomer(customer);
             invoice.setDriver(driver);
             invoice.setTotalPayment(totalPayment);
+            driver.getInvoiceList().add(invoice);
+            customer.getInvoiceList().add(invoice);
+            invoiceRepo.save(invoice);
             return invoice;
     }
 
@@ -83,22 +86,6 @@ public class InvoiceService {
         }
     }
 
-//    public ResponseEntity<List<Invoice>> findByDriver(Long driverID, String startDate, String endDate){
-//        try {
-//            String time = "T00:00:00.000Z";
-//            Driver driver = driverRepo.findDriverById(driverID);
-//            String startTime = startDate + time;
-//            String endTime = endDate + time;
-//            ZonedDateTime start = ZonedDateTime.parse(startTime);
-//            ZonedDateTime end = ZonedDateTime.parse(endTime);
-//            List<Invoice> invoiceList =
-//                    invoiceRepo.findByDriverAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(driver, start, end);
-//            return invoiceList == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-//                    : new ResponseEntity<>(invoiceList, HttpStatus.FOUND);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 
 
 
@@ -137,6 +124,11 @@ public class InvoiceService {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public void setTotalPayment(Invoice invoice) {
+        invoice.setTotalPayment(0.0);
+        invoiceRepo.save(invoice);
     }
 
 
