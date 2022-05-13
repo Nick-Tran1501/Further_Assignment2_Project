@@ -75,6 +75,8 @@ public interface CarRepo extends JpaRepository<Car, Long> {
     List<Car> findByMakeAndRatingGreaterThanEqualAndRateKilometerGreaterThanEqual(String make, Double rating, Double rateKilometer);
     List<Car> findByMakeAndRatingGreaterThanEqualAndAvailable(String make, Double rating, Boolean available);
 
+    List<Car> findByMakeAndRateKilometerGreaterThanEqualAndAvailable(String make, Double rateKilometer, Boolean available);
+
     List<Car> findByModelAndColorAndConvertible(String model, String color, Boolean convertible);
     List<Car> findByModelAndColorAndRatingGreaterThanEqual(String model, String color, Double rating);
     List<Car> findByModelAndColorAndRateKilometerGreaterThanEqual(String model, String color, Double rateKilometer);
