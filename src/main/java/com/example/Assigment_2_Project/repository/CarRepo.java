@@ -66,4 +66,32 @@ public interface CarRepo extends JpaRepository<Car, Long> {
     List<Car> findByMakeAndColorAndConvertible(String make, String color, Boolean convertible);
     List<Car> findByMakeAndColorAndRatingGreaterThanEqual(String make, String color, Double rating);
     List<Car> findByMakeAndColorAndRateKilometerGreaterThanEqual(String make, String color, Double rateKilometer);
+    List<Car> findByMakeAndColorAndAvailable(String make, String color,Boolean available);
+
+    List<Car> findByMakeAndConvertibleAndRatingGreaterThanEqual(String make, Boolean convertible, Double rating);
+    List<Car> findByMakeAndConvertibleAndRateKilometerGreaterThanEqual(String make, Boolean convertible, Double rateKilometer);
+    List<Car> findByMakeAndConvertibleAndAvailable(String make, Boolean convertible, Boolean available);
+
+    List<Car> findByMakeAndRatingGreaterThanEqualAndRateKilometerGreaterThanEqual(String make, Double rating, Double rateKilometer);
+    List<Car> findByMakeAndRatingGreaterThanEqualAndAvailable(String make, Double rating, Boolean available);
+
+    List<Car> findByMakeAndRateKilometerGreaterThanEqualAndAvailable(String make, Double rateKilometer, Boolean available);
+
+    List<Car> findByModelAndColorAndConvertible(String model, String color, Boolean convertible);
+    List<Car> findByModelAndColorAndRatingGreaterThanEqual(String model, String color, Double rating);
+    List<Car> findByModelAndColorAndRateKilometerGreaterThanEqual(String model, String color, Double rateKilometer);
+    List<Car> findByModelAndColorAndAvailable(String model, String color, Boolean available);
+
+    List<Car> findByModelAndConvertibleAndRatingGreaterThanEqual(String model, Boolean convertible, Double rating);
+    List<Car> findByModelAndConvertibleAndRateKilometerGreaterThanEqual(String model, Boolean convertible, Double rateKilometer);
+    List<Car> findByModelAndConvertibleAndAvailable(String model, Boolean convertible, Boolean available);
+
+    List<Car> findByModelAndRatingGreaterThanEqualAndRateKilometerGreaterThanEqual(String model, Double rating, Double rateKilometer);
+    List<Car> findByModelAndRatingGreaterThanEqualAndAvailable(String model, Double rating, Boolean available );
+
+    List<Car> findByModelAndRateKilometerGreaterThanEqualAndAvailable(String model, Double rateKilometer, Boolean available );
+    List<Car> findByRatingGreaterThanEqualAndRateKilometerGreaterThanEqualAndAvailable(Double rating,Double rateKilometer, Boolean available);
+
+
+
 }
