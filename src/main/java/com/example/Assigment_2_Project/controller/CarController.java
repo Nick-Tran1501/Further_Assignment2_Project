@@ -57,9 +57,11 @@ public class CarController extends EntityController<Car> {
                                                            @RequestParam(required = false) Optional<String> model,
                                                            @RequestParam(required = false) Optional<String> color,
                                                            @RequestParam(required = false) Optional<Boolean> convertible,
+                                                           @RequestParam(required = false) Optional<String> licensePlate,
                                                            @RequestParam(required = false) Optional<Double> rating,
-                                                           @RequestParam(required = false) Optional<Double> rateKilometer) {
-        return this.carService.searchCar(make, model, color, convertible, rating, rateKilometer);
+                                                           @RequestParam(required = false) Optional<Double> rateKilometer,
+                                                            @RequestParam(required = false) Optional<Boolean> available) {
+        return this.carService.searchCar(make, model, color, convertible, licensePlate, rating, rateKilometer, available);
     }
 
     // update car by ID

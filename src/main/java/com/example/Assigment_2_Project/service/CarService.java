@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
@@ -65,24 +66,28 @@ public class CarService {
 
     // search car by variables
     public ResponseEntity<List<Car>> searchCar(Optional<String> make, Optional<String> model,
-                                                           Optional<String> color, Optional<Boolean> convertible,
-                                                           Optional<Double> rating, Optional<Double> rateKilometer) {
+                                               Optional<String> color, Optional<Boolean> convertible,
+                                               Optional<String> licensePlate, Optional<Double> rating,
+                                               Optional<Double> rateKilometer, Optional<Boolean> available) {
 
         try {
-            String unavailable = "Cannot find car";
-            List<Car> carTemp = carRepo.findByAvailableTrue();
+            List<Car> carTemp = null;
             if (make.isPresent())
-                carTemp = carRepo.findByAvailableTrueAndMake(make.get());
+                carTemp = carRepo.findByMake(make.get());
             else if (model.isPresent())
-                carTemp =  carRepo.findByAvailableTrueAndModel(model.get());
+                carTemp =  carRepo.findByModel(model.get());
             else if (color.isPresent())
-                carTemp = carRepo.findByAvailableTrueAndColor(color.get());
+                carTemp = carRepo.findByColor(color.get());
+            else if (licensePlate.isPresent())
+                carTemp = carRepo.findByLicensePlate(licensePlate.get());
             else if (convertible.isPresent())
-                carTemp = carRepo.findByAvailableTrueAndConvertibleTrue();
+                carTemp = carRepo.findByConvertible(convertible.get());
             else if (rating.isPresent())
-                carTemp = carRepo.findByAvailableTrueAndRating(rating.get());
+                carTemp = carRepo.findByRatingGreaterThanEqual(rating.get());
             else if (rateKilometer.isPresent())
-                carTemp = carRepo.findByAvailableTrueAndRateKilometer(rateKilometer.get());
+                carTemp = carRepo.findByRateKilometerGreaterThanEqual(rateKilometer.get());
+            else if (available.isPresent())
+                carTemp = carRepo.findByAvailable(available.get());
             return carTemp == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                     : new ResponseEntity<>(carTemp, HttpStatus.FOUND);
 
@@ -139,29 +144,6 @@ public class CarService {
         }
     }
 
-
-//    public ResponseEntity<List<Car>> getAvailableCar(String date, String time){
-//        try{
-//            String strDateTime = date + "T" + time+ ":00.000Z";
-//            ZonedDateTime pickupTime = ZonedDateTime.parse(strDateTime);
-//            List<Car> carList = carRepo.findByAvailableTrue();
-//            List<Booking> bookingList = bookingRepo.findAll();
-//            ZonedDateTime timeTemp = null;
-//            for (Booking booking : bookingList) {
-//                timeTemp = booking.getPickupTime();
-//                if (timeTemp.getYear() == pickupTime.getYear()
-//                        && timeTemp.getMonth().equals(pickupTime.getMonth())
-//                        && timeTemp.getDayOfMonth() == pickupTime.getDayOfMonth()){
-//                    carList.remove(booking.getCar());
-//                }
-//            }
-//            carList.removeIf(car -> car.getDriver() == null);
-//            return new ResponseEntity<>(carList, HttpStatus.FOUND);
-//        } catch (Exception e){
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
     public List<Car> getAvailableCar(String date, String time) {
         String strDateTime = date + "T" + time+ ":00.000Z";
         ZonedDateTime pickupTime = ZonedDateTime.parse(strDateTime);
@@ -184,85 +166,4 @@ public class CarService {
         car.setAvailable(true);
         carRepo.save(car);
     }
-
-
-
 }
-
-
-
-
-
-//    public ResponseEntity<List<Car>> getAvailableCars(Map<String, String> fields) {
-//        try {
-//                List<Car> cars = carRepo.findByAvailable(fields.get("available"));
-////            System.out.println(cars);
-//                if (cars.size() == 0) {
-//                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//                }
-//            System.out.println((ResponseEntity<List<Car>>) cars);
-//                return (ResponseEntity<List<Car>>) cars;
-//
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
-
-
-
-//    private List<Car> carList;
-//
-//    private List<Driver> drivers;
-//
-//
-//
-//    @Autowired
-//    private SessionFactory sessionFactory;
-//
-//    @Autowired
-//    private DriverService driverService;
-//
-//    public void setCarList(List<Car> carList) {
-//        this.carList = carList;
-//    }
-//
-//    public void setSessionFactory(SessionFactory sessionFactory) {
-//        this.sessionFactory = sessionFactory;
-//    }
-//
-//    public Long createCar(Car car){
-//        getAllCar().add(car);
-//        assignCarToDriver(car);
-//        sessionFactory.getCurrentSession().save(car);
-//        return car.getId();
-//    }
-//    //View all cars
-//    public List<Car> getAllCar() {
-//        carList = this.sessionFactory.getCurrentSession().createQuery("from Car").list();
-//        return carList;
-//    }
-//
-//    public void assignCarToDriver(Car car) {
-//        driverService.getAllDriver();
-//        for (Driver driver : driverService.getDrivers()) {
-//            if (driver.getCar() == null){
-//                driver.setCar(car);
-//            }
-//        }
-//    }
-//
-//    //Delete car
-//    public String deleteCarByID(Long id) {
-//        Car car = sessionFactory.getCurrentSession().get(Car.class, id);
-//        this.sessionFactory.getCurrentSession().delete(car);
-//        return "Delete successfully";
-//    }
-//
-//    public Car updateCar(Car car) {
-//        Car carTemp = sessionFactory.getCurrentSession().get(Car.class, car.getId());
-//        this.sessionFactory.getCurrentSession().update(car);
-//        return car;
-//    }
-//
-
