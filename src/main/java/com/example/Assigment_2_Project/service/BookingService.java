@@ -27,10 +27,8 @@ public class BookingService {
     @Autowired
     private BookingRepo bookingRepo;
 
-
     @Autowired
     private CustomerRepo customerRepo;
-
 
     @Autowired
     private InvoiceService invoiceService;
