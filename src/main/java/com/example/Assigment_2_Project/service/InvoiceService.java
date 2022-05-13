@@ -44,9 +44,9 @@ public class InvoiceService {
 //        }
 //    }
 
-    public Invoice addInvoice(Customer customer, Driver driver, Double rateKilometer, Double tripDistance) {
+    public Invoice addInvoice(Customer customer, Driver driver, Double rateKilometer, String tripDistance) {
             Invoice invoice =  new Invoice();
-            Double totalPayment = rateKilometer * tripDistance;
+            Double totalPayment = rateKilometer * Double.parseDouble(tripDistance);
             invoice.setCustomer(customer);
             invoice.setDriver(driver);
             invoice.setTotalPayment(totalPayment);

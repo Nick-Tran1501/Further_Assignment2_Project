@@ -46,17 +46,18 @@ public class BookingService {
     }
 
 
-    public Booking createBookingBody(ZonedDateTime pickupDate, String startLocation,
-                                     String endLocation, Double tripDistance,
+    public Booking createBookingBody(String date, String time, String startLocation,
+                                     String endLocation, String tripDistance,
                                      Invoice invoice, Car car, Customer customer) {
         Booking booking = new Booking();
-        booking.setPickupTime(pickupDate);
+        ZonedDateTime pickupTime = ZonedDateTime.parse(date +"T" +time + ":00.000Z");
+        booking.setCreatedDate(pickupTime);
+        booking.setPickupTime(pickupTime);
         booking.setStartLocation(startLocation);
         booking.setEndLocation(endLocation);
         booking.setInvoice(invoice);
         booking.setCar(car);
-        booking.setTripDistance(tripDistance);
-        booking.setCreatedDate(pickupDate);
+        booking.setTripDistance(Double.parseDouble(tripDistance));
         booking.setCustomer(customer);
         booking.setStatus("Ready");
         customer.getBookingList().add(booking);
@@ -71,13 +72,11 @@ public class BookingService {
 
             String startLocation  = bookingBody.get("startLocation");
             String endLocation = bookingBody.get("endLocation");
-            Double tripDistance = Double.parseDouble(bookingBody.get("tripDistance"));
+            String tripDistance = bookingBody.get("tripDistance");
 
             String date = bookingBody.get("Date");
             String time = bookingBody.get("Time");
-
             String strPickup = date + "T" + time + ":00.000Z";
-
             ZonedDateTime pickupTime = ZonedDateTime.parse(strPickup);
 
             List<Car> carList = carService.getAvailableCar(date, time);
@@ -100,7 +99,7 @@ public class BookingService {
             Double rateKilometer = carData.getRateKilometer();
 
             Invoice invoice = invoiceService.addInvoice(customer, driver, rateKilometer, tripDistance);
-            Booking booking = createBookingBody(pickupTime, startLocation, endLocation, tripDistance, invoice, carData, customer);
+            Booking booking = createBookingBody(date, time, startLocation, endLocation, tripDistance, invoice, carData, customer);
 
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
         } catch (Exception e) {

@@ -13,10 +13,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
@@ -34,36 +38,40 @@ public class BookingControllerTest {
 
     private CustomerControllerTest customerControllerTest;
 
-    @Autowired
-    private InvoiceService invoiceService;
 
 
     @Test
     void loadContext() {assertNotNull(bookingController);}
 
+
+
+
+
     @Test
     @Order(1)
     void createBooking() {
-        Booking booking = new Booking();
-        ZonedDateTime pickupTime = ZonedDateTime.parse("2022-05-14T04:30:00.000Z");
-        Double tripDistance = 12.0;
-        Double rateKilometer = 2.0;
-        Car car = new Car();
-        Driver driver = new Driver();
-        car.setAvailable(true);
-        car.setDriver(new Driver());
-        Customer customer = new Customer();
-        Invoice invoice = invoiceService.addInvoice(customer, driver, rateKilometer, tripDistance);
-        booking.setPickupTime(pickupTime);
-        booking.setStartLocation("HCM");
-        booking.setEndLocation("Ha Noi");
-        booking.setInvoice(invoice);
-        booking.setCar(car);
-        booking.setTripDistance(tripDistance);
-        booking.setCreatedDate(pickupTime);
-        booking.setCustomer(customer);
-        booking.setStatus("Ready");
+        Map<String, String> bookingBody = new HashMap<>();
+        bookingBody.put("Date", "2022-05-14");
+        bookingBody.put("Time", "17:00");
+        bookingBody.put("startLocation", "HCM");
+        bookingBody.put("endLocation", "Ha Noi");
+        bookingBody.put("tripDistance", "12.0");
 
+        Driver driver = new Driver();
+
+//        Double tripDistance = Double.parseDouble(bookingBody.get("trpDistance"));
+
+        Car car = new Car();
+        car.setRateKilometer(2.0);
+        car.setAvailable(true);
+        car.setDriver(driver);
+
+        Customer customer = new Customer();
+
+        ResponseEntity<Booking> res = bookingController.createBooking(customer.getId(), car.getId(), bookingBody);
+        Booking booking = res.getBody();
+        assertEquals(res.getBody(), booking);
+        assertEquals(res.getStatusCode(), HttpStatus.CREATED);
 
     }
 
