@@ -29,14 +29,11 @@ public class CustomerService {
     @Autowired
     private CustomerRepo customerRepo;
 
-    @Autowired
-    private BookingRepo bookingRepo;
-
     // Add customers
-    public ResponseEntity<Customer> addCustomer(Customer customers) {
+    public ResponseEntity<Customer> addCustomer(Customer customer) {
         try {
-            customerRepo.save(customers);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            customerRepo.save(customer);
+            return new ResponseEntity<>(customer, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -75,7 +72,6 @@ public class CustomerService {
                 customers = ((CustomerRepo) customerRepo).findByAddress(address.get());
             else if (phone.isPresent())
                 customers = ((CustomerRepo) customerRepo).findByPhone(phone.get());
-
             return customers == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                     : new ResponseEntity<>(customers, HttpStatus.OK);
         } catch (Exception e) {
@@ -88,7 +84,7 @@ public class CustomerService {
         try {
             Customer customers = customerRepo.findCustomerById(id);
             return customers == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                    : new ResponseEntity<>(customers, HttpStatus.OK);
+                    : new ResponseEntity<>(customers, HttpStatus.FOUND);
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
