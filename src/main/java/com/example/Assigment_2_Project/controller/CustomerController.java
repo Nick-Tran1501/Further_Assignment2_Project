@@ -53,17 +53,7 @@ public class CustomerController extends EntityController<Customer>{
     }
 
     // Create list customer sample
-    @Override
-    @PostMapping(path = "/demo")
-    public ResponseEntity<List<Customer>> inputDemoData(@Validated @RequestBody List<Customer> data) {
-        try {
-            customerRepo.saveAll(data);
-            return new ResponseEntity<>(HttpStatus.CREATED);
 
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     // Create customer manual
     @PostMapping(path = "/post")
@@ -102,6 +92,19 @@ public class CustomerController extends EntityController<Customer>{
     @DeleteMapping(path = "/deleteID/{id}")
     public ResponseEntity<Customer> deleteByID(@PathVariable("id") Long id){
         return customerService.deleteByID(id);
+    }
+
+
+    @Override
+    @PostMapping(path = "/demo")
+    public ResponseEntity<List<Customer>> inputDemoData(@Validated @RequestBody List<Customer> data) {
+        try {
+            customerRepo.saveAll(data);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
