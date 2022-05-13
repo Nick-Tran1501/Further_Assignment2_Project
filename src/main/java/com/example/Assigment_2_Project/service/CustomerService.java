@@ -29,9 +29,6 @@ public class CustomerService {
     @Autowired
     private CustomerRepo customerRepo;
 
-    @Autowired
-    private BookingRepo bookingRepo;
-
     // Add customers
     public ResponseEntity<Customer> addCustomer(Customer customers) {
         try {
@@ -75,7 +72,6 @@ public class CustomerService {
                 customers = ((CustomerRepo) customerRepo).findByAddress(address.get());
             else if (phone.isPresent())
                 customers = ((CustomerRepo) customerRepo).findByPhone(phone.get());
-
             return customers == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                     : new ResponseEntity<>(customers, HttpStatus.OK);
         } catch (Exception e) {

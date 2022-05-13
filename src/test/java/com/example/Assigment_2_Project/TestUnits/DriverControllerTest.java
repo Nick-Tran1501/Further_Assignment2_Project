@@ -85,7 +85,6 @@ class DriverControllerTest {
     @Test
     @Order(4)
     void updateDriver() {
-
         Long id = 1L;
         System.out.println(driverRepo.findDriverById(id).getName());
 
@@ -97,9 +96,47 @@ class DriverControllerTest {
         assertEquals(res.getBody().getName(), "Khoi Crypto");
 
     }
+
+    @Test
+    @Order((5))
+    void getDriverById() {
+        Long id = 1L;
+        ResponseEntity<Driver> res = driverController.getByID(id);
+        Driver driver = res.getBody();
+
+        assertEquals(res.getBody(), driver);
+        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
+
+    }
+
+
+    @Test
+    @Order(6)
+    void searchDriver() {
+        Optional<String> name = Optional.of("Khoi Solid");
+        Optional<String> license = Optional.empty();
+        Optional<String> phone = Optional.empty();
+        Optional<Double> rating = Optional.empty();
+
+        ResponseEntity<List<Driver>> res = driverController.searchDriver(name, phone, license, rating);
+        List<Driver> driverList = res.getBody();
+
+        assertEquals(res.getBody(), driverList);
+        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
+
+    }
+
+    @Test
+    @Order(7)
+    void getAllDriver() {
+        ResponseEntity<List<Driver>> res = driverController.getAllDriver();
+        List<Driver> driverList = res.getBody();
+        assertEquals(res.getBody(), driverList);
+        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
+    }
 //
     @Test
-    @Order(5)
+    @Order(8)
     void selectCar() {
 
         Car car = new Car();
@@ -125,7 +162,7 @@ class DriverControllerTest {
     }
 //
     @Test
-    @Order(7)
+    @Order(9)
     void deleteDriverById() {
 
         Long id = 1L;
@@ -137,7 +174,7 @@ class DriverControllerTest {
     }
 //
     @Test
-    @Order(8)
+    @Order(10)
     void deleteAllDriver() {
         Driver driver = new Driver();
         driver.setName("Khoi Solid");
@@ -151,20 +188,7 @@ class DriverControllerTest {
         assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
     }
 
-    @Test
-    @Order(6)
-    void searchDriver() {
-        Optional<String> name = Optional.of("Khoi Solid");
-        Optional<String> license = Optional.empty();
-        Optional<String> phone = Optional.empty();
-        Optional<Double> rating = Optional.empty();
 
-        ResponseEntity<List<Driver>> res = driverController.searchDriver(name, phone, license, rating);
-
-//        assertEquals(res.getBody(), driverRepo);
-        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
-
-    }
 //
 //
 

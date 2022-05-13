@@ -60,8 +60,12 @@ public class CarService {
 
     // Get car by id
     public ResponseEntity<Car> getCarById(Long id){
-        Car car =  carRepo.findCarById(id);
-        return new ResponseEntity<>(car, HttpStatus.FOUND);
+        try {
+            Car car =  carRepo.findCarById(id);
+            return new ResponseEntity<>(car, HttpStatus.FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // search car by variables
@@ -116,7 +120,7 @@ public class CarService {
                     }
                 }
             }
-            return new ResponseEntity<HashMap<String,Integer>>(result, HttpStatus.FOUND);
+            return new ResponseEntity<>(result, HttpStatus.FOUND);
         }
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

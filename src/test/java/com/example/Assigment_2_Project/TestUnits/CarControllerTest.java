@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -62,7 +63,25 @@ public class CarControllerTest {
         contentField.put("make", "USA");
 
         ResponseEntity<Car> res = carController.updateTableColumnById(id, contentField);
-
         assertEquals(res.getBody().getMake(), "USA");
+    }
+
+    @Test
+    @Order(3)
+    void getCarById() {
+        Long id = 1L;
+        ResponseEntity<Car> res = carController.getCarById(id);
+        Car car = res.getBody();
+        assertEquals(res.getBody(), car);
+        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
+    }
+
+    @Test
+    @Order(4)
+    void getAllCar() {
+        ResponseEntity<List<Car>> res = carController.getCars();
+        List<Car> carList = res.getBody();
+        assertEquals(res.getBody(), carList);
+        assertEquals(res.getStatusCode(), HttpStatus.OK);
     }
 }
