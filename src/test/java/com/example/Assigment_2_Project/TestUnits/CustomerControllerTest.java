@@ -38,7 +38,7 @@ public class CustomerControllerTest {
 
     @Test
     @Order(1)
-    void createCustomer() {
+    Customer createCustomer() {
         Customer customer = new Customer();
         customer.setPhone("0777042801");
         customer.setAddress("702 Nguyen Hue");
@@ -47,6 +47,7 @@ public class CustomerControllerTest {
         ResponseEntity<Customer> res = customerController.addCustomer(customer);
         assertEquals(res.getBody(), customer);
         assertEquals(res.getStatusCode(), HttpStatus.CREATED);
+        return customer;
     }
 
     @Test

@@ -154,7 +154,6 @@ class DriverControllerTest {
         Long carID = car.getId();
 
         Long id = 1L;
-        System.out.println(driverRepo.findDriverById(id).getName());
         ResponseEntity<Driver> res = driverController.selectCar(id, carID);
 
         assertEquals(res.getStatusCode(), HttpStatus.OK);
