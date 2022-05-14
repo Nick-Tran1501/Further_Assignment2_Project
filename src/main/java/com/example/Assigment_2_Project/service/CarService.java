@@ -69,6 +69,30 @@ public class CarService {
         }
     }
 
+
+    public List<Car> getAvailableCar(String date, String time) {
+        String strDateTime = date + "T" + time+ ":00.000Z";
+        ZonedDateTime pickupTime = ZonedDateTime.parse(strDateTime);
+        List<Car> carList = carRepo.findByAvailableTrue();
+        List<Booking> bookingList = bookingRepo.findAll();
+        ZonedDateTime timeTemp = null;
+        for (Booking booking : bookingList) {
+            timeTemp = booking.getPickupTime();
+            if (timeTemp.getYear() == pickupTime.getYear()
+                    && timeTemp.getMonth().equals(pickupTime.getMonth())
+                    && timeTemp.getDayOfMonth() == pickupTime.getDayOfMonth()){
+                carList.remove(booking.getCar());
+            }
+        }
+        carList.removeIf(car -> car.getDriver() == null);
+        return carList;
+    }
+
+    public void setCarAvailableFinish(Car car){
+        car.setAvailable(true);
+        carRepo.save(car);
+    }
+
     // search car by variables
     public ResponseEntity<List<Car>> searchCar(Optional<String> make, Optional<String> model,
                                                Optional<String> color, Optional<Boolean> convertible,
@@ -151,26 +175,5 @@ public class CarService {
         }
     }
 
-    public List<Car> getAvailableCar(String date, String time) {
-        String strDateTime = date + "T" + time+ ":00.000Z";
-        ZonedDateTime pickupTime = ZonedDateTime.parse(strDateTime);
-        List<Car> carList = carRepo.findByAvailableTrue();
-        List<Booking> bookingList = bookingRepo.findAll();
-        ZonedDateTime timeTemp = null;
-        for (Booking booking : bookingList) {
-            timeTemp = booking.getPickupTime();
-            if (timeTemp.getYear() == pickupTime.getYear()
-                    && timeTemp.getMonth().equals(pickupTime.getMonth())
-                    && timeTemp.getDayOfMonth() == pickupTime.getDayOfMonth()){
-                carList.remove(booking.getCar());
-            }
-        }
-        carList.removeIf(car -> car.getDriver() == null);
-        return carList;
-    }
 
-    public void setCarAvailableFinish(Car car){
-        car.setAvailable(true);
-        carRepo.save(car);
-    }
 }

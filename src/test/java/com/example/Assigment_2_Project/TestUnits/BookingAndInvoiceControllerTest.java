@@ -205,6 +205,7 @@ public class BookingAndInvoiceControllerTest {
 
     }
 
+//+++++++++++++++++++++++++++++++++++Negative test++++++++++++++++++++++++++
 
 
 }

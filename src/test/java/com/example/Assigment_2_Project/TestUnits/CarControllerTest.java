@@ -75,13 +75,7 @@ public class CarControllerTest {
         assertEquals(res.getStatusCode(), HttpStatus.OK);
     }
 
-    @Test
-    @Order(4)
-    void getCarByIDFalse() {
-        Long id = 2L;
-        ResponseEntity<Car> res = carController.getCarById(id);
-        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
-    }
+
 
     @Test
     @Order(4)
@@ -108,7 +102,7 @@ public class CarControllerTest {
         Long id = car.getId();
 
         ResponseEntity<Car> res =  carController.deleteByID(id);
-        assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
+        assertEquals(res.getStatusCode(), HttpStatus.OK);
     }
 
 
@@ -116,6 +110,33 @@ public class CarControllerTest {
     @Order(6)
     void deleteAllCar() {
         ResponseEntity<HttpStatus> res =  carController.deleteAll();
-        assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
+        assertEquals(res.getStatusCode(), HttpStatus.OK);
+    }
+
+//++++++++++++++++++++++++++++++Negative test+++++++++++++++++++++++++++++++++
+
+    @Test
+    @Order(3)
+    void falseCreateCar() {
+        Car car = new Car();
+        car.setMake("China");
+        car.setColor("red");
+        car.setModel("sport");
+        car.setConvertible(true);
+        car.setRating(9.5);
+        car.setLicensePlate("50A077.07");
+        car.setRateKilometer(2.0);
+        car.setAvailable(true);
+
+        ResponseEntity<Car> res = carController.addCar(car);
+
+        assertEquals(res.getStatusCode(), HttpStatus.ALREADY_REPORTED);
+    }
+    @Test
+    @Order(4)
+    void getCarByIDFalse() {
+        Long id = 2L;
+        ResponseEntity<Car> res = carController.getCarById(id);
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 }
