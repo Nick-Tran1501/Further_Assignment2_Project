@@ -36,7 +36,6 @@ public class BookingService {
     @Autowired
     private CarService carService;
 
-
     public ResponseEntity<List<Car>> getAvailableCar(String date, String time){
         try {
             return new ResponseEntity<>(carService.getAvailableCar(date, time), HttpStatus.FOUND);
@@ -109,23 +108,6 @@ public class BookingService {
 
 
 
-
-    //  Get available car for customer
-    public void autoCancelled(Booking booking){
-        Integer nowHour = ZonedDateTime.now().getHour();
-        Integer nowDate = ZonedDateTime.now().getDayOfMonth();
-        Integer bookingDate = booking.getPickupTime().getDayOfMonth();
-        Integer nowMinute = ZonedDateTime.now().getMinute();
-        if (bookingDate.equals(nowDate) && nowHour.equals(23) && nowMinute.equals(59) && booking.getStatus().equals("Ready")){
-            booking.getCar().setAvailable(true);
-            booking.setStatus("Cancelled");
-            carService.setCarAvailableFinish(booking.getCar());
-            invoiceService.setTotalPayment(booking.getInvoice());
-            bookingRepo.save(booking);
-        }
-    }
-
-
     //  Get all booking data
     public ResponseEntity<List<Booking>> getBookings() {
         try {
@@ -152,6 +134,20 @@ public class BookingService {
         }
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public void autoCancelled(Booking booking){
+        Integer nowHour = ZonedDateTime.now().getHour();
+        Integer nowDate = ZonedDateTime.now().getDayOfMonth();
+        Integer bookingDate = booking.getPickupTime().getDayOfMonth();
+        Integer nowMinute = ZonedDateTime.now().getMinute();
+        if (bookingDate.equals(nowDate) && nowHour.equals(23) && nowMinute.equals(59) && booking.getStatus().equals("Ready")){
+            booking.getCar().setAvailable(true);
+            booking.setStatus("Cancelled");
+            carService.setCarAvailableFinish(booking.getCar());
+            invoiceService.setTotalPayment(booking.getInvoice());
+            bookingRepo.save(booking);
         }
     }
 

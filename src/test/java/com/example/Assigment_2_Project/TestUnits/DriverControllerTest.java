@@ -164,7 +164,7 @@ class DriverControllerTest {
         ResponseEntity<Driver> newDriver = driverController.addDriver(driver);
         ResponseEntity<HttpStatus> res =  driverController.deleteAll();
 
-        assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
+        assertEquals(res.getStatusCode(), HttpStatus.OK);
     }
 
 //+++++++++++++++++++++++++++++++++++++++ Negative ++++++++++++++++++++++++++++++++
