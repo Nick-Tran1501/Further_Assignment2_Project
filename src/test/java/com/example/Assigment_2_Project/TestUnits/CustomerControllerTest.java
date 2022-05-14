@@ -145,6 +145,7 @@ public class CustomerControllerTest {
         Long id = 1L;
         ResponseEntity<Customer> res = customerController.getById(id);
         Customer customer = res.getBody();
+
         assertEquals(res.getBody(), customer);
         assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
 
