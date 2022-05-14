@@ -8,7 +8,6 @@ import com.example.Assigment_2_Project.model.Booking;
 import com.example.Assigment_2_Project.model.Car;
 import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.model.Driver;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TestAllController {
+public class BookingAndInvoiceControllerTest {
 
 
     @Autowired
