@@ -62,7 +62,8 @@ public class CarService {
     public ResponseEntity<Car> getCarById(Long id){
         try {
             Car car =  carRepo.findCarById(id);
-            return new ResponseEntity<>(car, HttpStatus.FOUND);
+            return  car == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND):
+                    new ResponseEntity<>(car, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

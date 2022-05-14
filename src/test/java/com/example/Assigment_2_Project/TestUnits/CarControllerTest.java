@@ -72,7 +72,15 @@ public class CarControllerTest {
         ResponseEntity<Car> res = carController.getCarById(id);
         Car car = res.getBody();
         assertEquals(res.getBody(), car);
-        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
+        assertEquals(res.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    @Order(4)
+    void getCarByIDFalse() {
+        Long id = 2L;
+        ResponseEntity<Car> res = carController.getCarById(id);
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 
     @Test
