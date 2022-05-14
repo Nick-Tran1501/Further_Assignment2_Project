@@ -98,6 +98,21 @@ class DriverControllerTest {
     }
 
     @Test
+    @Order(3)
+    void updateDriverFalse() {
+        Long id = 2L;
+
+        Map<String, String> contentField = new HashMap<>();
+        contentField.put("name", "Khoi Crypto");
+
+        ResponseEntity<Driver> res = driverController.updateTableColumnById(id, contentField);
+
+//        assertEquals(res.getBody().getName(), "Khoi Solid");
+        assertEquals(res.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+
+    @Test
     @Order((5))
     void getDriverById() {
         Long id = 1L;
@@ -186,6 +201,7 @@ class DriverControllerTest {
 
         assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
     }
+
 
 
 
