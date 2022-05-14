@@ -88,6 +88,13 @@ public class CustomerControllerTest {
 
     @Test
     @Order(5)
+    void findAll() {
+        ResponseEntity<List<Customer>> res = customerController.getCustomer();
+        assertEquals(res.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    @Order(6)
     void deleteById() {
         Customer customer = new Customer();
         customer.setPhone("0777042802");
@@ -103,10 +110,63 @@ public class CustomerControllerTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     void deleteAll() {
         ResponseEntity<HttpStatus> res = customerController.deleteAll();
         assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
     }
+
+
+//  Testing False
+
+    @Test
+    @Order(8)
+    void falseFindAll() {
+        ResponseEntity<List<Customer>> res = customerController.getCustomer();
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    @Order(9)
+    void falseSearch(){
+        Optional<String> name = Optional.of("False name");
+        Optional<String> phone = Optional.of("False phone");
+        Optional<String> address = Optional.of("False address");
+
+        ResponseEntity<List<Customer>> res = customerController.customerSearch(name, phone, address);
+        List<Customer> customerList = res.getBody();
+        assertEquals(res.getBody(), customerList);
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    @Order(10)
+    void falseGetCustomerById() {
+        Long id = 1L;
+        ResponseEntity<Customer> res = customerController.getById(id);
+        Customer customer = res.getBody();
+        assertEquals(res.getBody(), customer);
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
+
+    }
+
+    @Test
+    @Order(11)
+    void falseDeleteById() {
+        Customer customer = new Customer();
+        customer.setPhone("0777042802");
+        customer.setAddress("702 Nguyen Hue");
+        customer.setName("Khoi Nguyen");
+
+        ResponseEntity<Customer> addCustomer = customerController.addCustomer(customer);
+
+        Long id = customer.getId();
+        ResponseEntity<Customer> res = customerController.deleteByID(id);
+        assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
+
+    }
+
+
+
 
 }

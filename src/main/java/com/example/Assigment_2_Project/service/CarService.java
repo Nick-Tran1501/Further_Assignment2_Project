@@ -92,7 +92,7 @@ public class CarService {
                 carTemp = carRepo.findByRateKilometerGreaterThanEqual(rateKilometer.get());
             else if (available.isPresent())
                 carTemp = carRepo.findByAvailable(available.get());
-            return carTemp == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+            return carTemp.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                     : new ResponseEntity<>(carTemp, HttpStatus.FOUND);
 
         } catch (Exception e) {
