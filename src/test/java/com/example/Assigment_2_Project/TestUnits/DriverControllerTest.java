@@ -4,6 +4,7 @@ package com.example.Assigment_2_Project.TestUnits;
 import com.example.Assigment_2_Project.controller.CarController;
 import com.example.Assigment_2_Project.controller.DriverController;
 import com.example.Assigment_2_Project.model.Car;
+import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.model.Driver;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import com.example.Assigment_2_Project.repository.DriverRepo;
@@ -15,8 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import javax.swing.text.html.Option;
-import java.time.ZonedDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -64,25 +63,6 @@ class DriverControllerTest {
     }
 
     @Test
-    @Order(3)
-    void createDriverFalse() {
-        Driver driver = new Driver();
-        driver.setName("Khoi Solid");
-        driver.setLicense("07A2021");
-        driver.setPhone("0777042801");
-        driver.setRating(9.5);
-
-        System.out.println(driver.getId());
-
-        ResponseEntity<Driver> res = driverController.addDriver(driver);
-        assertEquals(res.getStatusCode(), HttpStatus.ALREADY_REPORTED);
-    }
-
-//
-//
-//
-//
-    @Test
     @Order(4)
     void updateDriver() {
         Long id = 1L;
@@ -97,20 +77,7 @@ class DriverControllerTest {
 
     }
 
-    @Test
-    @Order(3)
-    void updateDriverFalse() {
-        Long id = 2L;
 
-        Map<String, String> contentField = new HashMap<>();
-        contentField.put("name", "Khoi Crypto");
-
-        ResponseEntity<Driver> res = driverController.updateTableColumnById(id, contentField);
-
-//        assertEquals(res.getBody().getName(), "Khoi Solid");
-        assertEquals(res.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
-
-    }
 
     @Test
     @Order((5))
@@ -128,7 +95,7 @@ class DriverControllerTest {
     @Test
     @Order(6)
     void searchDriver() {
-        Optional<String> name = Optional.of("Khoi Solid");
+        Optional<String> name = Optional.of("Khoi Crypto");
         Optional<String> license = Optional.empty();
         Optional<String> phone = Optional.empty();
         Optional<Double> rating = Optional.empty();
@@ -166,6 +133,7 @@ class DriverControllerTest {
 
 
         ResponseEntity<Car> newCar = carController.addCar(car);
+        System.out.println(newCar.getBody().getLicensePlate());
         Long carID = car.getId();
 
         Long id = 1L;
@@ -178,12 +146,9 @@ class DriverControllerTest {
     @Test
     @Order(9)
     void deleteDriverById() {
-
         Long id = 1L;
-        System.out.println(driverRepo.findDriverById(id).getName());
         ResponseEntity<Driver> res = driverController.deleteByID(id);
-        System.out.println(driverRepo.findAll());
-        assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
+        assertEquals(res.getStatusCode(), HttpStatus.OK);
 
     }
 //
@@ -202,7 +167,62 @@ class DriverControllerTest {
         assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
     }
 
+//+++++++++++++++++++++++++++++++++++++++ Negative ++++++++++++++++++++++++++++++++
+    @Test
+    @Order(8)
+    void falseSelectCar() {
+        Long carID = 1L;
+        Long id = 1L;
+        ResponseEntity<Car> car = carController.getCarById(carID);
+        System.out.println(car.getBody().getLicensePlate());
+        ResponseEntity<Driver> res = driverController.selectCar(id, carID);
+        Driver driver = res.getBody();
+        assertEquals(res.getStatusCode(), HttpStatus.ALREADY_REPORTED);
+    }
 
+    @Test
+    @Order(3)
+    void createDriverFalse() {
+        Driver driver = new Driver();
+        driver.setName("Khoi Solid");
+        driver.setLicense("07A2021");
+        driver.setPhone("0777042801");
+        driver.setRating(9.5);
 
+        ResponseEntity<Driver> res = driverController.addDriver(driver);
+        assertEquals(res.getStatusCode(), HttpStatus.ALREADY_REPORTED);
+    }
 
+    @Test
+    @Order(4)
+    void updateDriverFalse() {
+        Long id = 2L;
+
+        Map<String, String> contentField = new HashMap<>();
+        contentField.put("name", "Khoi Crypto");
+
+        ResponseEntity<Driver> res = driverController.updateTableColumnById(id, contentField);
+
+//        assertEquals(res.getBody().getName(), "Khoi Solid");
+        assertEquals(res.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+
+    @Test
+    @Order(5)
+    void FalseGetDriverById() {
+        Long id = 2L;
+        ResponseEntity<Driver> res = driverController.getById(id);
+        Driver driver = res.getBody();
+        assertEquals(res.getBody(), driver);
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    @Order(6)
+    void FalseDeleteById() {
+        Long id = 2L;
+        ResponseEntity<Driver> res = driverController.deleteByID(id);
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
 }

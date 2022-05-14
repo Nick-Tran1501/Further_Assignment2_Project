@@ -131,8 +131,10 @@ public class CarService {
     //  Delete car by ID
     public ResponseEntity<Car> deleteByID(Long id){
         try{
+            if (carRepo.findCarById(id) == null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             carRepo.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -143,7 +145,7 @@ public class CarService {
     public ResponseEntity<HttpStatus> deleteAll() {
         try {
             carRepo.deleteAll();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
