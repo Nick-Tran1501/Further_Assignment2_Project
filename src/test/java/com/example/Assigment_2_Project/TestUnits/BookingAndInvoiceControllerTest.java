@@ -122,10 +122,10 @@ public class BookingAndInvoiceControllerTest {
     void selectCar() {
         Long id = 1L;
         Long carID =  1L;
-        ResponseEntity<Driver> res = driverController.selectCar(id, carID);
-        Driver driver = res.getBody();
+        ResponseEntity<String> res = driverController.selectCar(id, carID);
+        String string = res.getBody();
 
-        assertEquals(res.getBody(), driver);
+        assertEquals(res.getBody(), string);
         assertEquals(res.getStatusCode(),HttpStatus.OK);
     }
 

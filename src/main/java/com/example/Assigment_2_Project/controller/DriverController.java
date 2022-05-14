@@ -54,7 +54,7 @@ public class DriverController extends EntityController<Driver> {
     }
 
     @PostMapping(path = "/{id}")
-    public ResponseEntity<Driver> selectCar(@PathVariable("id") Long id, @RequestParam("Car id") Long carID) {
+    public ResponseEntity<String> selectCar(@PathVariable("id") Long id, @RequestParam("Car id") Long carID) {
         return driverService.selectCar(id, carID);
     }
 
