@@ -137,8 +137,9 @@ class DriverControllerTest {
         Long carID = car.getId();
 
         Long id = 1L;
-        ResponseEntity<Driver> res = driverController.selectCar(id, carID);
-
+        ResponseEntity<String> res = driverController.selectCar(id, carID);
+        String string = res.getBody();
+        assertEquals(res.getBody(), string);
         assertEquals(res.getStatusCode(), HttpStatus.OK);
 
     }
@@ -175,8 +176,9 @@ class DriverControllerTest {
         Long id = 1L;
         ResponseEntity<Car> car = carController.getCarById(carID);
         System.out.println(car.getBody().getLicensePlate());
-        ResponseEntity<Driver> res = driverController.selectCar(id, carID);
-        Driver driver = res.getBody();
+        ResponseEntity<String> res = driverController.selectCar(id, carID);
+        String string = res.getBody();
+        assertEquals(res.getBody(), string);
         assertEquals(res.getStatusCode(), HttpStatus.ALREADY_REPORTED);
     }
 

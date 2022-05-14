@@ -55,7 +55,7 @@ public class DriverService {
     }
 
     // Select car
-    public ResponseEntity<Driver> selectCar(Long driverID, Long carID) {
+    public ResponseEntity<String> selectCar(Long driverID, Long carID) {
         try {
             Driver driver = driverRepo.findDriverById(driverID);
             Car car = carRepo.findCarById(carID);
@@ -63,10 +63,10 @@ public class DriverService {
                 car.setDriver(driver);
                 driver.setCar(car);
                 driverRepo.save(driver);
-                return new ResponseEntity<>(driver, HttpStatus.OK);
+                return new ResponseEntity<>("Car selected successfully", HttpStatus.OK);
             }
             else {
-                return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+                return new ResponseEntity<>("This car has been selected, please choose another",HttpStatus.ALREADY_REPORTED);
             }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
