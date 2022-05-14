@@ -34,11 +34,6 @@ public class BookingControllerTest {
     @Autowired
     private BookingController bookingController;
 
-    private CarControllerTest carControllerTest;
-
-    private CustomerControllerTest customerControllerTest;
-
-
 
     @Test
     void loadContext() {assertNotNull(bookingController);}
@@ -59,14 +54,16 @@ public class BookingControllerTest {
 
         Driver driver = new Driver();
 
-//        Double tripDistance = Double.parseDouble(bookingBody.get("trpDistance"));
-
         Car car = new Car();
         car.setRateKilometer(2.0);
         car.setAvailable(true);
         car.setDriver(driver);
 
+
         Customer customer = new Customer();
+        customer.setPhone("0777042801");
+        customer.setAddress("702 Nguyen Hue");
+        customer.setName("Khoi Nguyen");
 
         ResponseEntity<Booking> res = bookingController.createBooking(customer.getId(), car.getId(), bookingBody);
         Booking booking = res.getBody();
