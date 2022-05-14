@@ -100,9 +100,10 @@ public class DriverService {
     //  Get driver by id
     public ResponseEntity<Driver> getByID(Long id){
         try {
-            Driver driver = driverRepo.findDriverById(id);
+            Driver driver  = driverRepo.findDriverById(id);
+
             return driver == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                    : new ResponseEntity<>(driver, HttpStatus.OK);
+                    : new ResponseEntity<>(driver, HttpStatus.FOUND);
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -112,8 +113,10 @@ public class DriverService {
     //  Delete driver by ID
     public ResponseEntity<Driver> deleteByID(Long id){
         try{
+            if (driverRepo.findDriverById(id)  == null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             driverRepo.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
