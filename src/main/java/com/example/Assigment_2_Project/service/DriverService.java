@@ -90,7 +90,7 @@ public class DriverService {
                 driverList = driverRepo.findByNameAndPhone(name.get(), phone.get());
             if (name.isPresent() && rating.isPresent())
                 driverList = driverRepo.findByNameAndRating(name.get(), rating.get());
-            return driverList == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+            return driverList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                     : new ResponseEntity<>(driverList, HttpStatus.FOUND);
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -119,6 +119,7 @@ public class DriverService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    //Test
     // delete all driver
     public ResponseEntity<HttpStatus> deleteAll() {
         try {
@@ -131,36 +132,5 @@ public class DriverService {
 
 }
 
-
-//    @Autowired
-//    private SessionFactory sessionFactory;
-//
-//
-//    private List<Driver> drivers;
-//
-//
-//    public List<Driver> getDrivers() {
-//
-//        return drivers;
-//    }
-//
-//    public void setDrivers(List<Driver> drivers) {
-//        drivers = sessionFactory.getCurrentSession().createQuery("from Driver ").list();
-//        this.drivers = drivers;
-//    }
-//
-//    public Long addDriver(Driver driver) {
-//        getAllDriver().add(driver);
-//        this.sessionFactory.getCurrentSession().save(driver);
-//        return driver.getId();
-//    }
-//
-//
-//    public List<Driver> getAllDriver() {
-//        this.drivers = sessionFactory.getCurrentSession().createQuery("from Driver ").list();
-//        return this.drivers;
-//    }
-
-//    public String
 
 

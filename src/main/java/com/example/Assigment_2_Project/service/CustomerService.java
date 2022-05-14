@@ -58,24 +58,26 @@ public class CustomerService {
         try {
             List<Customer> customers = null; // result list
             if (name.isPresent() && phone.isPresent() && address.isPresent()) // check 3 elements exist
-                customers = ((CustomerRepo) customerRepo).findByNameAndPhoneAndAddress(name.get(), phone.get(),
-                        address.get());
+                customers = customerRepo.findByNameAndPhoneAndAddress(name.get(), phone.get(),
+                    address.get());
             else if (name.isPresent() && address.isPresent())
-                customers = ((CustomerRepo) customerRepo).findByNameAndAddress(name.get(), address.get());
+                customers = customerRepo.findByNameAndAddress(name.get(), address.get());
             else if (name.isPresent() && phone.isPresent())
-                customers = ((CustomerRepo) customerRepo).findByNameAndPhone(name.get(), phone.get());
+                customers = customerRepo.findByNameAndPhone(name.get(), phone.get());
             else if (phone.isPresent() && address.isPresent() )
-                customers = ((CustomerRepo) customerRepo).findByPhoneAndAddress(phone.get(), address.get());
+                customers = customerRepo.findByPhoneAndAddress(phone.get(), address.get());
             else if (name.isPresent())
-                customers = ((CustomerRepo) customerRepo).findByName(name.get());
+                customers = customerRepo.findByName(name.get());
             else if (address.isPresent())
-                customers = ((CustomerRepo) customerRepo).findByAddress(address.get());
+                customers = customerRepo.findByAddress(address.get());
             else if (phone.isPresent())
-                customers = ((CustomerRepo) customerRepo).findByPhone(phone.get());
-            return customers == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                customers = customerRepo.findByPhone(phone.get());
+
+            return customers.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                     : new ResponseEntity<>(customers, HttpStatus.OK);
+
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
