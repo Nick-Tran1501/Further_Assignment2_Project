@@ -157,9 +157,9 @@ class DriverControllerTest {
         ResponseEntity<Driver> res = driverController.selectCar(id, carID);
 
         assertEquals(res.getStatusCode(), HttpStatus.OK);
-//
+
     }
-//
+
     @Test
     @Order(9)
     void deleteDriverById() {
@@ -188,7 +188,5 @@ class DriverControllerTest {
     }
 
 
-//
-//
 
 }

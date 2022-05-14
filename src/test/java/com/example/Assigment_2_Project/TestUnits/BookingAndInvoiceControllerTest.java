@@ -1,13 +1,7 @@
 package com.example.Assigment_2_Project.TestUnits;
 
-import com.example.Assigment_2_Project.controller.BookingController;
-import com.example.Assigment_2_Project.controller.CarController;
-import com.example.Assigment_2_Project.controller.CustomerController;
-import com.example.Assigment_2_Project.controller.DriverController;
-import com.example.Assigment_2_Project.model.Booking;
-import com.example.Assigment_2_Project.model.Car;
-import com.example.Assigment_2_Project.model.Customer;
-import com.example.Assigment_2_Project.model.Driver;
+import com.example.Assigment_2_Project.controller.*;
+import com.example.Assigment_2_Project.model.*;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -17,7 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.print.attribute.standard.PresentationDirection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,6 +36,9 @@ public class BookingAndInvoiceControllerTest {
     @Autowired
     private BookingController bookingController;
 
+    @Autowired
+    private InvoiceController invoiceController;
+
     @Test
     @Order(1)
     void loadContextDriver() {
@@ -60,6 +59,18 @@ public class BookingAndInvoiceControllerTest {
 
     @Test
     @Order(4)
+    void loadConTextBooking() {
+        assertNotNull(bookingController);
+    }
+
+    @Test
+    @Order(5)
+    void loadContext() {
+        assertNotNull(invoiceController);
+    }
+
+    @Test
+    @Order(6)
     void createDriver() {
         Driver driver = new Driver();
         driver.setName("Khoi Solid");
@@ -76,8 +87,7 @@ public class BookingAndInvoiceControllerTest {
     }
 
     @Test
-    public
-    @Order(5)
+    @Order(7)
     void createCar() {
         Car car = new Car();
         car.setMake("China");
@@ -95,7 +105,7 @@ public class BookingAndInvoiceControllerTest {
     }
 
     @Test
-    @Order(6)
+    @Order(8)
     void createCustomer() {
         Customer customer = new Customer();
         customer.setPhone("0777042801");
@@ -108,7 +118,7 @@ public class BookingAndInvoiceControllerTest {
     }
 
     @Test
-    @Order(7)
+    @Order(9)
     void selectCar() {
         Long id = 1L;
         Long carID =  1L;
@@ -120,7 +130,20 @@ public class BookingAndInvoiceControllerTest {
     }
 
     @Test
-    @Order(8)
+    @Order(10)
+    void getAvailableCar() {
+        String date = "2022-05-14";
+        String time = "17:00";
+
+        ResponseEntity<List<Car>> res = bookingController.getAvailableCar(date, time);
+        List<Car> carList = res.getBody();
+
+        assertEquals(res.getBody(), carList);
+        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
+    }
+
+    @Test
+    @Order(11)
     void createBooking() {
         Map<String, String> bookingBody = new HashMap<>();
         bookingBody.put("Date", "2022-05-14");
@@ -139,6 +162,47 @@ public class BookingAndInvoiceControllerTest {
         assertEquals(res.getStatusCode(), HttpStatus.CREATED);
     }
 
+    @Test
+    @Order(12)
+    void getAllBookingPeriods() {
+        String start = "2022-05-12";
+        String end = "2022-05-20";
+        ResponseEntity<List<Booking>> res = bookingController.findByPeriod(start, end);
+        List<Booking> bookingList = res.getBody();
 
+        assertEquals(res.getBody(), bookingList);
+        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
+    }
+
+    @Test
+    @Order(13)
+    void getAllInvoice() {
+        String searchBy = "all";
+//        String searchBy = "customer";
+//        String searchBy = "driver";
+        Long id = 1L;
+        String start = "2022-05-12";
+        String end = "2022-05-20";
+        ResponseEntity<List<Invoice>> res = invoiceController.findInvoice(searchBy, id, start, end);
+        List<Invoice> invoiceList = res.getBody();
+        assertEquals(res.getBody(), invoiceList);
+        assertEquals(res.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    @Order(14)
+    void getRevenue() {
+        String searchBy = "all";
+//        String searchBy = "customer";
+//        String searchBy = "driver";
+        Long id = 1L;
+        String start = "2022-05-12";
+        String end = "2022-05-20";
+        ResponseEntity<Double> res = invoiceController.getRevenue(searchBy, id, start, end);
+        Double revenue  = res.getBody();
+        assertEquals(res.getBody(), revenue);
+        assertEquals(res.getStatusCode(), HttpStatus.OK);
+
+    }
 
 }
