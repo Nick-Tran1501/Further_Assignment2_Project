@@ -36,6 +36,9 @@ public class CustomerController extends EntityController<Customer>{
     public ResponseEntity<Customer> updateTableColumnById(@PathVariable("id") Long id, @RequestBody Map<String, String> contentField) {
         try {
             Customer customer = customerRepo.findCustomerById(id);
+            if (customer == null){
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
             if (contentField.containsKey("name"))
                 customer.setName(contentField.get("name"));
 
