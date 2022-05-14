@@ -59,7 +59,7 @@ public class CustomerControllerTest {
         ResponseEntity<List<Customer>> res = customerController.customerSearch(name, phone, address);
         List<Customer> customerList = res.getBody();
         assertEquals(res.getBody(), customerList);
-        assertEquals(res.getStatusCode(), HttpStatus.OK);
+        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class CustomerControllerTest {
     @Order(5)
     void findAll() {
         ResponseEntity<List<Customer>> res = customerController.getCustomer();
-        assertEquals(res.getStatusCode(), HttpStatus.OK);
+        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
     }
 
     @Test
@@ -105,7 +105,7 @@ public class CustomerControllerTest {
 
         Long id = customer.getId();
         ResponseEntity<Customer> res = customerController.deleteByID(id);
-        assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
+        assertEquals(res.getStatusCode(), HttpStatus.OK);
 
     }
 
@@ -113,7 +113,7 @@ public class CustomerControllerTest {
     @Order(7)
     void deleteAll() {
         ResponseEntity<HttpStatus> res = customerController.deleteAll();
-        assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
+        assertEquals(res.getStatusCode(), HttpStatus.OK);
     }
 
 
@@ -128,7 +128,7 @@ public class CustomerControllerTest {
 
     @Test
     @Order(9)
-    void falseSearch(){
+    void falseSearchCustomer(){
         Optional<String> name = Optional.of("False name");
         Optional<String> phone = Optional.of("False phone");
         Optional<String> address = Optional.of("False address");
@@ -154,18 +154,24 @@ public class CustomerControllerTest {
     @Test
     @Order(11)
     void falseDeleteById() {
-        Customer customer = new Customer();
-        customer.setPhone("0777042802");
-        customer.setAddress("702 Nguyen Hue");
-        customer.setName("Khoi Nguyen");
-
-        ResponseEntity<Customer> addCustomer = customerController.addCustomer(customer);
-
-        Long id = customer.getId();
+        Long id = 1L;
         ResponseEntity<Customer> res = customerController.deleteByID(id);
-        assertEquals(res.getStatusCode(), HttpStatus.NO_CONTENT);
-
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
     }
+
+    @Test
+    @Order(12)
+    void falseUpdateCustomer() {
+        Long id  = 1L;
+        Map<String, String> contentField = new HashMap<>();
+        contentField.put("name", "Tuan Oh Yeah");
+
+        ResponseEntity<Customer> res = customerController.updateTableColumnById(id, contentField);
+        Customer customer = res.getBody();
+        assertEquals(res.getBody(), customer);
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
 
 
 

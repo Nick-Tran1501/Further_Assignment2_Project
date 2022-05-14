@@ -46,7 +46,7 @@ public class CustomerService {
             if (customer.size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(customer, HttpStatus.OK);
+            return new ResponseEntity<>(customer, HttpStatus.FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -74,14 +74,14 @@ public class CustomerService {
                 customers = customerRepo.findByPhone(phone.get());
 
             return customers.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                    : new ResponseEntity<>(customers, HttpStatus.OK);
+                    : new ResponseEntity<>(customers, HttpStatus.FOUND);
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-//  Get customer by id
+    //  Get customer by id
     public ResponseEntity<Customer> getByID(Long id){
         try {
             Customer customers = customerRepo.findCustomerById(id);
@@ -93,21 +93,24 @@ public class CustomerService {
         }
     }
 
-//  Delete by ID
+    //  Delete by ID
     public ResponseEntity<Customer> deleteByID(Long id){
         try{
+            if (customerRepo.findCustomerById(id) == null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             customerRepo.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-// delete all
+    // delete all
     public ResponseEntity<HttpStatus> deleteAll() {
          try {
              customerRepo.deleteAll();
-             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+             return new ResponseEntity<>(HttpStatus.OK);
          } catch (Exception e){
              return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
           }
