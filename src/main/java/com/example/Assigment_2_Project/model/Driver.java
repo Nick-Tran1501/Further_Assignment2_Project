@@ -3,14 +3,11 @@ package com.example.Assigment_2_Project.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,8 +20,8 @@ public class Driver {
     private long id;
 
     @CreatedDate
-    @JsonIgnore
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy '' HH:mm:ss")
+//    @JsonIgnore
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private ZonedDateTime createdDate = ZonedDateTime.now()
             .truncatedTo(ChronoUnit.MINUTES);
 

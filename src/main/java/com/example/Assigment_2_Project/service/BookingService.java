@@ -118,14 +118,18 @@ public class BookingService {
 
 
 
+
+
     //  Get all booking data
     public ResponseEntity<List<Booking>> getBookings() {
         try {
             List<Booking> bookingList = bookingRepo.findAll();
+            for (Booking booking : bookingList)
+                autoCancelled(booking);
             return new ResponseEntity<>(bookingList, HttpStatus.FOUND);
         }
         catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -153,15 +157,10 @@ public class BookingService {
 
     public void autoCancelled(Booking booking){
 
-        Integer nowYear = ZonedDateTime.now().getYear();
-        Integer nowDate = ZonedDateTime.now().getDayOfMonth();
-        Month month = ZonedDateTime.now().getMonth();
         ZonedDateTime bookingDate =  booking.getCreatedDate();
 
         if (bookingDate.compareTo(ZonedDateTime.now()) < 0 && booking.getStatus().equalsIgnoreCase("Ready")) {
-            booking.getCar().setAvailable(true);
             booking.setStatus("Cancelled");
-//            carService.setCarAvailableFinish(booking.getCar());
             invoiceService.setTotalPayment(booking.getInvoice());
             bookingRepo.save(booking);
         }

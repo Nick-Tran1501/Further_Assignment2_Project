@@ -2,16 +2,11 @@ package com.example.Assigment_2_Project.model;
 
 
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "booking")
@@ -22,7 +17,7 @@ public class Booking {
     private long id;
 
     @CreatedDate
-    @JsonIgnore
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
     @Column

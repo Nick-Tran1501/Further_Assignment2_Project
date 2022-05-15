@@ -1,7 +1,7 @@
 package com.example.Assigment_2_Project.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -10,7 +10,6 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 @Entity
 @Table(name = "car")
@@ -21,7 +20,7 @@ public class Car {
     private long id;
 
     @CreatedDate
-    @JsonIgnore
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
     @Column
@@ -45,16 +44,11 @@ public class Car {
     @Column
     private double rateKilometer;
 
-    @Column
-    private boolean available;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "driver_id")
     @JsonManagedReference
-    private Driver driver; //refresh everyday
-
-//    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private Booking booking;
+    private Driver driver;
 
     public Car(){}
 
@@ -128,14 +122,6 @@ public class Car {
 
     public void setRateKilometer(double rateKilometer) {
         this.rateKilometer = rateKilometer;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
     }
 
     public Driver getDriver() {

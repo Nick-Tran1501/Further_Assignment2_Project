@@ -3,13 +3,12 @@ package com.example.Assigment_2_Project.model;
 
 import com.fasterxml.jackson.annotation.*;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Map;
+
 
 @Entity
 @Table(name = "customer")
@@ -20,7 +19,7 @@ public class Customer {
     private long id;
 
     @CreatedDate
-    @JsonIgnore
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS );
 
     @Column
@@ -32,9 +31,7 @@ public class Customer {
     @Column
     private String address;
 
-    //    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-////    @JsonManagedReference
-//    private Booking booking;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Booking> bookingList;

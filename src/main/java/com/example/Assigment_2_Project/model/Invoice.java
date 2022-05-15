@@ -1,10 +1,7 @@
 package com.example.Assigment_2_Project.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import com.sun.source.tree.LambdaExpressionTree;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -21,7 +18,7 @@ public class Invoice {
     private long id;
 
     @CreatedDate
-    @JsonIgnore
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
 //    @Column

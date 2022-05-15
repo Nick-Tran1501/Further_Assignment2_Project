@@ -83,21 +83,9 @@ public class CarService {
             }
         }
 
-//        for (Booking booking : bookingList) {
-//            ZonedDateTime timeTemp = booking.getPickupTime();
-//            if (timeTemp.getYear() == pickupTime.getYear()
-//                    && timeTemp.getMonth().equals(pickupTime.getMonth())
-//                    && timeTemp.getDayOfMonth() == pickupTime.getDayOfMonth()){
-//                carList.remove(booking.getCar());
-//            }
-//        }
         return carList;
     }
 
-    public void setCarAvailableFinish(Car car){
-        car.setAvailable(true);
-        carRepo.save(car);
-    }
 
     // search car by variables
     public ResponseEntity<List<Car>> searchCar(Optional<String> make, Optional<String> model,
@@ -121,9 +109,7 @@ public class CarService {
                 carTemp = carRepo.findByRatingGreaterThanEqual(rating.get());
             else if (rateKilometer.isPresent())
                 carTemp = carRepo.findByRateKilometerGreaterThanEqual(rateKilometer.get());
-            else if (available.isPresent())
-                carTemp = carRepo.findByAvailable(available.get());
-            return carTemp.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+            return carTemp.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                     : new ResponseEntity<>(carTemp, HttpStatus.FOUND);
 
         } catch (Exception e) {

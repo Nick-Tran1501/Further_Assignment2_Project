@@ -19,79 +19,12 @@ public interface CarRepo extends JpaRepository<Car, Long> {
     //Find by single attribute (8
     //1
     Car findCarById(Long id);
-    List<Car> findByAvailableTrue();
-    List<Car> findByAvailable(Boolean available);
     List<Car> findByMake(String make);
     List<Car> findByModel(String model);
     List<Car> findByColor(String color);
-    List<Car> findByConvertibleTrue();
     List<Car> findByConvertible(Boolean convertible);
     List<Car> findByLicensePlate(String licensePlate);
     List<Car> findByRatingGreaterThanEqual(Double rating);
     List<Car> findByRateKilometerGreaterThanEqual(Double rateKilometer);
-
-    List<Car> findByMakeAndModel(String make, String model);
-    List<Car> findByMakeAndColor(String make, String color);
-    List<Car> findByMakeAndConvertible(String make, Boolean convertible);
-    List<Car> findByMakeAndRatingGreaterThanEqual(String make, Double rating);
-    List<Car> findByMakeAndRateKilometerGreaterThanEqual(String make, Double rateKilometer);
-    List<Car> findByMakeAndAvailable(String make, Boolean available);
-
-    List<Car> findByModelAndColor(String model, String color);
-    List<Car> findByModelAndConvertible(String model, Boolean convertible);
-    List<Car> findByModelAndRatingGreaterThanEqual(String model, Double rating);
-    List<Car> findByModelAndRateKilometerGreaterThanEqual(String model, Double rateKilometer);
-    List<Car> findByModelAndAvailable(String model, Boolean available);
-
-    List<Car> findByColorAndConvertible(String color, Boolean convertible);
-    List<Car> findByColorAndRatingGreaterThanEqual(String color, Double rating);
-    List<Car> findByColorAndRateKilometerGreaterThanEqual(String color, Double rateKilometer);
-    List<Car> findByColorAndAvailable(String color, Boolean available);
-
-    List<Car> findByConvertibleAndRatingGreaterThanEqual(Boolean convertible, Double rating);
-    List<Car> findByConvertibleAndRateKilometerGreaterThanEqual(Boolean convertible, Double rateKilometer);
-    List<Car> findByConvertibleAndAvailable(Boolean convertible, Boolean available);
-
-    List<Car> findByRatingGreaterThanEqualAndAvailable(Double rating, Boolean available);
-    List<Car> findByRatingGreaterThanEqualAndRateKilometerGreaterThanEqual(Double rating, Double rateKilometer);
-
-    List<Car> findByRateKilometerGreaterThanEqualAndAvailable(Double rateKilometer, Boolean available);
-
-    List<Car> findByMakeAndModelAndColor(String make, String model, String color);
-    List<Car> findByMakeAndModelAndConvertible(String make, String model, Boolean convertible);
-    List<Car> findByMakeAndModelAndRatingGreaterThanEqual(String make, String model, Double rating);
-    List<Car> findByMakeAndModelAndRateKilometerGreaterThan(String make, String model, Double rateKilometer);
-    List<Car> findByMakeAndModelAndAvailable(String make, String model, Boolean available);
-
-    List<Car> findByMakeAndColorAndConvertible(String make, String color, Boolean convertible);
-    List<Car> findByMakeAndColorAndRatingGreaterThanEqual(String make, String color, Double rating);
-    List<Car> findByMakeAndColorAndRateKilometerGreaterThanEqual(String make, String color, Double rateKilometer);
-    List<Car> findByMakeAndColorAndAvailable(String make, String color,Boolean available);
-
-    List<Car> findByMakeAndConvertibleAndRatingGreaterThanEqual(String make, Boolean convertible, Double rating);
-    List<Car> findByMakeAndConvertibleAndRateKilometerGreaterThanEqual(String make, Boolean convertible, Double rateKilometer);
-    List<Car> findByMakeAndConvertibleAndAvailable(String make, Boolean convertible, Boolean available);
-
-    List<Car> findByMakeAndRatingGreaterThanEqualAndRateKilometerGreaterThanEqual(String make, Double rating, Double rateKilometer);
-    List<Car> findByMakeAndRatingGreaterThanEqualAndAvailable(String make, Double rating, Boolean available);
-
-    List<Car> findByMakeAndRateKilometerGreaterThanEqualAndAvailable(String make, Double rateKilometer, Boolean available);
-
-    List<Car> findByModelAndColorAndConvertible(String model, String color, Boolean convertible);
-    List<Car> findByModelAndColorAndRatingGreaterThanEqual(String model, String color, Double rating);
-    List<Car> findByModelAndColorAndRateKilometerGreaterThanEqual(String model, String color, Double rateKilometer);
-    List<Car> findByModelAndColorAndAvailable(String model, String color, Boolean available);
-
-    List<Car> findByModelAndConvertibleAndRatingGreaterThanEqual(String model, Boolean convertible, Double rating);
-    List<Car> findByModelAndConvertibleAndRateKilometerGreaterThanEqual(String model, Boolean convertible, Double rateKilometer);
-    List<Car> findByModelAndConvertibleAndAvailable(String model, Boolean convertible, Boolean available);
-
-    List<Car> findByModelAndRatingGreaterThanEqualAndRateKilometerGreaterThanEqual(String model, Double rating, Double rateKilometer);
-    List<Car> findByModelAndRatingGreaterThanEqualAndAvailable(String model, Double rating, Boolean available );
-
-    List<Car> findByModelAndRateKilometerGreaterThanEqualAndAvailable(String model, Double rateKilometer, Boolean available );
-    List<Car> findByRatingGreaterThanEqualAndRateKilometerGreaterThanEqualAndAvailable(Double rating,Double rateKilometer, Boolean available);
-
-
 
 }
