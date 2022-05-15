@@ -1,7 +1,6 @@
 package com.example.Assigment_2_Project.service;
 
 
-import com.example.Assigment_2_Project.model.Booking;
 import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.model.Driver;
 import com.example.Assigment_2_Project.model.Invoice;
@@ -9,7 +8,6 @@ import com.example.Assigment_2_Project.repository.CustomerRepo;
 import com.example.Assigment_2_Project.repository.DriverRepo;
 import com.example.Assigment_2_Project.repository.InvoiceRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service

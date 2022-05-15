@@ -83,14 +83,6 @@ public class CarService {
             }
         }
 
-//        for (Booking booking : bookingList) {
-//            ZonedDateTime timeTemp = booking.getPickupTime();
-//            if (timeTemp.getYear() == pickupTime.getYear()
-//                    && timeTemp.getMonth().equals(pickupTime.getMonth())
-//                    && timeTemp.getDayOfMonth() == pickupTime.getDayOfMonth()){
-//                carList.remove(booking.getCar());
-//            }
-//        }
         return carList;
     }
 
@@ -123,7 +115,7 @@ public class CarService {
                 carTemp = carRepo.findByRateKilometerGreaterThanEqual(rateKilometer.get());
             else if (available.isPresent())
                 carTemp = carRepo.findByAvailable(available.get());
-            return carTemp.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+            return carTemp.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                     : new ResponseEntity<>(carTemp, HttpStatus.FOUND);
 
         } catch (Exception e) {
