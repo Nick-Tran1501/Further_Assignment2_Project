@@ -26,30 +26,8 @@ public class InvoiceController extends EntityController<Invoice> {
     }
 
     @Autowired
-    private InvoiceRepo invoiceRepo;
-
-    @Autowired
     private InvoiceService invoiceService;
 
-
-//    @GetMapping(path = "/test")
-//    public ResponseEntity<List<Invoice>> findByPeriod(@RequestParam String start, @RequestParam String end){
-//        return invoiceService.findByPeriod(start, end);
-//    }
-
-    //    @GetMapping(path = "/byCustomer")
-//    public ResponseEntity<List<Invoice>> findByCustomer(@RequestParam Long cusID,
-//                                                        @RequestParam String startDate,
-//                                                        @RequestParam String endDate) {
-//        return invoiceService.findByCustomer(cusID, startDate, endDate);
-//    }
-//
-//    @GetMapping(path = "/byDriver/{id}")
-//    public ResponseEntity<List<Invoice>> findByDriver(@PathVariable("id") Long driverID,
-//                                                      @RequestParam String start,
-//                                                      @RequestParam String end){
-//        return invoiceService.findByDriver(driverID, start, end);
-//    }
     @GetMapping(path = "/search")
     public ResponseEntity<List<Invoice>> findInvoice(@RequestParam String searchBy,
                                                      @RequestParam Long id,

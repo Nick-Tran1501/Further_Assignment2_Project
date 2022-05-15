@@ -160,7 +160,6 @@ public class BookingService {
         ZonedDateTime bookingDate =  booking.getCreatedDate();
 
         if (bookingDate.compareTo(ZonedDateTime.now()) < 0 && booking.getStatus().equalsIgnoreCase("Ready")) {
-            booking.getCar().setAvailable(true);
             booking.setStatus("Cancelled");
             invoiceService.setTotalPayment(booking.getInvoice());
             bookingRepo.save(booking);

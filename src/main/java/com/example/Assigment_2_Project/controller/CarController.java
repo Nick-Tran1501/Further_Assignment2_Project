@@ -1,7 +1,6 @@
 package com.example.Assigment_2_Project.controller;
 
 import com.example.Assigment_2_Project.model.Car;
-import com.example.Assigment_2_Project.model.Customer;
 import com.example.Assigment_2_Project.repository.CarRepo;
 import com.example.Assigment_2_Project.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,46 +120,5 @@ public class CarController extends EntityController<Car> {
     public ResponseEntity<Car> deleteByID(@PathVariable("id") Long id){
         return carService.deleteByID(id);
     }
-
-
-//    @GetMapping(path = "/{id}")
-//    public ResponseEntity<Car> getCarByID(@PathVariable("id") Long id) {
-//        try {
-//            Car car = carRepo.findById(id).get();
-//            return new ResponseEntity<>(car, HttpStatus.FOUND);
-//
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-
-
-
-
-//    @RequestMapping(path = "/post", method = RequestMethod.POST)
-//    public Long createCar(@RequestBody Car car){
-//        return carService.createCar(car);
-//    }
-//
-//    @RequestMapping(path = "/get", method = RequestMethod.GET)
-//    public List<Car> getAllCars() {
-//        return carService.getAllCar();
-//    }
-//
-//    @RequestMapping(path = "/delete/{id}", method = RequestMethod.DELETE)
-//    public String deleteCarByID(@PathVariable Long id) {
-//        return carService.deleteCarByID(id);
-//    }
-//
-//    @RequestMapping(path = "/update", method = RequestMethod.PUT)
-//    public Car updateCar(@RequestParam) {
-//        return carService.updateCar(id, param);
-//    }
-//
-//    @Override
-//    public ResponseEntity<Car> updateTableColumnById(Long id, Map<String, String> contentField) {
-//        return null;
-//    }
-
 
 }

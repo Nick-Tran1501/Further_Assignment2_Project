@@ -97,7 +97,6 @@ public class BookingAndInvoiceControllerTest {
         car.setRating(9.5);
         car.setLicensePlate("50A077.07");
         car.setRateKilometer(2.0);
-        car.setAvailable(true);
 
         ResponseEntity<Car> res = carController.addCar(car);
         assertEquals(res.getBody(), car);
