@@ -132,7 +132,7 @@ public class BookingAndInvoiceControllerTest {
     @Test
     @Order(10)
     void getAvailableCar() {
-        String date = "2022-05-14";
+        String date = "2022-05-15";
         String time = "17:00";
 
         ResponseEntity<List<Car>> res = bookingController.getAvailableCar(date, time);
@@ -146,7 +146,7 @@ public class BookingAndInvoiceControllerTest {
     @Order(11)
     void createBooking() {
         Map<String, String> bookingBody = new HashMap<>();
-        bookingBody.put("Date", "2022-05-14");
+        bookingBody.put("Date", "2022-05-15");
         bookingBody.put("Time", "17:00");
         bookingBody.put("startLocation", "HCM");
         bookingBody.put("endLocation", "Ha Noi");
@@ -165,8 +165,8 @@ public class BookingAndInvoiceControllerTest {
     @Test
     @Order(12)
     void getAllBookingPeriods() {
-        String start = "2022-05-12";
-        String end = "2022-05-20";
+        String start = "2022-05-01";
+        String end = "2022-05-30";
         ResponseEntity<List<Booking>> res = bookingController.findByPeriod(start, end);
         List<Booking> bookingList = res.getBody();
 
@@ -181,8 +181,8 @@ public class BookingAndInvoiceControllerTest {
 //        String searchBy = "customer";
 //        String searchBy = "driver";
         Long id = 1L;
-        String start = "2022-05-12";
-        String end = "2022-05-20";
+        String start = "2022-05-01";
+        String end = "2022-05-30";
         ResponseEntity<List<Invoice>> res = invoiceController.findInvoice(searchBy, id, start, end);
         List<Invoice> invoiceList = res.getBody();
         assertEquals(res.getBody(), invoiceList);
@@ -196,8 +196,8 @@ public class BookingAndInvoiceControllerTest {
 //        String searchBy = "customer";
 //        String searchBy = "driver";
         Long id = 1L;
-        String start = "2022-05-12";
-        String end = "2022-05-20";
+        String start = "2022-05-01";
+        String end = "2022-05-30";
         ResponseEntity<Double> res = invoiceController.getRevenue(searchBy, id, start, end);
         Double revenue  = res.getBody();
         assertEquals(res.getBody(), revenue);
@@ -205,9 +205,65 @@ public class BookingAndInvoiceControllerTest {
 
     }
 
-//+++++++++++++++++++++++++++++++++++Negative test++++++++++++++++++++++++++
 
+//+++++++++++++++++++++++++++++++++++ Negative test ++++++++++++++++++++++++++
+    @Test
+    @Order(15)
+    void falseGetAvailableCar(){
+        String date = "2022-05-15";
+        String time = "17:00";
 
+        ResponseEntity<List<Car>> res = bookingController.getAvailableCar(date, time);
+        List<Car> carList = res.getBody();
+
+        assertEquals(res.getBody(), carList);
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    @Order(16)
+    void falseCreateBooking(){
+        Map<String, String> bookingBody = new HashMap<>();
+        bookingBody.put("Date", "2022-05-15");
+        bookingBody.put("Time", "17:00");
+        bookingBody.put("startLocation", "HCM");
+        bookingBody.put("endLocation", "Ha Noi");
+        bookingBody.put("tripDistance", "12.0");
+
+        Long cusID = 1L;
+        Long carID = 1L;
+
+        ResponseEntity<Booking> res = bookingController.createBooking(cusID, carID, bookingBody);
+        Booking booking = res.getBody();
+
+        assertEquals(res.getBody(), booking);
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @Test
+    @Order(17)
+    void finishTrip(){
+        Long id = 1L;
+        ResponseEntity<Booking> res = bookingController.finishTrip(id);
+        Booking booking = res.getBody();
+
+        assertEquals(res.getBody(),booking);
+        assertEquals(res.getStatusCode(), HttpStatus.OK);
+
+    }
+
+    @Test
+    @Order(18)
+    void GetAvailableCar1(){
+        String date = "2022-05-15";
+        String time = "17:00";
+
+        ResponseEntity<List<Car>> res = bookingController.getAvailableCar(date, time);
+        List<Car> carList = res.getBody();
+
+        assertEquals(res.getBody(), carList);
+        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
+    }
 
 
 }
