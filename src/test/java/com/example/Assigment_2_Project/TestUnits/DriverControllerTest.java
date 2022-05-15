@@ -39,14 +39,13 @@ class DriverControllerTest {
     private CarController carController;
 
     @Test
-    @Order(1)
     void loadContext() {
         assertNotNull(driverController);
 
     }
 
     @Test
-    @Order(2)
+    @Order(1)
     void createDriver() {
         Driver driver = new Driver();
         driver.setName("Khoi Solid");
@@ -63,7 +62,7 @@ class DriverControllerTest {
     }
 
     @Test
-    @Order(4)
+    @Order(2)
     void updateDriver() {
         Long id = 1L;
         System.out.println(driverRepo.findDriverById(id).getName());
@@ -80,7 +79,7 @@ class DriverControllerTest {
 
 
     @Test
-    @Order((5))
+    @Order(3)
     void getDriverById() {
         Long id = 1L;
         ResponseEntity<Driver> res = driverController.getByID(id);
@@ -93,7 +92,7 @@ class DriverControllerTest {
 
 
     @Test
-    @Order(6)
+    @Order(4)
     void searchDriver() {
         Optional<String> name = Optional.of("Khoi Crypto");
         Optional<String> license = Optional.empty();
@@ -109,7 +108,7 @@ class DriverControllerTest {
     }
 
     @Test
-    @Order(7)
+    @Order(5)
     void getAllDriver() {
         ResponseEntity<List<Driver>> res = driverController.getAllDriver();
         List<Driver> driverList = res.getBody();
@@ -118,7 +117,7 @@ class DriverControllerTest {
     }
 //
     @Test
-    @Order(8)
+    @Order(6)
     void selectCar() {
 
         Car car = new Car();
@@ -129,8 +128,6 @@ class DriverControllerTest {
         car.setRating(9.5);
         car.setLicensePlate("51A077.07");
         car.setRateKilometer(2.0);
-        car.setAvailable(true);
-
 
         ResponseEntity<Car> newCar = carController.addCar(car);
         System.out.println(newCar.getBody().getLicensePlate());
@@ -145,7 +142,7 @@ class DriverControllerTest {
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     void deleteDriverById() {
         Long id = 1L;
         ResponseEntity<Driver> res = driverController.deleteByID(id);
@@ -154,7 +151,7 @@ class DriverControllerTest {
     }
 //
     @Test
-    @Order(10)
+    @Order(11)
     void deleteAllDriver() {
         Driver driver = new Driver();
         driver.setName("Khoi Solid");
@@ -170,7 +167,7 @@ class DriverControllerTest {
 
 //+++++++++++++++++++++++++++++++++++++++ Negative ++++++++++++++++++++++++++++++++
     @Test
-    @Order(8)
+    @Order(7)
     void falseSelectCar() {
         Long carID = 1L;
         Long id = 1L;
@@ -183,7 +180,7 @@ class DriverControllerTest {
     }
 
     @Test
-    @Order(3)
+    @Order(8)
     void createDriverFalse() {
         Driver driver = new Driver();
         driver.setName("Khoi Solid");
@@ -196,7 +193,7 @@ class DriverControllerTest {
     }
 
     @Test
-    @Order(4)
+    @Order(9)
     void FalseUpdateDriver() {
         Long id = 2L;
 
@@ -211,7 +208,7 @@ class DriverControllerTest {
     }
 
     @Test
-    @Order(5)
+    @Order(11)
     void FalseGetDriverById() {
         Long id = 2L;
         ResponseEntity<Driver> res = driverController.getById(id);
@@ -221,7 +218,7 @@ class DriverControllerTest {
     }
 
     @Test
-    @Order(6)
+    @Order(12)
     void FalseDeleteById() {
         Long id = 2L;
         ResponseEntity<Driver> res = driverController.deleteByID(id);

@@ -86,10 +86,6 @@ public class CarService {
         return carList;
     }
 
-    public void setCarAvailableFinish(Car car){
-        car.setAvailable(true);
-        carRepo.save(car);
-    }
 
     // search car by variables
     public ResponseEntity<List<Car>> searchCar(Optional<String> make, Optional<String> model,
@@ -113,8 +109,6 @@ public class CarService {
                 carTemp = carRepo.findByRatingGreaterThanEqual(rating.get());
             else if (rateKilometer.isPresent())
                 carTemp = carRepo.findByRateKilometerGreaterThanEqual(rateKilometer.get());
-            else if (available.isPresent())
-                carTemp = carRepo.findByAvailable(available.get());
             return carTemp.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                     : new ResponseEntity<>(carTemp, HttpStatus.FOUND);
 
