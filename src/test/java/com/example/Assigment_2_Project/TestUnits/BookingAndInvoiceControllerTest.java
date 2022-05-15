@@ -186,7 +186,7 @@ public class BookingAndInvoiceControllerTest {
         ResponseEntity<List<Invoice>> res = invoiceController.findInvoice(searchBy, id, start, end);
         List<Invoice> invoiceList = res.getBody();
         assertEquals(res.getBody(), invoiceList);
-        assertEquals(res.getStatusCode(), HttpStatus.OK);
+        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
     }
 
     @Test
@@ -201,14 +201,38 @@ public class BookingAndInvoiceControllerTest {
         ResponseEntity<Double> res = invoiceController.getRevenue(searchBy, id, start, end);
         Double revenue  = res.getBody();
         assertEquals(res.getBody(), revenue);
+        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
+
+    }
+    @Test
+    @Order(15)
+    void carUsedByMonth(){
+        String year = "2022";
+        String month = "may";
+        ResponseEntity<HashMap<String,Integer>> res = carController.carsUsed(year,month);
+        HashMap<String,Integer> carsUsed = res.getBody();
+
+        assertEquals(res.getBody(),carsUsed);
+        assertEquals(res.getStatusCode(),HttpStatus.FOUND);
+    }
+
+    @Test
+    @Order(21)
+    void finishTrip(){
+        Long id = 1L;
+        ResponseEntity<Booking> res = bookingController.finishTrip(id);
+        Booking booking = res.getBody();
+
+        assertEquals(res.getBody(),booking);
         assertEquals(res.getStatusCode(), HttpStatus.OK);
 
     }
 
 
+
 //+++++++++++++++++++++++++++++++++++ Negative test ++++++++++++++++++++++++++
     @Test
-    @Order(15)
+    @Order(16)
     void falseGetAvailableCar(){
         String date = "2022-05-15";
         String time = "17:00";
@@ -221,7 +245,7 @@ public class BookingAndInvoiceControllerTest {
     }
 
     @Test
-    @Order(16)
+    @Order(17)
     void falseCreateBooking(){
         Map<String, String> bookingBody = new HashMap<>();
         bookingBody.put("Date", "2022-05-15");
@@ -241,29 +265,65 @@ public class BookingAndInvoiceControllerTest {
     }
 
     @Test
-    @Order(17)
-    void finishTrip(){
-        Long id = 1L;
-        ResponseEntity<Booking> res = bookingController.finishTrip(id);
-        Booking booking = res.getBody();
+    @Order(18)
+    void falseGetAllBookingPeriods() {
+        String start = "2022-04-01";
+        String end = "2022-04-30";
+        ResponseEntity<List<Booking>> res = bookingController.findByPeriod(start, end);
+        List<Booking> bookingList = res.getBody();
 
-        assertEquals(res.getBody(),booking);
-        assertEquals(res.getStatusCode(), HttpStatus.OK);
+        assertEquals(res.getBody(), bookingList);
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+    @Test
+    @Order(19)
+    void falseFetAllInvoice() {
+
+        String searchBy = "driver";
+//        String searchBy = "customer";
+//        String searchBy = "all";
+//        String searchBy = "null";
+
+
+        Long id = 1L;
+        String start = "2022-04-01";
+        String end = "2022-04-30";
+        ResponseEntity<List<Invoice>> res = invoiceController.findInvoice(searchBy, id, start, end);
+        List<Invoice> invoiceList = res.getBody();
+        assertEquals(res.getBody(), invoiceList);
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    @Order(20)
+    void falseGetRevenue() {
+        String searchBy = "all";
+//        String searchBy = "customer";
+//        String searchBy = "driver";
+        Long id = 1L;
+        String start = "2022-04-01";
+        String end = "2022-04-30";
+        ResponseEntity<Double> res = invoiceController.getRevenue(searchBy, id, start, end);
+        Double revenue = res.getBody();
+        assertEquals(res.getBody(), revenue);
+        assertEquals(res.getStatusCode(), HttpStatus.NOT_FOUND);
 
     }
 
     @Test
-    @Order(18)
-    void GetAvailableCar1(){
-        String date = "2022-05-15";
-        String time = "17:00";
+    @Order(22)
+    void falseCarUsedByMonth(){
+        String year = "2022";
+        String month = "January";
+        ResponseEntity<HashMap<String,Integer>> res = carController.carsUsed(year,month);
+        HashMap<String,Integer> carsUsed = res.getBody();
 
-        ResponseEntity<List<Car>> res = bookingController.getAvailableCar(date, time);
-        List<Car> carList = res.getBody();
-
-        assertEquals(res.getBody(), carList);
-        assertEquals(res.getStatusCode(), HttpStatus.FOUND);
+        assertEquals(res.getBody(),carsUsed);
+        assertEquals(res.getStatusCode(),HttpStatus.NOT_FOUND);
     }
+
+
+
 
 
 }

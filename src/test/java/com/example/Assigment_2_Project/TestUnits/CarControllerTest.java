@@ -86,8 +86,10 @@ public class CarControllerTest {
         assertEquals(res.getStatusCode(), HttpStatus.OK);
     }
 
+
+
     @Test
-    @Order(5)
+    @Order(6)
     void deleteCarById() {
         Car car = new Car();
         car.setMake("China");
@@ -107,7 +109,7 @@ public class CarControllerTest {
 
 
     @Test
-    @Order(6)
+    @Order(7)
     void deleteAllCar() {
         ResponseEntity<HttpStatus> res =  carController.deleteAll();
         assertEquals(res.getStatusCode(), HttpStatus.OK);
@@ -116,7 +118,7 @@ public class CarControllerTest {
 //++++++++++++++++++++++++++++++Negative test+++++++++++++++++++++++++++++++++
 
     @Test
-    @Order(3)
+    @Order(5)
     void falseCreateCar() {
         Car car = new Car();
         car.setMake("China");
@@ -133,7 +135,7 @@ public class CarControllerTest {
         assertEquals(res.getStatusCode(), HttpStatus.ALREADY_REPORTED);
     }
     @Test
-    @Order(4)
+    @Order(8)
     void getCarByIDFalse() {
         Long id = 2L;
         ResponseEntity<Car> res = carController.getCarById(id);

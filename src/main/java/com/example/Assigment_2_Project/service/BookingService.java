@@ -176,6 +176,9 @@ public class BookingService {
             ZonedDateTime start = ZonedDateTime.parse(startTime);
             ZonedDateTime end = ZonedDateTime.parse(endTime);
             List<Booking> bookingList = bookingRepo.findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(start, end);
+            if (bookingList.isEmpty()){
+                return new ResponseEntity<>(bookingList, HttpStatus.NOT_FOUND);
+            }
             for (Booking booking : bookingList)
                 autoCancelled(booking);
             return new ResponseEntity<>(bookingList, HttpStatus.FOUND);

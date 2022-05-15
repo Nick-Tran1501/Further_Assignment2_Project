@@ -151,7 +151,8 @@ public class CarService {
                     }
                 }
             }
-            return new ResponseEntity<>(result, HttpStatus.FOUND);
+            return result.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                    : new ResponseEntity<>(result, HttpStatus.FOUND);
         }
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
