@@ -18,6 +18,7 @@ import java.time.Year;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -30,6 +31,9 @@ public class BookingService {
     private BookingRepo bookingRepo;
 
     @Autowired
+    private CarRepo carRepo;
+
+    @Autowired
     private CustomerRepo customerRepo;
 
     @Autowired
@@ -40,7 +44,11 @@ public class BookingService {
 
     public ResponseEntity<List<Car>> getAvailableCar(String date, String time){
         try {
-            return new ResponseEntity<>(carService.getAvailableCar(date, time), HttpStatus.FOUND);
+            List<Car> carList = carService.getAvailableCar(date, time);
+            if (carList.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(carList, HttpStatus.FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -51,7 +59,9 @@ public class BookingService {
                                      String endLocation, String tripDistance,
                                      Invoice invoice, Car car, Customer customer) {
         Booking booking = new Booking();
+
         ZonedDateTime pickupTime = ZonedDateTime.parse(date +"T" +time + ":00.000Z");
+
         booking.setCreatedDate(pickupTime);
         booking.setPickupTime(pickupTime);
         booking.setStartLocation(startLocation);
@@ -61,6 +71,7 @@ public class BookingService {
         booking.setTripDistance(Double.parseDouble(tripDistance));
         booking.setCustomer(customer);
         booking.setStatus("Ready");
+
         customer.getBookingList().add(booking);
         bookingRepo.save(booking);
         return booking;
@@ -83,13 +94,9 @@ public class BookingService {
             List<Car> carList = carService.getAvailableCar(date, time);
 
             Car carData = null;
-            for (Car cars :  carList)
-                if (cars.getId() == carID){
-                    carData = cars;
-                    if(pickupTime.getMonth().equals(ZonedDateTime.now().getMonth()) &&
-                        pickupTime.getYear() == ZonedDateTime.now().getYear() &&
-                        pickupTime.getDayOfMonth() == ZonedDateTime.now().getDayOfMonth())
-                        cars.setAvailable(false); // return false value for car
+            for (Car car :  carList)
+                if (car.getId() == carID){
+                    carData = car;
                 }
 
             if (customer == null || carData == null) {
@@ -101,6 +108,7 @@ public class BookingService {
 
             Invoice invoice = invoiceService.addInvoice(customer, driver, rateKilometer, tripDistance);
             Booking booking = createBookingBody(date, time, startLocation, endLocation, tripDistance, invoice, carData, customer);
+            carRepo.save(carData);
 
             return new ResponseEntity<>(booking, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -127,11 +135,15 @@ public class BookingService {
     public ResponseEntity<Booking> finishTrip(Long id){
         try {
             Booking booking = bookingRepo.findBookingById(id);
+
+            if ((booking == null)){
+                return new ResponseEntity<>(null,HttpStatus.NOT_ACCEPTABLE);
+            }
             Car car  = booking.getCar();
             ZonedDateTime dropTime =  ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
             booking.setDropTime(dropTime);
             booking.setStatus("Finished");
-            carService.setCarAvailableFinish(car);
+//            carService.setCarAvailableFinish(car);
             return new ResponseEntity<>(booking, HttpStatus.OK);
         }
         catch (Exception e){
@@ -149,7 +161,7 @@ public class BookingService {
         if (bookingDate.compareTo(ZonedDateTime.now()) < 0 && booking.getStatus().equalsIgnoreCase("Ready")) {
             booking.getCar().setAvailable(true);
             booking.setStatus("Cancelled");
-            carService.setCarAvailableFinish(booking.getCar());
+//            carService.setCarAvailableFinish(booking.getCar());
             invoiceService.setTotalPayment(booking.getInvoice());
             bookingRepo.save(booking);
         }

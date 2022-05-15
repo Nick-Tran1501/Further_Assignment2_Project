@@ -1,9 +1,5 @@
 package com.example.Assigment_2_Project.controller;
 
-import com.example.Assigment_2_Project.repository.CarRepo;
-import org.apache.catalina.util.ResourceSet;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
+
 
 public abstract class EntityController<T> {
     protected final JpaRepository<T, Long> repo;
