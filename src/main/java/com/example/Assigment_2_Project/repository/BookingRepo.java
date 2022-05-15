@@ -19,6 +19,8 @@ public interface BookingRepo extends JpaRepository<Booking, Long> {
     Booking findBookingById(Long id);
     Booking deleteBookingById(Long id);
 
+    List<Booking> findByStatus(String status);
+
     List<Booking> findByDropTimeBefore(ZonedDateTime zonedDateTime);
     List<Booking> findByPickupTimeBefore(ZonedDateTime zonedDateTime);
     List<Booking> findByPickupTime(ZonedDateTime pickupTime);
