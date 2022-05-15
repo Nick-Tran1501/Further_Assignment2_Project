@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -138,11 +140,13 @@ public class BookingService {
     }
 
     public void autoCancelled(Booking booking){
-        Integer nowHour = ZonedDateTime.now().getHour();
+
+        Integer nowYear = ZonedDateTime.now().getYear();
         Integer nowDate = ZonedDateTime.now().getDayOfMonth();
-        Integer bookingDate = booking.getPickupTime().getDayOfMonth();
-        Integer nowMinute = ZonedDateTime.now().getMinute();
-        if (bookingDate.equals(nowDate) && nowHour.equals(23) && nowMinute.equals(59) && booking.getStatus().equals("Ready")){
+        Month month = ZonedDateTime.now().getMonth();
+        ZonedDateTime bookingDate =  booking.getCreatedDate();
+
+        if (bookingDate.compareTo(ZonedDateTime.now()) < 0 && booking.getStatus().equalsIgnoreCase("Ready")) {
             booking.getCar().setAvailable(true);
             booking.setStatus("Cancelled");
             carService.setCarAvailableFinish(booking.getCar());
