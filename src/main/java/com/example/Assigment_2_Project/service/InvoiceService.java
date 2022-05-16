@@ -96,7 +96,7 @@ public class InvoiceService {
                         invoiceRepo.findByCustomerAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(customer, start, end);
                 for (Invoice invoice : invoiceList)
                     revenue += invoice.getTotalPayment();
-                if (revenue == 0){
+                if (revenue == 0.0){
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 }
                 return new ResponseEntity<>(revenue, HttpStatus.FOUND);
@@ -107,7 +107,7 @@ public class InvoiceService {
                         invoiceRepo.findByDriverAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(driver, start, end);
                 for (Invoice invoice : invoiceList)
                     revenue += invoice.getTotalPayment();
-                if (revenue == 0){
+                if (revenue == 0.0){
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 }
                 return new ResponseEntity<>(revenue, HttpStatus.FOUND);
@@ -117,7 +117,7 @@ public class InvoiceService {
                         invoiceRepo.findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(start,end);
                 for (Invoice invoice : invoiceList)
                     revenue += invoice.getTotalPayment();
-                if (revenue == 0){
+                if (revenue == 0.0){
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 }
                 return new ResponseEntity<>(revenue, HttpStatus.FOUND);
