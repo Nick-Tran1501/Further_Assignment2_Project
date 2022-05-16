@@ -131,7 +131,7 @@ public class BookingAndInvoiceControllerTest {
     @Test
     @Order(10)
     void getAvailableCar() {
-        String date = "2022-05-15";
+        String date = "2022-05-17";
         String time = "17:00";
 
         ResponseEntity<List<Car>> res = bookingController.getAvailableCar(date, time);
@@ -141,11 +141,13 @@ public class BookingAndInvoiceControllerTest {
         assertEquals(res.getStatusCode(), HttpStatus.FOUND);
     }
 
+
+    //Booking will be cancelled automatically if the current date is greater than the pickupDate
     @Test
     @Order(11)
     void createBooking() {
         Map<String, String> bookingBody = new HashMap<>();
-        bookingBody.put("Date", "2022-05-15");
+        bookingBody.put("Date", "2022-05-17");
         bookingBody.put("Time", "17:00");
         bookingBody.put("startLocation", "HCM");
         bookingBody.put("endLocation", "Ha Noi");
@@ -184,6 +186,7 @@ public class BookingAndInvoiceControllerTest {
         String end = "2022-05-30";
         ResponseEntity<List<Invoice>> res = invoiceController.findInvoice(searchBy, id, start, end);
         List<Invoice> invoiceList = res.getBody();
+
         assertEquals(res.getBody(), invoiceList);
         assertEquals(res.getStatusCode(), HttpStatus.FOUND);
     }
@@ -198,7 +201,9 @@ public class BookingAndInvoiceControllerTest {
         String start = "2022-05-01";
         String end = "2022-05-30";
         ResponseEntity<Double> res = invoiceController.getRevenue(searchBy, id, start, end);
+
         Double revenue  = res.getBody();
+        System.out.println(revenue);
         assertEquals(res.getBody(), revenue);
         assertEquals(res.getStatusCode(), HttpStatus.FOUND);
 
