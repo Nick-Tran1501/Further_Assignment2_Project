@@ -16,9 +16,10 @@ public interface CarRepo extends JpaRepository<Car, Long> {
         return this.findById(id);
     }
 
-    //Find by single attribute (8
-    //1
+    // Method to get car by id (Long)
     Car findCarById(Long id);
+
+    // Method to filtered car
     List<Car> findByMake(String make);
     List<Car> findByModel(String model);
     List<Car> findByColor(String color);

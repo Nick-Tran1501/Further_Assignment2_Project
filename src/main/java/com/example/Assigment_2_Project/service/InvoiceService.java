@@ -29,7 +29,13 @@ public class InvoiceService {
     @Autowired
     private DriverRepo driverRepo;
 
+    //Method to set total payment to zero if the booking is cancelled
+    public void setTotalPayment(Invoice invoice) {
+        invoice.setTotalPayment(0.0);
+        invoiceRepo.save(invoice);
+    }
 
+    // Method to create invoices and save to repository (Called in booking service)
     public Invoice addInvoice(Customer customer, Driver driver, Double rateKilometer, String tripDistance) {
             Invoice invoice =  new Invoice();
             Double totalPayment = rateKilometer * Double.parseDouble(tripDistance);
@@ -42,6 +48,7 @@ public class InvoiceService {
             return invoice;
     }
 
+    // Method to get all invoices, invoices by customers, invoices by drivers in a periods
     public ResponseEntity<List<Invoice>> findInvoice(String searchBy, Long ID, String startDate, String endDate){
         try {
             String time = "T00:00:00.000Z";
@@ -80,7 +87,7 @@ public class InvoiceService {
         }
     }
 
-
+    // Method to get total revenue, revenue by customers, revenue by drivers in a periods
     public ResponseEntity<Double> getRevenue(String searchBy, Long ID, String startDate, String endDate) {
         try{
             Double revenue = 0.0;
@@ -122,10 +129,7 @@ public class InvoiceService {
         }
     }
 
-    public void setTotalPayment(Invoice invoice) {
-        invoice.setTotalPayment(0.0);
-        invoiceRepo.save(invoice);
-    }
+
 
 
 }

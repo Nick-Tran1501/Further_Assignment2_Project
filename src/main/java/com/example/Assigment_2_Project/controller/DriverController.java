@@ -56,6 +56,27 @@ public class DriverController extends EntityController<Driver> {
         return driverService.selectCar(id, carID);
     }
 
+
+
+    //  Find by ID
+    @GetMapping(path = "/searchID/{id}")
+    public ResponseEntity<Driver> getById(@PathVariable("id") Long id){
+        return driverService.getByID(id);
+    }
+
+    // Delete all driver
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteAll(){
+        return driverService.deleteAll();
+    }
+
+    // Delete driver by ID
+    @DeleteMapping(path = "/deleteByID/{id}")
+    public ResponseEntity<Driver> deleteByID(@PathVariable("id") Long id){
+        return driverService.deleteByID(id);
+    }
+
+    // Update driver by id
     @Override
     @PutMapping(path = "/{id}")
     public ResponseEntity<Driver> updateTableColumnById(@PathVariable("id") Long id, @RequestBody Map<String, String> contentField) {
@@ -76,6 +97,7 @@ public class DriverController extends EntityController<Driver> {
         }
     }
 
+    // Create a list of sample drivers
     @Override
     @PostMapping(path = "/demo")
     public ResponseEntity<List<Driver>> inputDemoData(@Validated @RequestBody List<Driver> data) {
@@ -85,24 +107,6 @@ public class DriverController extends EntityController<Driver> {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    //  Find by ID
-    @GetMapping(path = "/searchID/{id}")
-    public ResponseEntity<Driver> getById(@PathVariable("id") Long id){
-        return driverService.getByID(id);
-    }
-
-    // Delete all driver
-    @DeleteMapping
-    public ResponseEntity<HttpStatus> deleteAll(){
-        return driverService.deleteAll();
-    }
-
-    // Delete driver by ID
-    @DeleteMapping(path = "/deleteByID/{id}")
-    public ResponseEntity<Driver> deleteByID(@PathVariable("id") Long id){
-        return driverService.deleteByID(id);
     }
 
 }

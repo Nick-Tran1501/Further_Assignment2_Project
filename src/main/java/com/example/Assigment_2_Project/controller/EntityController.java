@@ -58,13 +58,15 @@ public abstract class EntityController<T> {
         }
     }
 
+    // Override method to update column by id
     @PutMapping(path = "/{id}")
     public abstract ResponseEntity<T> updateTableColumnById(@PathVariable("id") Long id, @RequestBody Map<String, String> contentField);
 
-
+    // Override method to post list of sample data
     @PostMapping(path = "/testData")
     public abstract ResponseEntity<List<T>> inputDemoData(@RequestBody List<T> data);
 
+    // Method to delete all data in table
     @DeleteMapping
     public ResponseEntity<HttpStatus> deleteAll() {
         try {
@@ -75,6 +77,7 @@ public abstract class EntityController<T> {
         }
     }
 
+    // Method to delete row data by id
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id) {
         try {

@@ -13,6 +13,7 @@ import java.time.temporal.ChronoUnit;
 @Table(name = "invoice")
 public class Invoice {
 
+    // Invoice attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "invoice_id")
     private long id;
@@ -21,24 +22,27 @@ public class Invoice {
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private ZonedDateTime createdDate = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
-//    @Column
-//    public ZonedDateTime dateTime;
+    @Column
+    private Double totalPayment;
 
+    // Relationship between invoices and customer
     @ManyToOne(cascade = CascadeType.ALL)
     private Customer customer;
 
+    // Relationship between invoices and driver
     @ManyToOne(cascade = CascadeType.ALL)
     private Driver driver;
 
+    //Relationship between booking and invoice
     @OneToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     private Booking booking;
 
-    @Column
-    private Double totalPayment;
 
+    // Constructor
     public Invoice(){}
 
+    // Getter setter
     public long getId() {
         return id;
     }

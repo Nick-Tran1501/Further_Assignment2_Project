@@ -28,6 +28,7 @@ public class InvoiceController extends EntityController<Invoice> {
     @Autowired
     private InvoiceService invoiceService;
 
+    // Get all invoices, invoices by customers, invoice by drivers
     @GetMapping(path = "/search")
     public ResponseEntity<List<Invoice>> findInvoice(@RequestParam String searchBy,
                                                      @RequestParam Long id,
@@ -36,7 +37,7 @@ public class InvoiceController extends EntityController<Invoice> {
         return invoiceService.findInvoice(searchBy, id, start, end);
     }
 
-
+    // Get total revenue, revenue by customers, revenues by drivers
     @GetMapping(path = "/revenue")
     public ResponseEntity<Double> getRevenue(@RequestParam String searchBy,
                                              @RequestParam Long id,
@@ -45,12 +46,14 @@ public class InvoiceController extends EntityController<Invoice> {
         return invoiceService.getRevenue(searchBy, id, start, end);
     }
 
+    // Override method to update invoice table by id (not used)
     @Override
     @PutMapping(path = "/{id}")
     public ResponseEntity<Invoice> updateTableColumnById(@PathVariable("id") Long id, @RequestParam Map<String, String> contentField) {
         return null;
     }
 
+    // Override method to create a list of sample data (not used)
     @Override
     public ResponseEntity<List<Invoice>> inputDemoData(List<Invoice> data) {
         return null;

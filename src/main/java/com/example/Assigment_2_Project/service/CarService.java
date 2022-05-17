@@ -30,7 +30,7 @@ public class CarService {
     private BookingRepo bookingRepo;
 
 
-    // Create car manual
+    // Method to create car and save to repository
     public ResponseEntity<Car> addCar(Car car) {
         try {
             List<Car> carList = carRepo.findAll();
@@ -69,7 +69,7 @@ public class CarService {
         }
     }
 
-
+    // Method to get available car in car repository
     public List<Car> getAvailableCar(String date, String time) {
         String strDateTime = date + "T" + time+ ":00.000Z";
         ZonedDateTime pickupTime = ZonedDateTime.parse(strDateTime);
@@ -87,7 +87,7 @@ public class CarService {
     }
 
 
-    // search car by variables
+    // Filtered cars by attributes
     public ResponseEntity<List<Car>> searchCar(Optional<String> make, Optional<String> model,
                                                Optional<String> color, Optional<Boolean> convertible,
                                                Optional<String> licensePlate, Optional<Double> rating,
@@ -117,7 +117,7 @@ public class CarService {
         }
     }
 
-    // car used by month
+    // Get all used car and number of used days in month
     public ResponseEntity<HashMap<String,Integer>> carsUsed(String year, String month){
         try{
             List<Booking> bookingList = bookingRepo.findAll();

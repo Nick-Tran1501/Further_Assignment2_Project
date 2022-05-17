@@ -63,6 +63,25 @@ public class CarController extends EntityController<Car> {
         return this.carService.searchCar(make, model, color, convertible, licensePlate, rating, rateKilometer, available);
     }
 
+
+    //   Get cars used in month
+    @GetMapping(path = "/carsUsed")
+    public ResponseEntity<HashMap<String,Integer>> carsUsed(@RequestParam String year, @RequestParam String month){
+        return carService.carsUsed(year,month);
+    }
+
+    // Delete all car
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteAll(){
+        return carService.deleteAll();
+    }
+
+    // Delete by ID
+    @DeleteMapping(path = "/deleteID/{id}")
+    public ResponseEntity<Car> deleteByID(@PathVariable("id") Long id){
+        return carService.deleteByID(id);
+    }
+
     // update car by ID
     @Override
     @PutMapping(path = "/{id}")
@@ -101,24 +120,6 @@ public class CarController extends EntityController<Car> {
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    //   Get cars used in month
-    @GetMapping(path = "/carsUsed")
-    public ResponseEntity<HashMap<String,Integer>> carsUsed(@RequestParam String year, @RequestParam String month){
-        return carService.carsUsed(year,month);
-    }
-
-    // Delete all car
-    @DeleteMapping
-    public ResponseEntity<HttpStatus> deleteAll(){
-        return carService.deleteAll();
-    }
-
-    // Delete by ID
-    @DeleteMapping(path = "/deleteID/{id}")
-    public ResponseEntity<Car> deleteByID(@PathVariable("id") Long id){
-        return carService.deleteByID(id);
     }
 
 }

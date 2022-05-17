@@ -10,7 +10,10 @@ import java.util.Optional;
 @Repository
 public interface DriverRepo extends JpaRepository<Driver, Long> {
 
+    // Method to get a driver by id
     Driver findDriverById(Long id);
+
+    // Methods to search driver
     List<Driver> findByLicense(String license);
     List<Driver> findByPhone(String phone);
     List<Driver> findByRating(Double rating);
