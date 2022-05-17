@@ -36,12 +36,13 @@ public class InvoiceService {
     }
 
     // Method to create invoices and save to repository (Called in booking service)
-    public Invoice addInvoice(Customer customer, Driver driver, Double rateKilometer, String tripDistance) {
+    public Invoice addInvoice(Customer customer, Driver driver, Double rateKilometer, String tripDistance, ZonedDateTime pickupTime) {
             Invoice invoice =  new Invoice();
             Double totalPayment = rateKilometer * Double.parseDouble(tripDistance);
             invoice.setCustomer(customer);
             invoice.setDriver(driver);
             invoice.setTotalPayment(totalPayment);
+            invoice.setCreatedDate(pickupTime);
             driver.getInvoiceList().add(invoice);
             customer.getInvoiceList().add(invoice);
             invoiceRepo.save(invoice);

@@ -39,7 +39,6 @@ public class CarController extends EntityController<Car> {
     }
 
     // Get all car
-    @GetMapping(path = "/all")
     public ResponseEntity<List<Car>> getCars() {
         return this.carService.getCars();
     }

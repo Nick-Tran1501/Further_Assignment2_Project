@@ -41,7 +41,6 @@ public class CustomerController extends EntityController<Customer>{
     }
 
     //  Get all customer data
-    @GetMapping(path = "/all")
     public ResponseEntity<List<Customer>> getCustomer(){
         return customerService.getCustomers();
     }

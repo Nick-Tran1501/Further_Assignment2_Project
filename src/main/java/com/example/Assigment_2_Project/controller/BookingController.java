@@ -66,9 +66,9 @@ public class BookingController extends EntityController<Booking>{
 
     // Get booking by time
     @GetMapping(path = "/between")
-    public ResponseEntity<List<Booking>> findByPeriod(@RequestParam String startDate,
-                                                      @RequestParam String endDate) {
-        return bookingService.findByPeriod(startDate, endDate);
+    public ResponseEntity<List<Booking>> findByPeriod(@RequestParam String start,
+                                                      @RequestParam String end) {
+        return bookingService.findByPeriod(start, end);
     }
 
 

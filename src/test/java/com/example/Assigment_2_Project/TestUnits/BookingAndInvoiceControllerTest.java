@@ -301,7 +301,7 @@ public class BookingAndInvoiceControllerTest {
     @Test
     @Order(20)
     void falseGetRevenue() {
-        String searchBy = "all";
+        String searchBy = "null";
 //        String searchBy = "customer";
 //        String searchBy = "driver";
         Long id = 1L;
