@@ -15,19 +15,14 @@ public interface BookingRepo extends JpaRepository<Booking, Long> {
         return this.findById(id);
     }
 
-
+    // Method to get booking by id (Long)
     Booking findBookingById(Long id);
-    Booking deleteBookingById(Long id);
 
+    // Method to get a list of booking by status
     List<Booking> findByStatus(String status);
 
-    List<Booking> findByDropTimeBefore(ZonedDateTime zonedDateTime);
-    List<Booking> findByPickupTimeBefore(ZonedDateTime zonedDateTime);
-    List<Booking> findByPickupTime(ZonedDateTime pickupTime);
-    List<Booking> findByCreatedDateIsBetween(ZonedDateTime startTime, ZonedDateTime endTime);
+    // Method to get a list of booking in a period
     List<Booking> findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(ZonedDateTime startTime,
                                                                                   ZonedDateTime endTime);
-
-    List<Booking> findByCreatedDateAfterAndCreatedDateBefore(ZonedDateTime startDate, ZonedDateTime endDate);
 
 }

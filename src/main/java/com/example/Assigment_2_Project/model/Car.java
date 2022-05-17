@@ -14,6 +14,8 @@ import java.time.temporal.ChronoUnit;
 @Entity
 @Table(name = "car")
 public class Car {
+
+    // Car attributes
     @Id
     @Column(name = "VIN")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "car_id") //Checking later
@@ -44,14 +46,16 @@ public class Car {
     @Column
     private double rateKilometer;
 
-
+    // Relationship between car and driver
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "driver_id")
     @JsonManagedReference
     private Driver driver;
 
+    // Constructor
     public Car(){}
 
+    //Getter setter
     public long getId() {
         return id;
     }

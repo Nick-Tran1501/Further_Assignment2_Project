@@ -12,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 @Table(name = "booking")
 public class Booking {
 
+    // Booking attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "booking_id")
     private long id;
@@ -40,21 +41,27 @@ public class Booking {
     @Column
     private String status;
 
+    //Relationship between booking and customer
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     @JsonIgnore
     private Customer customer;
 
+    //Relationship between booking and car
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id")
     private Car car;
 
+    //Relationship between booking and invoice
     @OneToOne(cascade = CascadeType.ALL)
     private Invoice invoice;
 
+    // Constructor
     public Booking() {
     }
 
+
+    //Getter setter
     public long getId() {
         return id;
     }

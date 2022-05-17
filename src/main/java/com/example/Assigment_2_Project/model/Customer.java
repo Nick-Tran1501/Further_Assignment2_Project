@@ -14,6 +14,7 @@ import java.util.List;
 @Table(name = "customer")
 public class Customer {
 
+    // Customer attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "customer_id")
     private long id;
@@ -31,18 +32,20 @@ public class Customer {
     @Column
     private String address;
 
-
+    // Relationship between customer and bookings
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Booking> bookingList;
 
+    // Relationship between customer and invoices
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Invoice> invoiceList;
 
-
+    // Constructor
     public Customer() {};
 
+    // Getter setter
     public long getId() {
         return id;
     }

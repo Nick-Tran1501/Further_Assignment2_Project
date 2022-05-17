@@ -42,6 +42,7 @@ public class BookingService {
     @Autowired
     private CarService carService;
 
+    // Method to get available cars based on pickup date and time
     public ResponseEntity<List<Car>> getAvailableCar(String date, String time){
         try {
             List<Car> carList = carService.getAvailableCar(date, time);
@@ -54,7 +55,7 @@ public class BookingService {
         }
     }
 
-
+    // Method to save booking with body
     public Booking createBookingBody(String date, String time, String startLocation,
                                      String endLocation, String tripDistance,
                                      Invoice invoice, Car car, Customer customer) {
@@ -77,7 +78,7 @@ public class BookingService {
         return booking;
     }
 
-    // Input booking
+    // Method to create booking
     public ResponseEntity<Booking> createBooking(Long cusID, Long carID, Map<String, String> bookingBody) {
         try {
             Customer customer = customerRepo.findCustomerById(cusID);
@@ -135,7 +136,7 @@ public class BookingService {
 
 
 
-    // Finish trip
+    // Method to finish the trip
     public ResponseEntity<Booking> finishTrip(Long id){
         try {
             Booking booking = bookingRepo.findBookingById(id);
@@ -155,6 +156,7 @@ public class BookingService {
         }
     }
 
+    // Method to cancel booking automatically
     public void autoCancelled(Booking booking){
 
         ZonedDateTime bookingDate =  booking.getCreatedDate();
@@ -166,7 +168,7 @@ public class BookingService {
         }
     }
 
-    // Find by booking by time
+    // Find all bookings in a periods
     public ResponseEntity<List<Booking>> findByPeriod(String startDate, String endDate) {
         try {
             String time = "T00:00:00.000Z";

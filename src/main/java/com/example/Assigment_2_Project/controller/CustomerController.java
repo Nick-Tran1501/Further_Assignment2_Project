@@ -30,32 +30,8 @@ public class CustomerController extends EntityController<Customer>{
     private CustomerRepo customerRepo;
 
 
-    // Update customer by ID
-    @Override
-    @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateTableColumnById(@PathVariable("id") Long id, @RequestBody Map<String, String> contentField) {
-        try {
-            Customer customer = customerRepo.findCustomerById(id);
-            if (customer == null){
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-            if (contentField.containsKey("name"))
-                customer.setName(contentField.get("name"));
 
-            if (contentField.containsKey("address"))
-                customer.setAddress(contentField.get("address"));
 
-            if (contentField.containsKey("phone"))
-                customer.setPhone(contentField.get("phone"));
-
-            customerRepo.save(customer);
-            return new ResponseEntity<>(customer, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    // Create list customer sample
 
 
     // Create customer manual
@@ -97,7 +73,33 @@ public class CustomerController extends EntityController<Customer>{
         return customerService.deleteByID(id);
     }
 
+    // Update customer by ID
+    @Override
+    @PutMapping("/{id}")
+    public ResponseEntity<Customer> updateTableColumnById(@PathVariable("id") Long id, @RequestBody Map<String, String> contentField) {
+        try {
+            Customer customer = customerRepo.findCustomerById(id);
+            if (customer == null){
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            if (contentField.containsKey("name"))
+                customer.setName(contentField.get("name"));
 
+            if (contentField.containsKey("address"))
+                customer.setAddress(contentField.get("address"));
+
+            if (contentField.containsKey("phone"))
+                customer.setPhone(contentField.get("phone"));
+
+            customerRepo.save(customer);
+            return new ResponseEntity<>(customer, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    // Create list of sample customers
     @Override
     @PostMapping(path = "/demo")
     public ResponseEntity<List<Customer>> inputDemoData(@Validated @RequestBody List<Customer> data) {
@@ -109,5 +111,7 @@ public class CustomerController extends EntityController<Customer>{
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
 }

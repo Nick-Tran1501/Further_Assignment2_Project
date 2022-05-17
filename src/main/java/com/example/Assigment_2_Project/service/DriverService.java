@@ -38,7 +38,7 @@ public class DriverService {
         }
     }
 
-    // Create driver manual
+    // Method to create driver and save to repository
     public ResponseEntity<Driver> addDriver(Driver driver) {
         try {
             List<Driver> driverList = driverRepo.findAll();
@@ -54,7 +54,7 @@ public class DriverService {
         }
     }
 
-    // Select car
+    // Method for drivers to select cars
     public ResponseEntity<String> selectCar(Long driverID, Long carID) {
         try {
             Driver driver = driverRepo.findDriverById(driverID);
@@ -73,7 +73,7 @@ public class DriverService {
         }
     }
 
-    // Get car by variables
+    // Search driver by attributes
     public ResponseEntity<List<Driver>> searchDriver(Optional<String> name, Optional<String> phone,
                                                         Optional<String> license, Optional<Double> rating){
         try{
@@ -122,7 +122,6 @@ public class DriverService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    //Test
     // delete all driver
     public ResponseEntity<HttpStatus> deleteAll() {
         try {

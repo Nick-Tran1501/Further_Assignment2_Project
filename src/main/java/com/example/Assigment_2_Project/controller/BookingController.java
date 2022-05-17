@@ -33,10 +33,7 @@ public class BookingController extends EntityController<Booking>{
     @Autowired
     private BookingService bookingService;
 
-    @Override
-    public ResponseEntity updateTableColumnById(Long id, Map contentField) {
-        return null;
-    }
+
 
     //  Get available cars
     @GetMapping(path = "/search")
@@ -56,7 +53,6 @@ public class BookingController extends EntityController<Booking>{
 //  Get all booking data
 
     //  Get all booking data
-
     public ResponseEntity<List<Booking>> getBooking() {
         return bookingService.getBookings();
     }
@@ -76,6 +72,7 @@ public class BookingController extends EntityController<Booking>{
     }
 
 
+    // Create list booking sample (not used)
     @Override
     @PostMapping(path = "/demo")
     public ResponseEntity<List<Booking>> inputDemoData(@Validated @RequestBody
@@ -87,5 +84,11 @@ public class BookingController extends EntityController<Booking>{
         } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // Update booking by id (not used)
+    @Override
+    public ResponseEntity updateTableColumnById(Long id, Map contentField) {
+        return null;
     }
 }

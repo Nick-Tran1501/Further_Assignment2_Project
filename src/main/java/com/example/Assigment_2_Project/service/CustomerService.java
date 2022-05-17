@@ -29,7 +29,7 @@ public class CustomerService {
     @Autowired
     private CustomerRepo customerRepo;
 
-    // Add customers
+    // Method to create customer and save to repository
     public ResponseEntity<Customer> addCustomer(Customer customer) {
         try {
             customerRepo.save(customer);
@@ -52,7 +52,7 @@ public class CustomerService {
         }
     }
 
-    // Get customer data by specific attribute
+    // Search customers by attributes
     // Must follow structure of customer class
     public ResponseEntity<List<Customer>> customerSearch(Optional<String> name, Optional<String> phone, Optional<String> address) {
         try {

@@ -15,12 +15,12 @@ import java.util.List;
 @Table(name = "driver")
 public class Driver {
 
+    // Driver attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @CreatedDate
-//    @JsonIgnore
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private ZonedDateTime createdDate = ZonedDateTime.now()
             .truncatedTo(ChronoUnit.MINUTES);
@@ -37,25 +37,26 @@ public class Driver {
     @Column
     private double rating;
 
+    // Relationship between driver and car
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_vin")
     @JsonBackReference
     private Car car;
 
-
+    // Relationshipl between driver and invoices
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Invoice> invoiceList;
 
+    // Constructor
     public Driver() {}
 
+    // Getter setter
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
-
-
         this.id = id;
     }
 

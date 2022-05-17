@@ -16,13 +16,17 @@ public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
         return this.findById(id);
     }
 
+    // Method to get an invoice by id (Long)
     Invoice findInvoiceById(Long id);
-    Invoice deleteInvoiceById(Long id);
 
-
+    // Method to get a list of invoices
+    // All in a period
     List<Invoice> findByCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(ZonedDateTime startTime, ZonedDateTime endOTime);
+
+    //Customer in a period
     List<Invoice> findByCustomerAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(Customer customer, ZonedDateTime startDate,
                                                                                           ZonedDateTime endDate);
+    //Driver in a period
     List<Invoice> findByDriverAndCreatedDateGreaterThanEqualAndCreatedDateLessThanEqual(Driver driver,
                                                                                         ZonedDateTime startDate,
                                                                                         ZonedDateTime endDate);
