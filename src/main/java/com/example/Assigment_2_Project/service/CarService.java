@@ -52,9 +52,9 @@ public class CarService {
             if (cars.size() == 0) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(cars, HttpStatus.OK);
+            return new ResponseEntity<>(cars, HttpStatus.FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -63,7 +63,7 @@ public class CarService {
         try {
             Car car =  carRepo.findCarById(id);
             return  car == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND):
-                    new ResponseEntity<>(car, HttpStatus.OK);
+                    new ResponseEntity<>(car, HttpStatus.FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

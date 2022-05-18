@@ -48,7 +48,7 @@ public class CustomerService {
             }
             return new ResponseEntity<>(customer, HttpStatus.FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

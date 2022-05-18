@@ -32,7 +32,8 @@ public class DriverService {
     public ResponseEntity<List<Driver>> getAllDriver() {
         try {
             List<Driver> drivers = driverRepo.findAll();
-            return new ResponseEntity<>(drivers, HttpStatus.FOUND);
+            return drivers.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                    : new ResponseEntity<>(drivers, HttpStatus.FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -132,7 +133,6 @@ public class DriverService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
 
 
