@@ -202,7 +202,6 @@ class DriverControllerTest {
 
         ResponseEntity<Driver> res = driverController.updateTableColumnById(id, contentField);
 
-//        assertEquals(res.getBody().getName(), "Khoi Solid");
         assertEquals(res.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
 
     }

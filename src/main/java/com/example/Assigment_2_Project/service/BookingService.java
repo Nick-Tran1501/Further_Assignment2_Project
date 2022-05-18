@@ -107,7 +107,7 @@ public class BookingService {
             Driver driver = carData.getDriver();
             Double rateKilometer = carData.getRateKilometer();
 
-            Invoice invoice = invoiceService.addInvoice(customer, driver, rateKilometer, tripDistance);
+            Invoice invoice = invoiceService.addInvoice(customer, driver, rateKilometer, tripDistance, pickupTime);
             Booking booking = createBookingBody(date, time, startLocation, endLocation, tripDistance, invoice, carData, customer);
             carRepo.save(carData);
 
@@ -140,16 +140,19 @@ public class BookingService {
     public ResponseEntity<Booking> finishTrip(Long id){
         try {
             Booking booking = bookingRepo.findBookingById(id);
-
             if ((booking == null)){
                 return new ResponseEntity<>(null,HttpStatus.NOT_ACCEPTABLE);
             }
-            Car car  = booking.getCar();
-            ZonedDateTime dropTime =  ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-            booking.setDropTime(dropTime);
-            booking.setStatus("Finished");
-//            carService.setCarAvailableFinish(car);
-            return new ResponseEntity<>(booking, HttpStatus.OK);
+            if (booking.getStatus().equalsIgnoreCase("Ready")){
+                Car car  = booking.getCar();
+                ZonedDateTime dropTime =  ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+                booking.setDropTime(dropTime);
+                booking.setStatus("Finished");
+                return new ResponseEntity<>(booking, HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+            }
         }
         catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
