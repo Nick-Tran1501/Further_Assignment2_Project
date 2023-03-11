@@ -1,5 +1,4 @@
 # Further_Assignment2_Project
-
 # Taxi Booking service
 
 This project is a system that automates business processes of a taxi company, including:  
@@ -10,6 +9,9 @@ This project is a system that automates business processes of a taxi company, in
 ## Authors
 
 - [@KhoiNguyen-281](https://github.com/KhoiNguyen-281)
+- [@Andy1703](https://github.com/Andy1703)
+- [@Nick-Tran1501](https://github.com/Nick-Tran1501)
+- [@ngocduan99](https://github.com/ngocduan99)
 
 
 ## Tech Stack
