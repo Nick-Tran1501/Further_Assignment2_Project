@@ -1,4 +1,3 @@
-# Further_Assignment2_Project
 # Taxi Booking service
 
 This project is a system that automates business processes of a taxi company, including:  
