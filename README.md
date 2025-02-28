@@ -19,13 +19,13 @@ This project is a system that automates business processes of a taxi company, in
 - IDE to support coding and run the system.
 **Java:** 
 - Main programming language in this project;
-- Applying the Spring Boot, JPA Hibernate, Repository and Maven to perform CRUD for all entities.
+- Applying the Spring Boot, JPA Hibernate, Repository and Maven to perform CRUD for all entities;
 
 **Spring Boot:** 
-- Spring Boot, Spring Web, Spring MVC, creating a web application of Spring.
-- By the Spring Web MVC, application will have a static homepage and accept the HTTP request through the URL: "HTTP://localhost:8080/method_path".
-- Spring Data JPA helps to implement JPA repositories.
-- Spring MVC (Model, View, Controller) supporting implement Spring framework's features.
+- Spring Boot, Spring Web, Spring MVC, creating a web application of Spring;
+- By the Spring Web MVC, application will have a static homepage and accept the HTTP request through the URL: "HTTP://localhost:8080/method_path";
+- Spring Data JPA helps to implement JPA repositories;
+- Spring MVC (Model, View, Controller) supporting implement Spring framework's features;
 **Hibernate:**
 - Is a Java ORM (Object Relational Mapping) tool, maps the domain objects and takes action to the relational database with the assistance of POSTMAN, without SQL syntax.
 **PgAdmin4:**
